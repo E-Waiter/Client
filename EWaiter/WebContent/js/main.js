@@ -46,6 +46,7 @@ var $table_data_id = null;
 var $blazy_control;
 var $last_click_time = new Date().getTime();
 var $timer_search;
+
 function loadLazy(targetId, defaultImg) {
 	var blazy = new Blazy({
 		container: '#' + targetId,
@@ -756,14 +757,12 @@ function bindDetailAction(target) {
 function loadCarteAll() {
 	if ($dish_load == false) {
 		// 获取所有的菜品
-		alert('aaaa');
 		jAjax({
 			type: "post",
 			url: "local_json/carte_all.json",
 			data: "r_id=" + R_ID,
 			showLoading: true,
 			success: function(data) {
-				console.log(data);
 				localStorage.setItem("carteAll", data);
 				var obj = eval('(' + data + ')');
 				var dish_list = $("#dish_list");
@@ -786,7 +785,7 @@ function loadCarteAll() {
 						$blazy_control.validate();
 					}
 				});
-				$blazy_control = loadLazy("dish_list_scroller", "../img/carte_default_small.png");
+				$blazy_control = loadLazy("dish_list_scroller", "img/carte_default_small.png");
 				bindOpeAction(dish_list);
 				$("#dish_search").bind("click",
 				function() {
@@ -1249,7 +1248,7 @@ function onSearchChange(searchContent) {
 			if (searchResult.size() > 0) {
 				$("#search_result").css("background-color", "#FFF");
 			}
-			var $blazy = loadLazy("search_dish_scroller", "../img/carte_default_small.png");
+			var $blazy = loadLazy("search_dish_scroller", "img/carte_default_small.png");
 			new iScroll("search_result", {
 				hScrollbar: false,
 				vScrollbar: false,
