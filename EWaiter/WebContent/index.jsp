@@ -1,11 +1,12 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
     
    <script>
        //判断是否微信中打开
@@ -164,7 +165,7 @@
         <div class="main" id="slider_my_scroll">
             <div>
                 <div class="userHead_Container">
-                    <img class="userHead_img" id="userHead_img" src="../img/user-head.png">
+                    <img class="userHead_img" id="userHead_img" src="img/user-head.png">
                     <div id="userHead_Name"></div>
                 </div>
                 <div id="body">
@@ -562,7 +563,7 @@
     </div>
     <div id="share-wx">
         <p>
-            <img src="../images/2000.png" />
+            <img src="img/2000.png" />
         </p>
     </div>
     <div id="temp-div" style="display:none;"></div>
@@ -645,36 +646,36 @@
               {% 
                 var this_price="";
                 var this_price_vip="";
-                for (var k=0; k< o.listCarteType.length ; k++) { %}  
-                    <li class="dish_list_active nav" data-ctid="{%=o.listCarteType[k].CT_ID%}" >{%=o.listCarteType[k].CT_Name%}</li>
-                {% for (var i=0; i< o.listCarteType[k].listCarte.length ; i++) { %}
-                    {% for (var j=0; j< o.listCarteType[k].listCarte[i].listCarteSpec.length ; j++) { %}
+                for (var k=0; k< o.foodTypeList.length ; k++) { %}  
+                    <li class="dish_list_active nav" data-ctid="{%=o.foodTypeList[k].id%}" >{%=o.foodTypeList[k].name%}</li>
+                {% for (var i=0; i< o.foodTypeList[k].foodModels.length ; i++) { %}
                     <li class="dish_list_active">
                         <div class="dish_item">
                             <div class="dish_image"><img class="dish_img b-lazy" 
-                                src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].C_ID%}.jpg" alt="" /></div>
-                            <div class="dish_name">{%=o.listCarteType[k].listCarte[i].C_Name%}({%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_Spec%})</div>
+                                src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg" alt="" /></div>
+                            <div class="dish_name">{%=o.foodTypeList[k].foodModels[i].name%}({%=o.foodTypeList[k].foodModels[i].unitModel.name%})</div>
                             {%
-                                if(j<=1)
+                                if(i<=1)
                                 {
-                                  this_price=subNum(o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_Price);
-                                  this_price_vip=subNum(o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_PriceMember);
+                                  this_price=subNum(o.foodTypeList[k].foodModels[i].dPrice);
+                                  //this_price_vip=subNum(o.foodTypeList[k].foodModels[i].dPrice);
+								  this_price_vip=0;
                                 }
                             %}
                             
                             <div class="dish_price">￥{%=this_price%} {% if(this_price_vip>0){ %} <span class="vip" style="padding-left: 15px;">VIP {%=this_price_vip %}</span>  {% } %} </div>
                             <div class="dish_add"></div>
                             <div class="dish_ope" style="display:none;"
-                                data-remark="{%=o.listCarteType[k].listCarte[i].C_Remark%}"
-                                id="dish_ope_id_{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_ID%}" cp-id="{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CP_ID%}" d-ctid="{%=o.listCarteType[k].CT_ID%}" data-id="{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_ID%}" 
-                                data-name="{%=o.listCarteType[k].listCarte[i].C_Name%}" data-spec="{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_Spec%}"
-                                data-ref-id="dish_ope_id_{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].CS_ID%}"
-                                data-price="{%=this_price%}" data-vip-price="{%=this_price_vip%}"  data-img="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.listCarteType[k].listCarte[i].listCarteSpec[j].C_ID%}.jpg">
+                                data-remark="{%=o.foodTypeList[k].foodModels[i].name%}"
+                                id="dish_ope_id_{%=o.foodTypeList[k].foodModels[i].id%}" cp-id="{%=o.foodTypeList[k].foodModels[i].id%}" d-ctid="{%=o.foodTypeList[k].id%}" data-id="{%=o.foodTypeList[k].foodModels[i].id%}" 
+                                data-name="{%=o.foodTypeList[k].foodModels[i].name%}" data-spec="{%=o.foodTypeList[k].foodModels[i].unitModel.name%}"
+                                data-ref-id="dish_ope_id_{%=o.foodTypeList[k].foodModels[i].unitModel.id%}"
+                                data-price="{%=this_price%}" data-vip-price="{%=this_price_vip%}"  data-img="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg">
                                 <span class="sub"></span><span class="number" >0</span><span class="add"></span>
                             </div> 
                         </div>
                     </li>
-                {% }}} %}
+                {% }} %}
             </ul>
         </div>
     </script>
@@ -703,20 +704,20 @@
         <div id="search_dish_scroller">
             <ul>
             {% for (var i=0; i< o.datas.length ; i++) { %}
-                {% for (var j=0; j< o.datas[i].listCarteSpec.length ; j++) { %}
+                
                     <li class="dish_list_active">
                         <div class="dish_item">
                             <div class="dish_image">
                                 <img class="dish_img b-lazy" src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.datas[i].C_ID%}.jpg" alt="" />
                             </div>
-                            <div class="dish_name">{%=o.datas[i].C_Name%}({%=o.datas[i].listCarteSpec[j].CS_Spec%})</div>
-                            <div class="dish_price">￥{%=o.datas[i].listCarteSpec[j].CS_Price%}</div>
-                            <div class="dish_ope" data-ref-id="dish_ope_id_{%=o.datas[i].listCarteSpec[j].CS_ID%}">
-                                <span class="sub"></span><span class="number">{%=o.datas[i].listCarteSpec[j].number %}</span><span class="add"></span>
+                            <div class="dish_name">{%=o.datas[i].name%}</div>
+                            <div class="dish_price">￥{%=o.datas[i].dPrice%}/{%=o.datas[i].unitModel.name%}</div>
+                            <div class="dish_ope" data-ref-id="dish_ope_id_{%=o.datas[i].id%}">
+                                <span class="sub"></span><span class="number">{%=o.datas[i].number %}</span><span class="add"></span>
                             </div> 
                         </div>
                     </li>
-             {% }} %}
+             {% } %}
             </ul>
          </div>    
     </script>
@@ -962,7 +963,7 @@
 
 
     <script type="text/x-tmpl" id="takeaway_model5">
-            <div class="item2" mark="{%=o.mark%}"><div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='../img/index-head.png'"/></div> <div class="l_right"> <div class="beign_img_l"></div><div class="message">{%=o.name%}</div><div class="tip">重新输入</div></div></div>
+            <div class="item2" mark="{%=o.mark%}"><div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='img/index-head.png'"/></div> <div class="l_right"> <div class="beign_img_l"></div><div class="message">{%=o.name%}</div><div class="tip">重新输入</div></div></div>
     </script>
 
      

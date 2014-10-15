@@ -655,7 +655,7 @@ function readDishItemData(target_current) {
 
 function bindDetailAction(target) {
 	// $(target).find('.dish_image').bind("click",function(e){
-	$(target).find('.dish_item').bind("click",
+	$(target).find('.dish_image').bind("click",
 	function(e) {
 		// var dish_item_obj = $(this).parent();
 		var dish_item_obj = $(this);
@@ -1216,29 +1216,27 @@ function onSearchChange(searchContent) {
 		}
 		var result = "";
 		// 搜索
-		for (var i = 0; i < $carteAll.listCarteType.length; i++) {
-			var search_obj = $carteAll.listCarteType[i];
-			for (var j = 0; j < search_obj.listCarte.length; j++) {
-				var search_obj_carte = search_obj.listCarte[j];
-				if (search_obj_carte.C_Name.indexOf(trimSearchContent) != -1) {
+		for (var i = 0; i < $carteAll.foodTypeList.length; i++) {
+			var search_obj = $carteAll.foodTypeList[i];
+			for (var j = 0; j < search_obj.foodModels.length; j++) {
+				var search_obj_carte = search_obj.foodModels[j];
+				if (search_obj_carte.name.indexOf(trimSearchContent) != -1) {
 					// 找到菜品了
 					result += search_obj_carte.C_Name;
 					// 便利所有的规格
-					for (var m = 0; m < search_obj_carte.listCarteSpec.length; m++) {
-						search_obj_carte.listCarteSpec[m].number = 0;
+						search_obj_carte.number = 0;
 						// 便利所有的订单
 						for (var k = 0; k < $order.size(); k++) {
 							var dishItemTemp = $order.get(k);
-							if (dishItemTemp.id == search_obj_carte.listCarteSpec[m].CS_ID) {
-								search_obj_carte.listCarteSpec[m].number = dishItemTemp.num;
+							if (dishItemTemp.id == search_obj_carte.id) {
+								search_obj_carte.number = dishItemTemp.num;
 							}
 						}
-					}
 					searchResult.add(search_obj_carte);
 				}
 			}
 		}
-
+		console.log(searchResult);
 		if (searchResult.size() > 0) {
 			// 模板
 			var search_json_data = eval('(' + JSON.stringify(searchResult) + ')');
@@ -1300,6 +1298,11 @@ function stophand(e) {
 
 var t_height = 0;
 $(document).ready(function() { // return;
+	//禁止用户在页面上做双击操作
+	document.documentElement.addEventListener('dblclick', function(e){
+	    e.preventDefault();
+	});
+	
 	$qaPage_scroll = new iScroll("mylist", {
 		hScrollbar: false,
 		vScrollbar: false,
@@ -1333,8 +1336,8 @@ $(document).ready(function() { // return;
 	$('.animation').css("height", t_height);
 	$("#lotteryBack").click(function() {
 		document.getElementById("lottery").style.webkitTransform = "translate3d(0, 1000px, 0)";
-		// document.addEventListener('touchmove',
-		// stophand, false); //防止浏览器的滑动
+		 document.addEventListener('touchmove',
+		 stophand, false); //防止浏览器的滑动
 		document.body.scrollTop = 0;
 	});
 	$("#takeaway_back").click(function() {
