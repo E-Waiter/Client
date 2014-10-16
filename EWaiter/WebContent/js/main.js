@@ -805,7 +805,7 @@ function initDishList() {
 		// 获取菜品分类
 		jAjax({
 			type: "post",
-			url: "local_json/carte_types.json",
+			url: "local_json/carte_all.json",
 			data: "r_id=" + R_ID,
 			showLoading: true,
 			success: function(data) {

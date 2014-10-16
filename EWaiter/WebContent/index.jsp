@@ -207,7 +207,16 @@
         <div id="carte_container">
            
             <div id="carte_mark">
-                <div id="zhuotaiRow" style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;"> <div id="carte_table">桌台:<div id="select_table" class="">未选择</div> </div></div>
+                <div id="zhuotaiRow" style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;"> 
+                <div id="carte_table">用餐人数:<div id="select_table" class="">未选择</div></div>
+                </div>
+              	<div style="padding-left: 15px;">
+              	 <div id="carte_memo" style=" position:relative ;">电话:
+                  <div style=" position:absolute ; top:0px; left:60px; right:15px;">
+                    <input id="remark_input" style=" " class="input no_value" value="请输入电话" onfocus="this.className='input'; if(this.value=='请输入电话'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入电话';this.className='input no_value';}"/>
+                  </div>
+                 </div>
+               </div>                
                 <div id="waimaiRow" style=" display:none;">
                     <div style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;">
                        <div style=" position:relative ;padding-left: 20px;">姓名:
@@ -621,20 +630,20 @@
         <div id="dish_category_scroller">
             <ul>
                 {%
-                 var f_flag=false;
-                 for (var i=0; i< o.special.length ; i++) {f_flag=true;  %}
-                    <li d-id={%=o.special[i].CT_ID %}    {% if(i==0){ %}class="active" {%}%}>
+                 var f_flag=false;<!--推荐的菜在此处做便利-->
+                 for (var i=0; i< 0 ; i++) {f_flag=true;  %}
+                    <li d-id={%=o.foodTypeList[i].id %}    {% if(i==0){ %}class="active" {%}%}>
                     {% if(i==0){ %}
                         <img src='../img/triangle.png' class='hot_category' />
                     {% } %}
-                    <span>{%=o.special[i].CT_Name %}</span><span class="num">2</span></li>
+                    <span>{%=o.foodTypeList[i].name %}</span><span class="num">2</span></li>
                 {% } %}
 
                 {% 
                 
-                for (var i=0; i< o.list.length ; i++) { %}
-                    <li d-id={%=o.list[i].CT_ID %}   {% if(i==0 && !f_flag){ %}class="active" {%}%} >
-                    <span>{%=o.list[i].CT_Name %}</span><span class="num">2</span></li>
+                for (var i=0; i< o.foodTypeList.length ; i++) { %}
+                    <li d-id={%=o.foodTypeList[i].id %}   {% if(i==0 && !f_flag){ %}class="active" {%}%} >
+                    <span>{%=o.foodTypeList[i].name %}</span><span class="num">2</span></li>
                 {% } %}
             </ul>
         </div>
@@ -653,7 +662,7 @@
                         <div class="dish_item">
                             <div class="dish_image"><img class="dish_img b-lazy" 
                                 src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg" alt="" /></div>
-                            <div class="dish_name">{%=o.foodTypeList[k].foodModels[i].name%}({%=o.foodTypeList[k].foodModels[i].unitModel.name%})</div>
+                            <div class="dish_name">{%=o.foodTypeList[k].foodModels[i].name%}</div>
                             {%
                                 if(i<=1)
                                 {
@@ -663,7 +672,7 @@
                                 }
                             %}
                             
-                            <div class="dish_price">￥{%=this_price%} {% if(this_price_vip>0){ %} <span class="vip" style="padding-left: 15px;">VIP {%=this_price_vip %}</span>  {% } %} </div>
+                            <div class="dish_price">￥{%=this_price%}/{%=o.foodTypeList[k].foodModels[i].unitModel.name%} {% if(this_price_vip>0){ %} <span class="vip" style="padding-left: 15px;">VIP {%=this_price_vip %}</span>  {% } %} </div>
                             <div class="dish_add"></div>
                             <div class="dish_ope" style="display:none;"
                                 data-remark="{%=o.foodTypeList[k].foodModels[i].name%}"
@@ -689,7 +698,7 @@
                             <div class="dish_image"><img class="dish_img" src="{%=o.list[i].img %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" /></div>
                             <div class="dish_name">{%=o.list[i].name %}</div>
                             <div class="dish_price">￥{%=o.list[i].price %}</div>
-                            <div class="dish_ope" style="right:5px;" data-id="{%=o.list[i].id %}" data-name="{%=o.list[i].name%}" data-spec="{%=o.list[i].spec%}"
+                            <div class="dish_ope"  data-id="{%=o.list[i].id %}" data-name="{%=o.list[i].name%}" data-spec="{%=o.list[i].spec%}"
                                  data-price="{%=o.list[i].price%}" data-ref-id="{%=o.list[i].ref_id%}">
                                  <span class="sub"></span><span class="number">{%=o.list[i].num %}</span><span class="add"></span>
                             </div>
