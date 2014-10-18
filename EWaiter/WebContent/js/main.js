@@ -46,6 +46,7 @@ var $table_data_id = null;
 var $blazy_control;
 var $last_click_time = new Date().getTime();
 var $timer_search;
+var $person_data_id = null;
 
 function loadLazy(targetId, defaultImg) {
 	var blazy = new Blazy({
@@ -212,34 +213,36 @@ function submitOrder() {
 	if (dineType == 1 || crowdObj.crowd_code) {
 		// 外卖 群点
 	} else {
-		if ($table_data_id == null) {
+		if ($person_data_id == null) {
 			// $("#open_slider_table").trigger("click");
-			document.getElementById("slider_table_Full").style.display = "block";
-			document.getElementById("slider_table").style.webkitTransform = "translate3d(0,0, 0)";
+			document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
 			return;
 		}
 	};
 	// 遍历xml ，组装 格式
 	var dishList = {
-		"list": []
+		"foods": []
 	};
 	for (var j = 0; j < $order.size(); j++) {
-		dishList.list.push($order.get(j));
+		dishList.foods.push($order.get(j));
 	}
-
-	var sub_xml = tmpl("order_submit", eval('(' + JSON.stringify(dishList) + ')'));
+/*	var sub_xml = tmpl("order_submit", eval('(' + JSON.stringify(dishList) + ')'));
 	var sub_ML_GUID = gdata.ML_GUID || gdata.ML_GUID_02;
 	var sub_TI_Code = $table_data_id;
 	var sub_PD_Type = -1; // 现金支付
-	var sub_T_Version = "";
+	var sub_T_Version = "";*/
+	
 	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 备注
+	var sub_DB_Phone = ($("#phone_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 备注
+	dishList.des = sub_DB_Remark;
+	dishList.phone = sub_DB_Phone;
 	// var sub_data =
 	// "ML_GUID="+sub_ML_GUID+"&TI_Code="+sub_TI_Code+"&PD_Type="+sub_PD_Type+"&T_Version="+sub_T_Version+"&DB_Remark="+sub_DB_Remark+"&xml="+
 	// encodeURIComponent(sub_xml);
 	// decimal r_id, string ml_guid, string ti_code, int pd_type, string
 	// t_version, string db_remark, string xml
 	// string crowd_code, string crowd_version
-	var sub_data = "r_id=" + R_ID + "&ml_guid=" + sub_ML_GUID + "&ti_code=" + sub_TI_Code + "&pd_type=" + sub_PD_Type + "&t_version=" + sub_T_Version + "&db_remark=" + sub_DB_Remark + "&xml=" + encodeURIComponent(sub_xml) + "&crowd_code=&crowd_version=";
+	var sub_data = "xml=" + dishList;
 	// 获取菜品分类
 	// 堂食下单
 	function localOrder() {
@@ -252,12 +255,13 @@ function submitOrder() {
 
 		jAjax({
 			type: "post",
-			url: "/1/dining.asmx/add",
+			url: "test.jsp",
 			data: sub_data,
 			showLoading: true,
 			success: function(data) {
+				console.log(data);
 				var obj = eval('(' + data + ')');
-				if (obj.result == 0) {
+/*				if (obj.result == 0) {*/
 					$("#carte_dish").html('');
 					// 选择状态为0
 					$("#dish_list").find('.dish_add').css('display', 'block');
@@ -268,12 +272,12 @@ function submitOrder() {
 					$order = new ArrayList();
 					// 隐藏所有的操作页面
 					// 是否有抽奖资格
-					// showdialog(1,"下单成功！");
-					orderinfo(obj.DB_Number);
+					showdialog(1,"下单成功！");
+					//orderinfo(obj.DB_Number);
 					refreshCart("dish_info");
 					// 清除选中状态
 					$(".dish_list_active").css('border-bottom', '1px solid #f3f4f4').find(".vip").show();
-
+/*
 				} else {
 					// 桌台不存在或者被占用
 					if (obj.result == 162 || obj.result == 160) {
@@ -283,7 +287,7 @@ function submitOrder() {
 						document.getElementById("slider_table").style.webkitTransform = "translate3d(0,0, 0)";
 					};
 					showdialog(1, obj.error);
-				}
+				}*/
 			},
 			error: function() {
 				showdialog(1, "请求失败!");
@@ -370,8 +374,9 @@ function submitOrder() {
 }
 /* 下单 */
 function addNewOrder() {
-	if (gdata.ML_GUID || gdata.ML_GUID_02) initLoginMark(1);
-	else reqeustUserSing(1);
+/*	if (gdata.ML_GUID || gdata.ML_GUID_02) initLoginMark(1);
+	else reqeustUserSing(1);*/
+	submitOrder();
 }
 
 function toCartePage() {
@@ -883,9 +888,14 @@ function bindToSliderMenu() {
 	});
 
 	$("#open_slider_person").bind("click",
-	function() {
-		document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
+			function() {
+				document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
 	});
+	
+	$("#select_table").bind("click",
+		function() {
+			document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
+	});	
 
 	$("#dish_back").bind("click",
 	function() {
@@ -1043,11 +1053,12 @@ function init_shop() {
 	function() {
 		if (!$(this).hasClass('cancel')) {
 			$person_data_id = $(this).attr('data-id');
-
-			$("#index_table_pe").text($(this).attr('data-id') + "人");
+			//$('#index_table_pe').html($(this).attr('data-name'));
+			$("#open_slider_person_index").html($(this).attr('data-id') + "人");
+			$("#select_table").html($(this).attr('data-id') + "人");
 			localStorage.setItem("person-data-id", $person_data_id);
 			$('.person_active').removeClass('person_active');
-			$(this).addClass("person_active")
+			$(this).addClass("person_active");
 		}
 
 		$("#slider_person").css({
@@ -1075,11 +1086,11 @@ function init_shop() {
 	});
 
 	// 初始化店铺信息，和GUID，以及桌台信息
-	$('#select_table,#select_table2').bind("click",
+/*	$('#select_table,#select_table2').bind("click",
 	function() {
 		document.getElementById("slider_table_Full").style.display = "block";
 		document.getElementById("slider_table").style.webkitTransform = "translate3d(0,0, 0)";
-	});
+	});*/
 	jAjax({
 		type: "post",
 		url: "./local_json/tables.json",
@@ -1115,7 +1126,7 @@ function init_shop() {
 					$('#select_table,#select_table2').html($(this).attr('data-name'));
 					$('#index_table_text').html($(this).attr('data-name'));
 					$('.table_active').removeClass('table_active');
-					$(this).addClass("table_active")
+					$(this).addClass("table_active");
 				}
 
 				setTimeout(function() {

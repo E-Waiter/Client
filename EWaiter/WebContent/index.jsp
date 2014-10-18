@@ -80,9 +80,9 @@
         </div>
 
         <div style="position:absolute;height: 100px; width:100%;bottom:35%;">
-            <div id="open_slider_table" style="height:100%;margin: 20px;padding: 10px;color: #FFF;font-size: 20px;background: url(img/black.png);border-radius:5px;">
-                <p style="text-align:center; font-size:18px;  line-height:60px; margin:0;">欢迎您&nbsp;!请问您坐在哪桌&nbsp;?</p>
-                <p style="text-align:center; margin:0;" id="open_slider_tableName">点击选择</p>
+            <div id="open_slider_person" style="height:100%;margin: 20px;padding: 10px;color: #FFF;font-size: 20px;background: url(img/black.png);border-radius:5px;">
+                <p style="text-align:center; font-size:18px;  line-height:60px; margin:0;">欢迎您&nbsp;!请问您的用餐人数&nbsp;?</p>
+                <p style="text-align:center; margin:0;" id="open_slider_person_index">点击选择</p>
             </div>
         </div>
         <div id="index_menu_Container">
@@ -210,14 +210,31 @@
                 <div id="zhuotaiRow" style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;"> 
                 <div id="carte_table">用餐人数:<div id="select_table" class="">未选择</div></div>
                 </div>
-              	<div style="padding-left: 15px;">
-              	 <div id="carte_memo" style=" position:relative ;">电话:
-                  <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                    <input id="remark_input" style=" " class="input no_value" value="请输入电话" onfocus="this.className='input'; if(this.value=='请输入电话'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入电话';this.className='input no_value';}"/>
-                  </div>
-                 </div>
-               </div>                
-                <div id="waimaiRow" style=" display:none;">
+				<div style="padding-left: 15px;">
+					<div id="carte_memo" style="position: relative;">
+						电话:
+						<div
+							style="position: absolute; top: 0px; left: 60px; right: 15px;">
+							<input id="phone_input" style="" class="input no_value"
+								value="请输入电话"
+								onfocus="this.className='input'; if(this.value=='请输入电话'){this.value='';}"
+								onblur="this.blur();if(this.value==''){this.value='请输入电话';this.className='input no_value';}" />
+						</div>
+					</div>
+				</div>
+				<div style="padding-left: 15px;">
+					<div id="carte_memo" style="position: relative;">
+						备注:
+						<div
+							style="position: absolute; top: 0px; left: 60px; right: 15px;">
+							<input id="remark_input" style="" class="input no_value"
+								value="请输入特殊要求"
+								onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}"
+								onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}" />
+						</div>
+					</div>
+				</div>				
+				<div id="waimaiRow" style=" display:none;">
                     <div style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;">
                        <div style=" position:relative ;padding-left: 20px;">姓名:
                           <div style=" position:absolute ; top:0px; left:60px; right:15px;">
@@ -241,15 +258,9 @@
                           </div>
                        </div>
                     </div>
-
-
                 </div>
-                <div style="padding-left: 15px;"> <div id="carte_memo" style=" position:relative ;">备注:
-                  <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                    <input id="remark_input" style=" " class="input no_value" value="请输入特殊要求" onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}"/>
-                  </div>
-               </div></div>
-                <!--<div style="padding-left: 15px;"> <div id="carte_memo">备注:<textarea id="remark_input" class="input no_value" value="请输入特殊要求" onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}"></textarea> </div></div>-->
+
+				<!--<div style="padding-left: 15px;"> <div id="carte_memo">备注:<textarea id="remark_input" class="input no_value" value="请输入特殊要求" onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}"></textarea> </div></div>-->
                 
             </div>
             <div id="carte_dish"></div>
@@ -795,10 +806,7 @@
                 <Carte>
                     <CS_ID>{%=o.list[i].id %}</CS_ID>
                     <DC_Name>{%=o.list[i].name %}</DC_Name>
-                    <MM_Names></MM_Names>
-                    <MT_Names></MT_Names>
                     <DC_Amount>{%=o.list[i].num %}</DC_Amount>
-                    <DC_Weight>0</DC_Weight>
                     <DC_Price>{%=o.list[i].price %}</DC_Price>
                     <DC_Sum>0</DC_Sum>
                     <DC_Remark></DC_Remark>
