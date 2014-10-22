@@ -1,0 +1,427 @@
+body {
+	background-color: #fff;
+	height: 100%;
+	overflow: hidden;
+}
+
+.bulletin-bar {
+	background-color: #fff1e7;
+	border-bottom: 1px solid #d2d2d2;
+	padding: 0 34px;
+	position: relative;
+}
+
+.bulletin-word {
+	color: #eb7e7f;
+	font-size: 12px;
+	height: 35px;
+	line-height: 35px;
+	display: block;
+	overflow: hidden;
+}
+
+.bulletin-bar .icon-trumpet {
+	font-size: 17px;
+	color: #eb7e7f;
+	position: absolute;
+	top: 8px;
+	left: 10px;
+}
+
+.bulletin-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 33px;
+	height: 100%;
+	font-size: 14px;
+	color: #cbcbcb;
+}
+
+.bulletin-close i {
+	vertical-align: -1px;
+}
+
+.detail-info {
+	border-bottom: 1px solid #d2d2d2;
+	background-color: #fff;
+	width: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -moz-box;
+	display: box;
+}
+
+.detail-info-cell {
+	text-align: center;
+	margin-top: 12px;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 auto;
+	-moz-box-flex: 1;
+	box-flex: 1;
+}
+
+.detail-separate {
+	width: 1px;
+	height: 32px;
+	background-color: #eeeeee;
+	margin: 14px 0;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 auto;
+	-moz-box-flex: 0;
+	box-flex: 0;
+}
+
+.detail-info-desc {
+	font-size: 12px;
+}
+
+.detail-info-receive, .detail-info-ship, .detail-info-rate {
+	font-size: 21px;
+}
+
+.detail-info-units {
+	font-size: 12px;
+	color: #959595;
+}
+
+.detail-info-receive {
+	color: #53a1dd;
+}
+
+.detail-info-ship {
+	color: #8fc31f;
+}
+
+.detail-info-rate {
+	color: #ffc600;
+}
+
+.detail-info-data {
+	font-size: 23px;
+}
+
+.detail-info-none {
+	font-size: 20px;
+}
+
+.menuwrap {
+	width: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -moz-box;
+	display: box;
+	height: 100%;
+	-ms-touch-action: none;
+}
+
+.asidewrap {
+	width: 28%;
+	min-width: 90px;
+	height: 100%;
+	background-color: #f8f8f8;
+	border-right: 1px solid #d2d2d2;
+	overflow: hidden;
+}
+
+.taglist {
+	width: 100%;
+}
+
+.tag {
+	padding: 12px 7px 12px 8px;
+	font-size: 14px;
+	color: #535353;
+	border-bottom: 1px solid #d2d2d2;
+	width: 100%;
+	text-align: left;
+	position: relative;
+}
+
+.tag-num {
+	width: 14px;
+	height: 14px;
+	line-height: 13px;
+	border-radius: 50% 50%;
+	background-color: #eb7e7f;
+	color: #fff;
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.tag-icon {
+	position: absolute;
+	margin-top: 1px;
+}
+
+.tag-word-behind-icon {
+	margin-left: 19px;
+}
+
+.tag.focus {
+	color: #eb7e7f;
+	background-color: #ffffff;
+}
+
+.mainwrap {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 auto;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	height: 100%;
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.foodlistwrap {
+	width: 100%;
+}
+
+.foodtagdesc {
+	height: 24px;
+	line-height: 24px;
+	padding: 0 10px;
+	border-bottom: 1px solid #dcdcdc;
+	color: #eb7e7f;
+	font-size: 12px;
+	background-color: #fdebd7;
+}
+
+.fooditem {
+	border-bottom: 1px solid #DCDCDC;
+	padding: 10px 0 0 9px;
+}
+
+.food-pic-wrap {
+	float: left;
+	width: 55px;
+	height: 55px;
+	text-align: center;
+	line-height: 52px;
+	margin-right: 9px;
+	overflow: hidden;
+}
+
+.food-pic {
+	vertical-align: middle;
+}
+
+.foodname {
+	font-size: 15px;
+	margin-right: 6px;
+	max-height: 2.3em;
+	line-height: 1.15em;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.food-content1-sub {
+	font-size: 12px;
+	margin-top: 8px;
+	color: #888888;
+}
+.food-good {
+	margin-left: 4px;
+}
+
+.food-good .icon-thumb {
+	color: #eb7e7f;
+	margin-right: 1px;
+	font-size: 14px;
+	vertical-align: -2px;
+}
+
+.food-content2 {
+	padding-top: 5px;
+	margin-bottom: 13px;
+}
+
+.food-price {
+	color: #eb7e7f;
+	font-size: 16px;
+	margin-top: 9px;
+}
+
+.off-sale {
+	width: 65px;
+	height: 25px;
+	background-color: #DCDCDC;
+	line-height: 25px;
+	text-align: center;
+	font-size: 14px;
+	color: #898989;;
+	margin: 2px 10px 0 0;
+}
+
+.foodop {
+	float: right;
+	margin: 2px 0 0 0;
+}
+
+.add-food, .remove-food {
+	display: block;
+	height: 37px;
+	float: right;
+}
+
+
+
+
+.remove-food {
+	text-align: right;
+	width: 32px;
+}
+
+.icon-plus, .icon-minus {
+	vertical-align: middle;
+	width: 27px;
+	height: 27px;
+	border-radius: 50%;
+	text-align: center;
+	color: #fff;
+	display: inline-block;
+	line-height: 27px;
+	font-size: 18px;
+}
+
+.icon-minus {
+	background-color: #a0a0a0;
+	font-size: 22px;
+}
+
+.icon-plus {
+	background-color: #eb7e7f;
+}
+
+.foodop-num {
+	font-size: 15px;
+	height: 27px;
+	line-height: 27px;
+	width: 21px;
+	text-align: center;
+	float: right;
+}
+
+.food-desc {
+	font-size: 12px;
+	color: #888888;
+	padding: 9px 0;
+	margin: 0 9px 0 0;
+	border-top: 1px solid #dcdcdc;
+}
+
+.food-desc-inner {
+	overflow: hidden;
+	max-height: 28px;
+}
+
+.cart-placeholder {
+	height: 55px;
+}
+
+.cart {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 55px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.cart-tip {
+	float: left;
+	color: white;
+	font-size: 15px;
+	line-height: 55px;
+	padding-left: 12px;
+}
+
+.cart-icon {
+	float: left;
+	position: relative;
+	padding: 4px 8px 0 0;
+}
+
+.cart-icon i {
+	font-size: 27px;
+}
+
+.cart-price {
+	font-size: 20px;
+	margin-left: 4px;
+}
+
+.cart-shipping {
+	font-size: 16px;
+	margin-left: 4px;
+}
+
+.cart-num {
+	border-radius: 50% 50%;
+	background-color: #eb7e7f;
+	width: 15px;
+	height: 15px;
+	line-height: 16px;
+	font-size: 12px;
+	text-align: center;
+	position: absolute;
+	top: 9px;
+	right: 0;
+}
+
+.cart-btns {
+	padding: 12px 11px 0 0;
+	color: white;
+	float: right;
+}
+
+.cart-btn-confirm, .cart-btn-unavail {
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 7px;
+	font-size: 15px;
+	border-radius: 3px;
+	color: white;
+}
+
+.cart-btn-confirm {
+	background-color: #eb7e7f;
+}
+
+.cart-btn-unavail {
+	background-color: #a0a0a0;
+}
+
+.detail-link {
+	display: block;
+	position: fixed;
+	left: 15px;
+	bottom: 65px;
+}
+
+.detail-link-inner {
+	width: 41px;
+	height: 41px;
+	line-height: 46px;
+	font-size: 24px;
+	color: #fff;
+	background-color: #eb7e7f;
+	text-align: center;
+	-webkit-box-shadow: inset 0 0 0 2px #fff, 0 1px 1px 0 #999;
+	-ms-box-shadow: inset 0 0 0 2px #fff, 0 1px 1px 0 #999;
+	-moz-box-shadow: inset 0 0 0 2px #fff, 0 1px 1px 0 #999;
+	box-shadow: inset 0 0 0 2px #fff, 0 1px 1px 0 #999;
+}
+
+.datail-link-placeholder {
+	height: 56px;
+}
+
+.field .f-list .off-sale {
+	color: #898989;
+}

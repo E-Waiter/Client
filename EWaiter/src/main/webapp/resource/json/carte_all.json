@@ -1,0 +1,291 @@
+{
+    "id": 2,
+    "deskID": 20,
+    "name": "渔嘉园",
+    "errorCode": "0",
+    "foodTypeList": [
+        {
+            "des": "包括粉肠，点心",
+            "foodModels": [
+                {
+                    "dPrice": 8,
+                    "id": 1,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "美颜红枣糕",
+                    "preferenceModels": [],
+                    "price": 10,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 12,
+                    "id": 3,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "剁椒金钱肚",
+                    "preferenceModels": [],
+                    "price": 15,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 19,
+                    "id": 2,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "胡椒蒸猪肚",
+                    "preferenceModels": [],
+                    "price": 20,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 10,
+                    "id": 4,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "排骨蒸粉肠",
+                    "preferenceModels": [],
+                    "price": 12,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                }
+            ],
+            "id": 1,
+            "merModel": {
+                "address": "广州市番禺",
+                "areaID": 1,
+                "businessCircle": 1,
+                "cityID": 1,
+                "des": "主要粤菜，兼营早茶",
+                "id": 2,
+                "lat": 200,
+                "lon": 200,
+                "name": "渔嘉园",
+                "nationID": 1,
+                "phone": "02039219882",
+                "provinceID": 1
+            },
+            "name": "蒸情蒸意"
+        },
+        {
+            "des": "点心",
+            "foodModels": [
+                {
+                    "dPrice": 10,
+                    "id": 8,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "香芋水晶球",
+                    "preferenceModels": [],
+                    "price": 12,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 8,
+                    "id": 5,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "水晶鲜虾饺",
+                    "preferenceModels": [],
+                    "price": 10,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 12,
+                    "id": 7,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "美味虾扇",
+                    "preferenceModels": [],
+                    "price": 15,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 19,
+                    "id": 6,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "山竹牛肉球",
+                    "preferenceModels": [],
+                    "price": 20,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                }
+            ],
+            "id": 2,
+            "merModel": {
+                "address": "广州市番禺",
+                "areaID": 1,
+                "businessCircle": 1,
+                "cityID": 1,
+                "des": "主要粤菜，兼营早茶",
+                "id": 2,
+                "lat": 200,
+                "lon": 200,
+                "name": "渔嘉园",
+                "nationID": 1,
+                "phone": "02039219882",
+                "provinceID": 1
+            },
+            "name": "靓茶美点"
+        },
+        {
+            "des": "包点",
+            "foodModels": [
+                {
+                    "dPrice": 19,
+                    "id": 10,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "乡村菜肉包",
+                    "preferenceModels": [],
+                    "price": 20,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 12,
+                    "id": 11,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "回香流沙包",
+                    "preferenceModels": [],
+                    "price": 15,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                },
+                {
+                    "dPrice": 8,
+                    "id": 9,
+                    "isChara": 0,
+                    "isTakeOut": 0,
+                    "name": "荞香燕麦包",
+                    "preferenceModels": [],
+                    "price": 10,
+                    "sortGroupsModel": {
+                        "foodSortModels": [],
+                        "id": 1,
+                        "name": "点心的分类"
+                    },
+                    "status": 0,
+                    "unitModel": {
+                        "id": 1,
+                        "name": "例"
+                    },
+                    "url": "www.huhu.com"
+                }
+            ],
+            "id": 3,
+            "merModel": {
+                "address": "广州市番禺",
+                "areaID": 1,
+                "businessCircle": 1,
+                "cityID": 1,
+                "des": "主要粤菜，兼营早茶",
+                "id": 2,
+                "lat": 200,
+                "lon": 200,
+                "name": "渔嘉园",
+                "nationID": 1,
+                "phone": "02039219882",
+                "provinceID": 1
+            },
+            "name": "粗粮系列"
+        }
+    ]
+}

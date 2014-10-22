@@ -87,7 +87,7 @@ function reloadUser() {
 	
 	var gml = gdata.ML_GUID;
 	if (!gml) {
-		gml = gdata.ML_GUID_02
+		gml = gdata.ML_GUID_02;
 	};
 
 	if (gml) {
@@ -223,26 +223,41 @@ function submitOrder() {
 	var dishList = {
 		"foods": []
 	};
+	var food = new Object();
 	for (var j = 0; j < $order.size(); j++) {
-		dishList.foods.push($order.get(j));
+		food.foodID = $order.get(j).id;
+		food.number = $order.get(j).num;
+		food.type = '大';
+		food.des = '暂时描述';
+		dishList.foods.push(food);
 	}
 /*	var sub_xml = tmpl("order_submit", eval('(' + JSON.stringify(dishList) + ')'));
 	var sub_ML_GUID = gdata.ML_GUID || gdata.ML_GUID_02;
 	var sub_TI_Code = $table_data_id;
 	var sub_PD_Type = -1; // 现金支付
 	var sub_T_Version = "";*/
-	
-	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 备注
-	var sub_DB_Phone = ($("#phone_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 备注
+	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 电话
+	var sub_DB_Phone = ($("#phone_input").val() == "请输入电话" ? "": $("#phone_input").val()); // 备注
+	if( sub_DB_Phone == "") {
+		showdialog(1, "请输入您的电话号码");
+		$("#phone_input").focus();
+		return;
+	}
 	dishList.des = sub_DB_Remark;
 	dishList.phone = sub_DB_Phone;
+    dishList.uID = 2;
+	dishList.dID = 2;
+	dishList.merID = 1;
+	dishList.number = 10;
+	dishList.menthod = 2;
+	dishList.note = '老客户';
 	// var sub_data =
 	// "ML_GUID="+sub_ML_GUID+"&TI_Code="+sub_TI_Code+"&PD_Type="+sub_PD_Type+"&T_Version="+sub_T_Version+"&DB_Remark="+sub_DB_Remark+"&xml="+
 	// encodeURIComponent(sub_xml);
 	// decimal r_id, string ml_guid, string ti_code, int pd_type, string
 	// t_version, string db_remark, string xml
 	// string crowd_code, string crowd_version
-	var sub_data = "xml=" + dishList;
+	var sub_data = "xml=" + JSON.stringify(dishList);
 	// 获取菜品分类
 	// 堂食下单
 	function localOrder() {
@@ -762,60 +777,41 @@ function bindDetailAction(target) {
 function loadCarteAll() {
 	if ($dish_load == false) {
 		// 获取所有的菜品
-		jAjax({
-			type: "post",
-			url: "local_json/carte_all.json",
-			data: "r_id=" + R_ID,
-			showLoading: true,
-			success: function(data) {
-				localStorage.setItem("carteAll", data);
-				var obj = eval('(' + data + ')');
-				var dish_list = $("#dish_list");
-				$dish_load = true;
-				// 初始化图片目录
-				obj.RestaurantSign = RestaurantSign;
-				$(dish_list).html(tmpl("tmpl-dish-list", obj));
-				$dish_scroller = new iScroll("dish_list_scroller", {
-					hScrollbar: false,
-					vScrollbar: false,
-					lockDirection: true,
-					hScroll: false,
-					vScroll: true,
-					useTransition: true,
-					click: true,
-					onTouchEnd: function() {
-						$blazy_control.validate();
-					},
-					onScrollEnd: function() {
-						$blazy_control.validate();
-					}
-				});
-				$blazy_control = loadLazy("dish_list_scroller", "img/carte_default_small.png");
-				bindOpeAction(dish_list);
-				$("#dish_search").bind("click",
-				function() {
-					showSearch();
-				});
-				bindDetailAction(dish_list);
+		var obj = JSON.parse(localStorage.getItem('dishJson'));
+		var dish_list = $("#dish_list");
+		$dish_load = true;
+		// 初始化图片目录
+		obj.RestaurantSign = RestaurantSign;
+		$(dish_list).html(tmpl("tmpl-dish-list", obj));
+		$dish_scroller = new iScroll("dish_list_scroller", {
+			hScrollbar: false,
+			vScrollbar: false,
+			lockDirection: true,
+			hScroll: false,
+			vScroll: true,
+			useTransition: true,
+			click: true,
+			onTouchEnd: function() {
+				$blazy_control.validate();
 			},
-			error: function() {
-				showdialog(1, "请求失败!");
+			onScrollEnd: function() {
+				$blazy_control.validate();
 			}
 		});
+		$blazy_control = loadLazy("dish_list_scroller", "img/carte_default_small.png");
+		bindOpeAction(dish_list);
+		$("#dish_search").bind("click",
+		function() {
+			showSearch();
+		});
+		bindDetailAction(dish_list);
 	}
 }
 
 function initDishList() {
 	if ($menu_load == false) {
 		// 获取菜品分类
-		jAjax({
-			type: "post",
-			url: "local_json/carte_all.json",
-			data: "r_id=" + R_ID,
-			showLoading: true,
-			success: function(data) {
-				var obj = eval('(' + data + ')');
-				// var obj=data;
+				var obj = JSON.parse(localStorage.getItem('dishJson'));
 				$("#dish_menu").html(tmpl("tmpl-dish-category", obj));
 
 				$dish_scroller = new iScroll("dish_category_scroller", {
@@ -854,16 +850,9 @@ function initDishList() {
 					$("#loading_img").removeClass("rotate_animation");
 				},
 				500);
-			},
-			error: function() {
-				showdialog(1, "请求失败!");
-				setTimeout(function() {
-					$("#loading_img").removeClass("rotate_animation");
-				},
-				100);
 			}
-		});
-	} else {
+/*		});*/
+		else {
 		document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 		setTimeout(function() {
 			$("#loading_img").removeClass("rotate_animation");
