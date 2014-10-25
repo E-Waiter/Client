@@ -13,114 +13,7 @@ html,body {
 
 html {
 	-ms-touch-action: none;
-}
-
-	@font-face {font-family: 'iconfont';
-	  src: url('../fonts/iconfont.eot'); /* IE9*/
-	  src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	  url('../fonts/iconfont.woff') format('woff'), /* chrome¡¢firefox */
-	  url('../fonts/iconfont.ttf') format('truetype'), /* chrome¡¢firefox¡¢opera¡¢Safari, Android, iOS 4.2+*/
-	  url('../fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
-	}
-	
-	.iconfont {
-	  font-family:"iconfont" !important;
-	  font-size:23px;
-	  font-style:normal;
-	  color:#B4B4AA;
-	  -webkit-font-smoothing: antialiased;
-	  -webkit-text-stroke-width: 0.2px;
-	  -moz-osx-font-smoothing: grayscale;
-	}
-	
-	.icon-liebiao:before { content: "\e600"; }
-
-	.icon-xiangshang:before { content: "\e601"; }
-	
-	.icon-xiangxia:before { content: "\e602"; }
-	
-	.icon-mclist:before { content: "\e607"; }
-	
-	.icon-mclist1:before { content: "\e609"; }
-	
-	.icon-mclist2:before { content: "\e60a"; }
-	
-	.icon-search:before { content: "\e60b"; }	
-	
-	#menu_font img{
-		width:15px;
-		height:15px;
-	}	
-	.menu_font {
-		background: rgba(0,0,0,0.8);
-		border-radius: 5px;
-		width: 120px;
-		margin-top: 10px;
-		position: absolute;
-		z-index: 9999;
-		right: 0px;
-		padding-left:0px;
-	}
-	.menu_font.hidden {
-		display: none;
-	}
-	.menu_font a {
-		height: 40px;
-		line-height: 40px;
-		/* background: #fff; */
-		position: relative;
-		color: #fff;
-		display: block;
-		width: 100%;
-		text-indent: 10px;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		font-size: 16px;
-		font-family: Î¢ÈíÑÅºÚ, 'Microsoft YaHei', Simsun;
-		padding-right: 14px;
-	}
-	.mr_5 {
-		margin-right: 5px;
-	}
-	.menu_font li:first-of-type {
-		border-top: 0;
-	}
-	.menu_font li:last-of-type {
-		border-bottom: 0;
-	}
-	.menu_font li {
-		border-top: 1px solid rgb(64, 72, 75);
-		border-bottom: 1px solid rgb(0, 6, 9);
-	}
-	.menu_font:after {
-		position: absolute;
-		content: "";
-		display: inline-block;
-		width: 0;
-		height: 0;
-		border-width: 0px 6px 6px 6px;
-		border-style: solid;
-		border-color: transparent transparent rgba(0,0,0,0.8) transparent;
-		top: -5px;
-		left: 95px;
-
-	}
-	.fmright{
-		float:right;
-		top: 11px;
-	}
-	
-	.up_nav {
-		width: 40px;
-		height: 40px;
-		text-align: center;
-		line-height: 32px;
-		position: relative;
-		top: 0;
-		right: 0;
-		margin-top: -36px;
-	}		
+}		
 
 #slider_menu {
 	width: 45%;
@@ -199,6 +92,16 @@ slider_table {
 	font-size: 18px;
 }
 
+        #slider_dish #dish_search
+        {
+          position: absolute;
+            right: 13px;
+            top: 11px;
+            background: url(../img/search.png) no-repeat;
+            height: 18px;
+            width: 18px;
+            background-size: contain;
+        }
 
 #dish_container {
 	width: 100%;

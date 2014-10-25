@@ -10,9 +10,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
+
     
    <script>
-       //判断是否微信中打开
        var ua = navigator.userAgent.toLowerCase();
        var gdata;
        var $carteAll = null;
@@ -23,19 +23,6 @@
     	   dishJson = <%= dishJSON%>;
     	   localStorage.setItem('$carteAll', JSON.stringify(dishJson));
        }
-/*        if (ua.match(/MicroMessenger/i) == "micromessenger" && !gdata.ML_GUID) {
-           var _state = window.location.host;
-           var param = document.location.search;
-           if (!param) {
-               _state = _state + "?filePath=htm";
-           } else {
-               _state = _state + param + "&filePath=htm"
-           };
-           _state = _state.replace(/&/g, "amp;").replace(/\?/g, "bmp;");
-           var url = " https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcf34c168e61773d0&redirect_uri=http://zyd.caipad.cn/weixin_redirect_page.html&response_type=code&scope=snsapi_base&state=" + _state + "#wechat_redirect";
-           window.location.href = url;
-       }; */
-    
    </script>
     <link href="../resource/css/main.css" rel="stylesheet" type="text/css" />
     <link href="../resource/css/base.css" rel="stylesheet" type="text/css" />
@@ -64,18 +51,8 @@
         <div class="dish_title">
             <span id="dish_back" class="back"></span>
             <div id="dish_shop_title" siteTitle="true">全部菜单</div>
-			<div class="up_nav fmright" onclick="$('#menu_font').toggleClass('hidden');">
-				<i class="iconfont"></i>
-			    <ul id="menu_font" class="menu_font hidden" onclick="$('#menu_font').toggleClass('hidden');">
-			       <li><a href="javascript:goHref('goShopLists','&amp;itype=1');"><span class="mr_5"><img src="../resource/img/menu_menus.png"></span>开始点菜</a></li>
-			       <li><a href="javascript:goHref('goShopLists','&amp;itype=2');"><span class="mr_5"><img src="../resource/img/menu_seat.png"></span>客位预定</a></li>
-			       <li><a href="javascript:goHref('goShopLists','&amp;itype=3');"><span class="mr_5"><img src="../resource/img/menu_deliver.png"></span>商家外送</a></li>
-			       <li><a href="javascript:goHref('goPersonInfo');"><span class="mr_5"><img src="../resource/img/menu_user.png"></span>我的信息</a></li>
-			       <li><a href="javascript:goHref('goPersonInfo');" id="dish_search"><span class="mr_5"><img src="../resource/img/search.png"></span>搜索菜单</a></li>
-			    </ul>
-			</div>
+	    <div id="dish_search"></div>
 		</div>
-        
         <div id="dish_container">
             <div id="dish_menu"></div>
             <div id="dish_list"></div>
@@ -150,69 +127,6 @@
     <!--加载div-->
     <div id="load" class="load">
         <div class="full"></div>
-            <div class="l-body">
-                <div class="content"></div>
-                <div class="spinner">
-                    <div class="spinner-container container1">
-                      <div class="circle1"></div>
-                      <div class="circle2"></div>
-                      <div class="circle3"></div>
-                      <div class="circle4"></div>
-                    </div>
-                    <div class="spinner-container container2">
-                      <div class="circle1"></div>
-                      <div class="circle2"></div>
-                      <div class="circle3"></div>
-                      <div class="circle4"></div>
-                    </div>
-                    <div class="spinner-container container3">
-                      <div class="circle1"></div>
-                      <div class="circle2"></div>
-                      <div class="circle3"></div>
-                      <div class="circle4"></div>
-                    </div>
-                </div>
-           <div class="load-text"></div>
-      </div>
-    </div>
-    <!--个人中心-->
-    <div id="slider_my" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px); display:block; ">
-        <div class="title">
-            <span id="slider_my_back" class="back" ></span>个人中心
-        </div>
-        <div class="main" id="slider_my_scroll">
-            <div>
-                <div class="userHead_Container">
-                    <img class="userHead_img" id="userHead_img" src="img/user-head.png">
-                    <div id="userHead_Name"></div>
-                </div>
-                <div id="body">
-                    <div class="table">
-                    <div class="item_noborder next">
-                        <div class="fullRow" id="my_orderlist">订单记录</div>
-                    </div>
-                    <div class="item border_efefef next" style="color: #aaa9a9;">
-                        <div class="fullRow">收藏</div>
-                    </div>
-                    <div class="item border_efefef next">
-                        <div class="fullRow" id="my_addresslist">送餐地址</div>
-                    </div>
-                    <div class="item border_efefef next"  style="color: #aaa9a9;">
-                        <div class="fullRow">发票</div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <!--账单列表-->    
-    <div id="slider_orderlist" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px);  display:block; "> 
-        <div class="title"><span id="slider_orderlist_back" class="back"></span>个人中心</div>
-        <div><div class="orderlist_Hd"><div class="item curr" id="hd01">未完成订单</div><div class="item" id="hd02">已完成订单</div></div></div>
-        <div class="main" style="top:82px;">
-            <div class="pageItem animation" id="pageitem01"></div>
-            <div class="pageItem animation" id="pageitem02" style="-webkit-transform: translate3d(100%, 0px, 0px);"></div>
-        </div>
     </div>
     <!--结账单-->
     <div id="slider_order" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px); display: block;"></div> 
@@ -252,32 +166,6 @@
 						</div>
 					</div>
 				</div>				
-				<div id="waimaiRow" style=" display:none;">
-                    <div style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;">
-                       <div style=" position:relative ;padding-left: 20px;">姓名:
-                          <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                            <input class="input" id="waimai_name" />
-                          </div>
-                       </div>
-                    </div>
-
-                    <div style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;">
-                       <div style=" position:relative ;padding-left: 20px;">电话:
-                          <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                            <input class="input" id="waimai_phone" />
-                          </div>
-                       </div>
-                    </div>
-
-                    <div style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;">
-                       <div style=" position:relative ;padding-left: 20px;">地址:
-                          <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                            <input class="input" id="waimai_address" />
-                          </div>
-                       </div>
-                    </div>
-                </div>
-
 				<!--<div style="padding-left: 15px;"> <div id="carte_memo">备注:<textarea id="remark_input" class="input no_value" value="请输入特殊要求" onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}"></textarea> </div></div>-->
                 
             </div>
@@ -312,47 +200,12 @@
             <span id="takeaway_back" class="back"></span>
             <div siteTitle="true"></div>
         </div>
-        <div id="takeawaymain" class="main" style=" bottom:41px;">
-            <div>
-                <div class="list" id="takeaway_list" mark="name">
-                    <div style=" text-align:center ; padding:10px;"><div class="date">2014-08-12</div></div>
-                    <div class="item">
-                        <div class="l_img">&nbsp;</div> 
-                        <div class="l_right">
-                                    <div class="beign_img_l"></div>
-                                    <div>您好，欢迎光临红姨厨房。</div>
-                                    <div>餐厅地址：1层</div>
-                                    <div>送餐范围：500米。</div>
-                                    <div>50元起送。</div>
-                                    <div>配送费：5元。</div>
-                                    <div>满200元免配送费。</div>
-                                    <div>联系方式:18612345678</div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="l_img">&nbsp;</div> 
-                        <div class="l_right">
-                                    <div class="beign_img_l"></div>
-                                    <div>请问您的送餐地址是</div>
-                        </div>
-                    </div>
-                    <div class="item2">
-                        <div class="l_img">&nbsp;</div> 
-                        <div class="l_right">
-                                    <div class="beign_img_l"></div>
-                                    <div>请问您的送餐地址是</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="takeaway_footer">
             <div class="input_div">
                 <input id="sendMessage-Text"/>
             </div>
             <div id="listBtn" class="right" title="收货地址列表">&nbsp;</div>
             <div id="messagebtn" class="right">发送</div>
-            
         </div>
 
         <div class="mylist" id="mylist">
@@ -364,241 +217,8 @@
         <div class="tanchu">&nbsp;</div>
     </div>
 
-    <!-- 外卖页面 -->
-    <div id="myAddress" class="page myAddress animation"  style="-webkit-transform: translate3d(100%, 0px, 0px); display:block;">
-         <div class="title">
-            <span id="myAddress_back" class="back"></span>
-            <div>管理收货地址</div>
-            <span class="rightBgn" id="myaddress_add_btn">新增</span>
-        </div>
-        <div id="Address_Main" class="main">
-            
-        </div>
-    </div>
-
-    <div id="myAddress_add" class="page myAddress animation"  style="-webkit-transform: translate3d(100%, 0px, 0px); display: block;">
-         <div class="title">
-            <span id="myAddress_add_back" class="back"></span>
-            <div id="addTitle">新建送餐地址</div>
-            <span class="rightBgn" id="saveAddress_btn">保存</span>
-        </div>
-        <div id="Address_add_Main" class="main">
-            <div>
-                <div class="item">
-                    <span class="name">联系人：</span><input class="input_noborder" id="lx_name" />
-                </div>
-                <div class="item">
-                    <span class="name">手机号码：</span><input class="input_noborder" id="lx_phone" />
-                </div>
-                <div class="item">
-                    <span class="name">送餐地址：</span><input class="input_noborder" id="lx_address" />
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="lottery" style="-webkit-transform: translate3d(0px, 1000px, 0px);display: block;">
-        <div class="lotter-title">
-            <span id="lotteryBack" class="back" ></span>幸运抽奖
-        </div>
-        <div>
-        <script>
-//            function dyniframesize(down) {
-//                var pTar = null;
-//                if (document.getElementById) {
-//                    pTar = document.getElementById(down);
-//                }
-//                else {
-//                    eval('pTar = ' + down + ';');
-//                };
-//                if (pTar && !window.opera) {
-//                    pTar.style.display = "block"
-//                    if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight) {
-//                        //ns6 syntax 
-//                        pTar.height = pTar.contentDocument.body.offsetHeight + 20;
-//               
-//                        if (pTar.height < (document.body.clientHeight - 41)) {
-//                            pTar.height = document.body.clientHeight - 41;
-//                        }
-//                    }
-//                    else if (pTar.Document && pTar.Document.body.scrollHeight) {
-//                        //ie5+ syntax 
-//                   
-//                        pTar.height = pTar.Document.body.scrollHeight;
-//                        if (pTar.height < (document.body.clientHeight - 41)) {
-//                            pTar.height = document.body.clientHeight - 41;
-//                        }
-//                    }
-//                }
-//            } 
-
-        
-        </script>
-        <!--<iframe src ="../ggk/lotter.html" frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto" id="ifm" name="ifm" onload="javascript:dyniframesize('ifm');" width="100%"></iframe> 
-       --> 
-       <div id="bodylotter"">
-        <div class="bodylotter" >
-            <div id="wScratchPad" style="display:inline-block; background:#fff; position:relative; margin-top:10px;"></div>
-            <div class="contents" id="firstDiv" style="display:none;">
-                <div class="title">恭喜您中奖了：</div>
-                <div style=" padding: 0 12px;">
-                    <div>您中了：<span id="span01"></span></div>
-                    <div>奖品名称：<span id="span02"></span></div>
-                    <div>中奖时间：<span id="span03"></span></div>
-                </div>
-            </div>
-
-            <div class="contents" >
-                <div class="title">奖项设置</div>
-                <div style=" padding: 0 12px;" id="list"></div>
-            </div>
 
 
-            <div class="contents" id="secondDiv" style="display:none;">
-                <div class="title">商家兑奖</div>
-                <div style=" padding: 0 12px;">
-                    <input id="num" class="num" />
-                    <div class="ok" id="ok">商家提交</div>
-                </div>
-            </div>
-            <div class="contents">
-                <div class="title">其他说明</div>
-                <div style=" padding: 0 12px;" id="memo">
-       
-                </div>
-            </div>
-    </div>
-        </div>
-        <!-- end-->
-
-
-        
-        </div>
-    </div>
-    <!-- 常见问题 -->
-    <div id="qaPage" class="page animation" style="-webkit-transform: translate3d(100%, 0px, 0px);">
-         <div class="title">
-            <span id="qa_back" class="back"></span>
-            <div >常见问题</div>
-        </div>
-        <div class="main" id="qa_main">
-            <div>
-                <div class="qa_list">
-                    <div class="item">
-                        <span button="true" class="button_right">&nbsp;</span>
-                        <div class="hd">Q:在店内如何点餐?</div>
-                        <div class="content">
-                            1.在餐厅首页中选择要就餐的桌台后开始点餐。<br />
-                            2.选择好菜品和数量加入到购物车。<br />
-                            3.确认订单信息无误，提交订单。<br />
-                            4.等待服务员的确认，点餐完成。
-                        </div>
-                    </div>
-
-                     <div class="item">
-                        <span button="true" class="button_right">&nbsp;</span>
-                        <div class="hd">Q:如何和朋友一起点餐？</div>
-                        <div class="content">
-                            1.从餐厅首页进入到“小伙伴一起点餐”，同时分享给朋友。<br />
-                            2.查看已点好的所有菜品，确认订单信息无误后提交。<br />
-                            3.等待服务员确认，群点完成。<br />
-                        </div>
-                    </div>
-                     <div class="item">
-                        <span button="true" class="button_right">&nbsp;</span>
-                        <div class="hd">Q: 如何呼叫外卖？</div>
-                        <div class="content">
-                            1.从餐厅首页进入到“叫外卖”，按要求输入姓名、地址、电话号码。<br />
-                            2.确定送餐地址在送餐范围内，开始点菜。<br />
-                            3.确认订单信息无误，提交订单。<br />
-                            4.等待服务员的确认，点餐完成。
-                        </div>
-                    </div>
-                     <div class="item">
-                        <span button="true" class="button_right">&nbsp;</span>
-                        <div class="hd">Q:优惠活动如何参加？</div>
-                        <div class="content">
-                            1.如果商家有优惠活动时，点击首页头部进入活动介绍页面，查看活动规则。<br />
-                            2.满足相应条件的订单可以参加抽奖。<br />
-                            3.中奖后请联系餐厅服务员进行兑奖。
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="crowdPage" class="page animation" style="-webkit-transform: translate3d(100%, 0px, 0px);">
-        <div class="title">
-            <span id="crowd_back" class="back"></span>
-            <div siteTitle="true"></div>
-        </div>
-      
-        <div class="main" id="crowd_main">
-            
-            <div style=" padding-bottom:10px;">
-                <div class="body">
-                    <div class="userInfoDiv">
-                        <div class="user_head_img" id="qundian_userhead"></div>
-                        <div class="user_username" id="qundian_username"></div>
-                    </div>
-                    <div class="erweima" >
-                        <div id="erweima" class="erweimaMain"></div>
-                    </div>
-                    <div style="color:#b2b2b2; font-size:12px;">扫描二维码开启群点体验，或者<span id="btn_click_right" style="color:#0028f3;">点击右上角</span>邀请小伙伴一起加入！</div>
-                </div>
-                <div class="buttonline"  >
-                    <div class="button" id="go_dishlist">去点餐</div>
-                </div>
-            </div>
-        </div>
-      
-
-    </div>
-    <div id="crowdcarte_Page" class="page animation" style="-webkit-transform: translate3d(100%, 0px, 0px);">
-        <div class="title">
-            <span id="crowdcarte_back" class="back"></span>
-            <div >提交菜品</div>
-            <span class="rightBgn" id="crowdcarte_refresh">&nbsp;</span>
-        </div>
-        <div class="order_meark">
-            <div class="item">
-                <div class="table-row ">
-                   桌台: <div class="select_table" id="select_table2">未选择</div>
-                </div>
-            </div>
-            <div class="item" style="border:none;"> 
-                <div id="carte_memo2" style="position:relative ;">
-                备注:
-                  <div style=" position:absolute ; top:0px; left:60px; right:15px;">
-                    <input id="remark_input2" style=" " class="input no_value" value="请输入特殊要求" onfocus="this.className='input'; if(this.value=='请输入特殊要求'){this.value='';}" onblur="this.blur();if(this.value==''){this.value='请输入特殊要求';this.className='input no_value';}" />
-
-                  </div>
-               </div>
-            </div>
-
-        </div>
-        <div class="main" style="top:145px;" id="crow_carte_container">
-           
-        </div>
-
-        <div class="botton_footer">
-            <div id="crow_info">共计11个菜,&nbsp;<span class="price">￥0.43</span></div>
-            <div id="crow_ok"><button class="select_ok" id="btn_beginOrder">立即下单</button></div>
-        </div>
-    </div>
-
-
-    <div id="crowduser_Page" class="page animation" style="-webkit-transform: translate3d(100%, 0px, 0px);">
-        <div class="title">
-            <span id="crowduser_back" class="back"></span>
-            <div id="crow_carteName"></div>
-        </div>
-        <div class="main" id="crowduser_container">
-            
-        </div>
-    </div>
     <div id="share-wx">
         <p>
             <img src="img/2000.png" />
