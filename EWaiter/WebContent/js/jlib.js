@@ -88,7 +88,7 @@ function showdialog(type,message,fn1,fn2) {
     _body.css({ "margin-top":"-"+(_body.height() / 2)+"px" });
    
     $(dialog).find("#ok").bind("click", function() {
-        $(dialog).remove()
+        $(dialog).remove();
         if (fn1) {
             fn1();
         }

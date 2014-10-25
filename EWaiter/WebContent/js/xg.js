@@ -407,8 +407,8 @@ $(function () {
     });
 
     $.ajax({
-        url: "local_json/lottery_rule.json",
-        type: "post",
+        url: "../resource/json/lottery_rule.json",
+        type: "get",
         //data: "r_id=" + R_ID,
         data: "r_id=",
         success: function (data) {
