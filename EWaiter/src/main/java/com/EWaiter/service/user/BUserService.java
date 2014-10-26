@@ -39,7 +39,7 @@ public class BUserService
 		if (user == null) {
 			return ErrorCode.USER_NOT_EXISTED;
 		}		
-		if (!user.getPassword().equals(Sha1.encode(pw))) 
+		if (!user.getPassword().equalsIgnoreCase(Sha1.encode(pw))) 
 		{
 			return ErrorCode.INCORRECT_PASSWORD;
 		}

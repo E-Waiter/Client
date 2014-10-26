@@ -1,8 +1,6 @@
 package com.EWaiter.controller;
 
-import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.EWaiter.model.food.FoodTypeModel;
-import com.EWaiter.model.mer.MerModel;
+
 import com.EWaiter.service.FoodTypeService;
 import com.EWaiter.service.mer.MerService;
 
@@ -44,13 +41,11 @@ public class FoodTypeController
 //		request.setAttribute("merID", merID);
 //		request.setAttribute("deskID", deskID);
 //		request.setAttribute("merName", merModeld.getName());
+		System.out.println("abc§");
 		
 	
 		String menu = foodTypeService.getMenuByMerID(merID, deskID);
-		System.out.println("menu:" + menu);
 		request.setAttribute("menu", menu);
-		System.out.println("deskID:" + deskID);
-		
 		return "takeout3";
 	}
 	@RequestMapping(value = "/")

@@ -27,6 +27,7 @@ import com.EWaiter.service.mer.RoomService;
 import com.EWaiter.service.order.OrderService;
 import com.EWaiter.service.place.NationService;
 import com.EWaiter.service.user.BUserService;
+import com.EWaiter.util.ErrorCode;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,17 +55,35 @@ public class TestDAO {
 	@Qualifier("bUserService")
 	private BUserService bUserService;
 	
+//	@Test
+//	public void testBuser()
+//	{
+//		JSONObject jsonObject = new JSONObject();
+//		ErrorCode errorCode = bUserService.authBUser("13922151165", "123458", jsonObject);
+//		System.out.println(errorCode.getDetail());
+//	}
 	@Test
-	public void testBuser()
+	public void  testOrder()
 	{
-		bUserService.authBUser(phone, pw, jsonObject)
+		List<OrderModel> orderModels = orderService.getOrderByMerID(1);
+		for (OrderModel orderModel : orderModels) 
+		{
+			System.out.println(orderModel.getPhone());
+			Set<OrderItemModel> orderItemModels = orderModel.getOrderItemModels();
+			for (OrderItemModel orderItemModel :orderItemModels ) 
+			{
+				System.out.println(orderItemModel.getFoodModel().getName());
+			}
+		}
+		
+		
 	}
 	
 	
 	
 //	@Test
 //	public void testFood()
-	{
+//	{
 //		List<FoodTypeModel> foodTypeModels = foodTypeService.getMenuByMerID(2, 20);
 //		for (FoodTypeModel foodTypeModel:foodTypeModels) 
 //		{

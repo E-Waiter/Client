@@ -1,6 +1,6 @@
 package com.EWaiter.controller.user;
 
-import java.util.UUID;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +34,9 @@ public class BUserController
 //		if (Action.valueOf(Action.class, action) != Action.MobileAuthenticate) 
 //		{
 //			return new JsonResponse(ErrorCode.BAD_REQUEST_CODE).generate();
+		
 //		}
+		System.out.println("auth!");
 		JSONObject data = new JSONObject();
 		ErrorCode code = bUserService.authBUser(phone, password ,data);
 		if (!code.isOK()) {

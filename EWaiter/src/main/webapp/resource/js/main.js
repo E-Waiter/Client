@@ -243,7 +243,7 @@ function submitOrder() {
 	dishList.phone = sub_DB_Phone;
     dishList.uID = $carteAll.deskID;
 	dishList.dID = 2;
-	dishList.merID = 1;
+	dishList.merID = $carteAll.merID;
 	dishList.number = 10;
 	dishList.method = 2;
 	dishList.note = '老客户';
@@ -269,7 +269,7 @@ function submitOrder() {
 			showLoading: true,
 			success: function(data) {
 				var obj = eval('(' + data + ')');
-/*				if (obj.result == 0) {*/
+				if (obj.code == 0) {
 					$("#carte_dish").html('');
 					// 选择状态为0
 					$("#dish_list").find('.dish_add').css('display', 'block');
@@ -278,12 +278,13 @@ function submitOrder() {
 					$("#dish_category_scroller").find(".num").css('display', 'none').html(0);
 					$("#dish_list").find(".dish_item").css('background-color', '#FFF');
 					$order = new ArrayList();
-					// 隐藏所有的操作页面
-					// 是否有抽奖资格
 					showdialog(1,"下单成功！");
 					refreshCart("dish_info");
 					// 清除选中状态
 					$(".dish_list_active").css('border-bottom', '1px solid #f3f4f4').find(".vip").show();
+				}else {
+					showdialog(1,obj.msg);
+				}
 			},
 			error: function() {
 				showdialog(1, "请求失败!");
@@ -315,11 +316,6 @@ function submitOrder() {
 		sub_data02 += "&b_time=" + orderT + "&b_address=" + encodeURIComponent(waimai_address) + "&b_peoplenum=1&b_invoiceunit=";
 		sub_data02 += "&b_contact=" + encodeURIComponent(waimai_name) + "&b_phone=" + encodeURIComponent(waimai_phone) + "&b_remark=" + sub_DB_Remark + "&xml=" + encodeURIComponent(sub_xml);
 
-		// add(decimal r_id, string ml_guid, int pd_type,decimal charge,decimal
-		// sum,
-		// DateTime b_time, string b_address, short b_peoplenum, string
-		// b_invoiceunit,
-		// string b_contact, string b_phone, string b_remark, string xml)
 		jAjax({
 			type: "post",
 			url: "/1/takeout.asmx/add",
@@ -598,7 +594,6 @@ function bindOpeAction(target) {
 		$(num_obj).html(num_val);
 		if (num_val > 0) {
 			$(this).parent().css("display", "block").prev().css("display", "none");
-			// $(this).parent().parent().css('background-color','#f9f7f7');
 			$(this).parent().parent().parent().css('border-bottom', '1px solid #e8383d').find(".vip").hide();
 		}
 		addOrder($(num_obj).parent());

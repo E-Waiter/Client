@@ -36,7 +36,4 @@ public class BUserDAO extends BaseDAO
 		}
 		return bUserModels.get(0);
 	}
-	
-	
-	
 }

@@ -28,12 +28,13 @@ public class TokenDAO extends BaseDAO{
 //		session.beginTransaction();
 		
 	
-		Query query = getSessionFactory().getCurrentSession().createQuery("from TokenModel tokenModel where tokenModel.userModel = :userModel");
+		Query query = getSessionFactory().getCurrentSession().createQuery("from tokenModel t where t.user = :userModel");
 		query.setParameter("userModel", userModel);
 		@SuppressWarnings("unchecked")
 		List<TokenModel> result = query.list();
 //		session.getTransaction().commit();
-		if (result.size() == 0) {
+		if (result.size() == 0) 
+		{
 			return null;
 		} else {
 			return result.get(0);

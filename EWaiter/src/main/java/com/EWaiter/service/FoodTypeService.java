@@ -45,8 +45,9 @@ public class FoodTypeService
 		List<FoodTypeModel> foodTypeModels = foodTypeDAO.getFoodTypes(merID);
 		MerModel merModel = merDAO.getMerByID(merID);
 		JSONObject merjson = new JSONObject();
-		merjson.put("id", merID);
+		merjson.put("merID", merID);
 		merjson.put("deskID", deskID);
+		
 		if(foodTypeModels == null ||foodTypeModels.size() ==0)
 		{
 			merjson.put("errorCode", "1");
