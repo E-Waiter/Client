@@ -23,6 +23,7 @@
 	</bean>
 	
 	<context:annotation-config />
+	<mvc:default-servlet-handler/>
 	<mvc:annotation-driven/>
  	<mvc:resources location="/resource/js/" mapping="/resource/js/**"/>
 	<mvc:resources location="/resource/css/" mapping="/resource/css/**"/> 
