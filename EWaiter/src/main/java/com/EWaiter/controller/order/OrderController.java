@@ -40,8 +40,13 @@ public class OrderController
 		System.out.println("-------------------------");
 		ErrorCode errorCode = orderService.addOrder(order);
 
+		if (ErrorCode.OK == errorCode)
+		{
+			
+		}
+		JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), new JSONObject());
 //		request.setAttribute("result", errorCode.getId());
-		return ""+errorCode.getId();
+		return jsonResponse.generate();
 		
 	}
 	@RequestMapping(value = "/syncOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")

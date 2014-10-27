@@ -30,8 +30,8 @@ import com.EWaiter.model.user.UserModel;
 @Table(name="Orders")
 public class OrderModel 
 {
-	public static final int New  = 1;
-	public static final int WaitingConfirm  = 2;
+	public static final int NEW  = 1;
+	public static final int CONFIRM  = 2;
 	public static final int Loading  = 3;
 	public static final int Paying  = 4;
 	public static final int End  = 5;

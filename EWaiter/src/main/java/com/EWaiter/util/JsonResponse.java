@@ -35,7 +35,7 @@ public class JsonResponse {
 	public String generate() {
 		try {
 //			"{code:}"
-			result.put("resultCode", resultCode);
+			result.put("code", resultCode);
 			result.put("msg", msg);
 			result.put("data", data);
 			
