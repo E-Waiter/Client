@@ -29,22 +29,9 @@ public class FoodTypeController
 	@RequestMapping(value = "/getFoodTypesByMerID" ,method=RequestMethod.GET)
 	public String getFoodTypes(Long merID , Long deskID,HttpServletRequest request)
 	{
-		
-//		String dID = (String)request.getAttribute("deskID");
-//		String merID =(String)request.getAttribute("merID");
-//		String merName = (String)request.getAttribute("merName");
-	
-//		System.out.println("call!");
-//		List<FoodTypeModel> foodTypeModels = foodTypeService.getFoodTypesByMerID(merID);
-//		MerModel merModeld = merServicd.getMerModeld(merID);
-//		request.setAttribute("foodTypes", foodTypeModels);
-//		request.setAttribute("merID", merID);
-//		request.setAttribute("deskID", deskID);
-//		request.setAttribute("merName", merModeld.getName());
-		System.out.println("abc§");
-		
 	
 		String menu = foodTypeService.getMenuByMerID(merID, deskID);
+		System.out.println("menu:" + menu);
 		request.setAttribute("menu", menu);
 		return "takeout3";
 	}

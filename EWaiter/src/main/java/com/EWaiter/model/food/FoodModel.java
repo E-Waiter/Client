@@ -24,21 +24,7 @@ import org.hibernate.annotations.Cascade;
 @Table(name = "Food")
 public class FoodModel 
 {
-//	CREATE TABLE `Food`(
-//			  `F_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-//			  `F_FTID` bigint(20) NOT NULL,
-//			  `F_MID` bigint(20) NOT NULL,
-//			  `F_Name` varchar(20) NOT NULL,
-//			  `F_URL` varchar(20) NOT NULL,
-//			  `F_Price` float ,
-//			  `F_DPrice` float,
-//			  `F_IsTakeOut` bit DEFAULT 0,
-//			  `F_IsChara` bit DEFAULT 0,
-//			  `F_Statue` int(5),
-//			 PRIMARY KEY (`F_ID`),
-//			 FOREIGN KEY(`F_FTID`)REFERENCES FoodType(`FT_ID`),
-//			 FOREIGN KEY(`F_MID`)REFERENCES Mer(`M_ID`)
-//			)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -54,7 +40,7 @@ public class FoodModel
 	private int isTakeOut;
 	//是否是特色菜
 	private int isChara;
-	//菜状态（正常，售完）
+	//菜状态（正常,售完,锁定）
 	private int status;
 	
 	@OneToOne

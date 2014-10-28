@@ -1,6 +1,7 @@
 package com.EWaiter.service.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.EWaiter.dao.FoodDAO;
 import com.EWaiter.dao.order.OrderDAO;
 import com.EWaiter.model.food.FoodModel;
 import com.EWaiter.model.mer.DeskModel;
@@ -30,6 +32,11 @@ public class OrderService
 	@Qualifier("orderDAO")
 	private OrderDAO orderDAO;
 	
+	@Autowired
+	@Qualifier("foodDAO")
+	private FoodDAO foodDAO;
+	
+	
 	public boolean addOrder(OrderModel orderModel)
 	{
 		long id = orderDAO.addOrder(orderModel);
@@ -40,7 +47,7 @@ public class OrderService
 		return false;
 	}
 	
-	public ErrorCode addOrder(String json)
+	public ErrorCode addOrder(String json, List<FoodModel> foodModels ,OrderModel orderModel)
 	{
 		
 		
@@ -58,10 +65,7 @@ public class OrderService
 		String phone = jObject.getString("phone");
 		int number = jObject.getInt("number");
 		
-		OrderModel orderModel = new OrderModel();
-//		UserModel userModel = new UserModel();
-//		userModel.setId(uID);
-//		orderModel.setUserModel(userModel);
+
 		DeskModel deskModel = new DeskModel();
 		deskModel.setId(dID);
 		orderModel.setDeskModel(deskModel);
@@ -72,7 +76,7 @@ public class OrderService
 		orderModel.setNote(note);
 		orderModel.setPhone(phone);
 		orderModel.setNumber(number);
-		
+		orderModel.setTime(new Date());
 
 		Set<OrderItemModel> orderDesModels  = new HashSet<OrderItemModel>();
 		JSONArray jsonArray = jObject.getJSONArray("foods");
@@ -97,10 +101,20 @@ public class OrderService
 			orderDesModels.add(orderDesModel);
 		}
 		
+		List<FoodModel> foodModels2 = isSellOut(orderDesModels);
+		if (foodModels2 != null && foodModels2.size() !=0) 
+		{
+			foodModels.addAll(foodModels2);
+			return ErrorCode.SELL_OUT;
+		}
+		
+		
 		orderModel.setOrderItemModels(orderDesModels);
 		long id = orderDAO.addOrder(orderModel);
+	
 		if (id >=0) 
 		{
+			orderModel.setId(id);
 			return ErrorCode.OK;
 		}
 		
@@ -114,5 +128,20 @@ public class OrderService
 		return orderModels;
 	}
 	
-	
+	public List<FoodModel> isSellOut(Set<OrderItemModel> orderDesModels)
+	{
+		List<FoodModel> foodModels = new ArrayList<FoodModel>();
+		
+		for (OrderItemModel orderItemModel: orderDesModels)
+		{
+		
+			FoodModel foodModel = foodDAO.getFoodByID(orderItemModel.getFoodModel().getId());
+			if (foodModel.getStatus() == 1)
+			{
+				foodModels.add(foodModel);
+			}
+		}
+		return foodModels;
+		
+	}
 }

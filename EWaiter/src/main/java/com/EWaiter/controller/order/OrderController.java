@@ -1,6 +1,9 @@
 package com.EWaiter.controller.order;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.EWaiter.model.food.FoodModel;
+import com.EWaiter.model.order.OrderItemModel;
 import com.EWaiter.model.order.OrderModel;
 import com.EWaiter.service.FoodTypeService;
 import com.EWaiter.service.order.OrderService;
@@ -32,21 +37,46 @@ public class OrderController
 	@Qualifier("orderService")
 	private OrderService orderService;
 	
+	
 //	order/
 	@RequestMapping(value = "/commitOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
-	public @ResponseBody String  addOrder(@RequestParam("orderInfo")String order,HttpServletRequest request)
+	public @ResponseBody String addOrder(@RequestParam("orderInfo")String order,HttpServletRequest request)
 	{
 		System.out.println("action:" + order);
 		System.out.println("-------------------------");
-		ErrorCode errorCode = orderService.addOrder(order);
-
+		List<FoodModel> foodModels = new ArrayList<FoodModel>();
+		OrderModel orderModel = new OrderModel();
+		
+		ErrorCode errorCode = orderService.addOrder(order ,foodModels , orderModel);
+		
+		
+		
 		if (ErrorCode.OK == errorCode)
 		{
+			JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), new JSONObject());
+			jsonResponse.addElement("orderID", ""+orderModel.getId());
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = format.format(orderModel.getTime());
 			
+			jsonResponse.addElement("time", date);
+//			request.setAttribute("result", errorCode.getId());
+			String result = jsonResponse.generate();
+			System.out.println("result:" +result);
+			return result;
+		
+		}else if(ErrorCode.SELL_OUT == errorCode)
+		{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("foods", JSONArray.fromObject(foodModels));
+			JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), jsonObject );
+			String result = jsonResponse.generate();
+			System.out.println("result:" +result);
+			return result;
 		}
 		JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), new JSONObject());
-//		request.setAttribute("result", errorCode.getId());
-		return jsonResponse.generate();
+		String result = jsonResponse.generate();
+		System.out.println("result:" +result);
+		return result;
 		
 	}
 	@RequestMapping(value = "/syncOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")

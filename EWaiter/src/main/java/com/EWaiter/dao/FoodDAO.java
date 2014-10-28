@@ -44,7 +44,16 @@ public class FoodDAO extends BaseDAO
 		query.setLong(0, id);
 		return (query.executeUpdate() > 0);
 	}
-
+//	public int getFoodStatusByID(long id)
+//	{
+//		FoodModel foodModel = getFoodByID(id);
+//		if (foodModel != null)
+//		{
+//			return foodModel.getStatus();
+//		}else {
+//			return -1;
+//		}
+//	}
 
 	public boolean updateFood(FoodModel foodModel) {
 		

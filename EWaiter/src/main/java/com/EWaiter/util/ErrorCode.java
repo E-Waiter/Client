@@ -2,6 +2,7 @@ package com.EWaiter.util;
 
 public enum ErrorCode {
 	OK(1, "成功"),
+	SELL_OUT(2,"售完"),
 	
 	BAD_VCODE(100, "验证码错误"),
 	SESSION_EXPIRED(101, "会话超时"),
