@@ -217,14 +217,7 @@
         <div class="tanchu">&nbsp;</div>
     </div>
 
-
-
-    <div id="share-wx">
-        <p>
-            <img src="img/2000.png" />
-        </p>
-    </div>
-    <div id="temp-div" style="display:none;"></div>
+    <div id="order_detail" style="display:none;"></div>
    
 
     <script src="../resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -393,33 +386,33 @@
               <div class="scroll">
                    <div class="Container">
                         <div class="order-Tip" style="height: 40px;line-height: 40px;background-color: #FFF2DD;position: relative;padding: 0 10px;"><span style="color: #DA643C;">请等待服务员与您确认订单</span>
-                            <div style="width: 16px;height: 16px;background: url(../img/close.png) no-repeat;background-size: contain;position: absolute;right: 10px;top: 12px;" onclick="javascript:$(this).parent().remove();"></div>
+                            <div style="width: 16px;height: 16px;background: url(../resource/img/close.png) no-repeat;background-size: contain;position: absolute;right: 10px;top: 12px;" onclick="javascript:$(this).parent().remove();"></div>
                         </div>
                         <div class="content">
-                            <div class="hd">{%=o.shopname%}</div>
+                            <div class="hd">麦当劳</div>
                             <div class="nav">
-                                <div class="left">订单号：{%=o.DB_Number%}</div>
-                                <div class="right">{%=o.time%}</div>
+                                <div class="left">订单号：1231231234567</div>
+                                <div class="right">2014/10/27 22:52:00</div>
                             </div>
                             <ul class="list">
-                             {% for(var i in o.list) { %}
+                             {% for(var i in o.foods) { %}
                                 <li class="item clearfix">
-                                    <div class="name">{%=o.list[i].DC_Name %}</div>
-                                    <div class="num">x&nbsp;{%=o.list[i].DC_Amount %}</div>
-                                    <div class="price">{%=o.list[i].DC_Sum %}</div>
+                                    <div class="name">{%=o.foods[i].name %}</div>
+                                    <div class="num">x&nbsp;{%=o.foods[i].number %}</div>
+                                    <div class="price">{%=o.foods[i].price %}</div>
                                 </li>
                              {% } %}
                             </ul>
-                            <div class="row"><div class="left"></div><div class="heji right">合计:<div class="totalPrice">{%=o.sum%}</div></div></div>
-                            <div class="row"><div class="left">桌台号：{%=o.TI_Name %}</div>
+                            <div class="row"><div class="left"></div><div class="heji right">合计:<div class="totalPrice">{%=200%}</div></div></div>
+                            <div class="row"><div class="left">桌台号：{%=o.merID %}</div>
                             </div>
-                            <div class="mark"><div style="line-height: 18px;padding-top: 10px;">备注:{%=o.DB_Remark%}</div></div>
+                            <div class="mark"><div style="line-height: 18px;padding-top: 10px;">备注:{%=o.des%}</div></div>
                         </div>
                     </div>
             </div>
             <div style="height: 10px; background: #f5f5f5;"></div>
             <div>
-                <div id="cj_btn" style="height: 40px;line-height: 40px;border-radius: 5px;font-size: 14px;margin: 0 15px;background: #fff;padding: 0 10px;">{%=o.lotterState%}</div>
+                <div id="cj_btn" style="height: 40px;line-height: 40px;border-radius: 5px;font-size: 14px;margin: 0 15px;background: #fff;padding: 0 10px;">TestingData</div>
             </div>
             <div style="height: 10px; background: #f5f5f5;"></div>
             <div style="padding: 0 15px;">
@@ -427,9 +420,6 @@
                     <div class="item hd" id="pay-type">支付方式<div class="expland up"></div></div>
                         <div id="paytype-list">
                             <div class="item select ">现金支付<div class="memo">请等待服务员与您确认订单<span class="right-img"></span></div></div>
-                            <div class="item " style="color: #aaa9a9;">微信支付<div class="memo">推介安装微信5.0及以上版本使用<span class="right-img"></span></div></div>
-                            <div class="item last" style="color: #aaa9a9;">支付宝<div class="memo">推介有支付宝的用户使用<span class="right-img"></span></div></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -539,7 +529,8 @@
     
 <!--订单列表页面-->
     <script type="text/x-tmpl" id="orderlistpage">
-            <ul id="">
+          <div id="order_detail_scroll">  
+			<ul>
                 {% for (var i=0; i<o.list.length ; i++) { %}
                 <li class="group" data-id={%=o.list[i].DB_Number%}>
                  
@@ -556,113 +547,13 @@
                 </li>
                 {% } %}
             </ul>
+		</div>
 </script>
 
-    <script type="text/x-tmpl" id="takeaway_model">
-            <div style=" text-align:center ; padding:10px;"><div class="date">{%=o.t %}</div></div>
-            <div class="item">
-                <div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div>您好，欢迎光临{%=o.Name %}。</div>
-                            <div>餐厅地址：{%=o.Address %}</div>
-                            <div>送餐范围：{%=o.Takeout.Distance %}米。</div>
-                            <div>10元起送。</div>
-                            <div>配送费：5元。</div>
-                            <div>满200元免配送费。</div>
-                            <div>联系方式:{%=o.Phone %}</div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div>请问您的名字是?</div>
-                </div>
-            </div>
-
-
-    </script>
-
-
-    <script type="text/x-tmpl" id="takeaway_model2">
-        <div class="item">
-                <div class="l_img" ><img src="{%=o.img%}" onerror="javascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div>请问您的{%=o.name %}是?</div>
-                </div>
-            </div>
-    </script>
-     <script type="text/x-tmpl" id="takeaway_model3">
-        <div class="item">
-                <div class="l_img"><img src="{%=o.img%}" onerror="jjavascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div>美味很快送达，请<a a-click="true" style="color:red;" href="javascript:void(0);">点此选菜</a></div>
-                </div>
-        </div>
-    </script>
-
-    <script type="text/x-tmpl" id="takeaway_model4">
-        <div class="item">
-                <div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div>请确认您输入的位置在送餐范围内。<a a-click="true" style="color:red;" href="javascript:void(0);">点此选菜</a></div>
-                </div>
-        </div>
-    </script>
 
 
 
-
-    <script type="text/x-tmpl" id="takeaway_model5">
-            <div class="item2" mark="{%=o.mark%}"><div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='img/index-head.png'"/></div> <div class="l_right"> <div class="beign_img_l"></div><div class="message">{%=o.name%}</div><div class="tip">重新输入</div></div></div>
-    </script>
-
-     
-
-    <script type="text/x-tmpl" id="takeaway_model6">
-        <div class="item">
-                <div class="l_img"><img src="{%=o.img%}" onerror="javascript:this.src='../img/shangjia-header90.png'"/></div> 
-                <div class="l_right">
-                            <div class="beign_img_l"></div>
-                            <div style=" color:red;">{%=o.message%}</div>
-                </div>
-        </div>
-    </script>
-
-<script type="text/x-tmpl" id="temp_myaddresslist">
-<div>
-    {% for (var i in o.addresses) { %}
-    <div class="item item2" CA_ID="{%=o.addresses[i].CA_ID %}">
-        <div class="name">{%=o.addresses[i].CA_Contact %} {%=o.addresses[i].CA_Phone %}</div>
-        <div class="name">{%=o.addresses[i].CA_Address %}</div>
-        <div class="del">删除</div>
-    </div>
-    {% } %}
-</div>
-</script>
-<!--外卖选择收货地址-->
-<script type="text/x-tmpl" id="temp_myaddresslist2">
-<div>
-    {% for (var i in o) { %}
-    <div class="item {%if(i==0){ %} no-border {% } %}" name="{%=o[i].CA_Contact %}" phone="{%=o[i].CA_Phone %}" address="{%=o[i].CA_Address %}" >
-        <div>您可能的送餐地址:</div>
-        <div>{%=o[i].CA_Contact %} {%=o[i].CA_Phone %}</div>
-        <div>{%=o[i].CA_Address %}</div>
-    </div>
-    {% } %}
-</div>
-</script>
-
-<!--群点菜品-->
-<script type="text/x-tmpl" id="temp_crowd_nodata">
-    <div style="text-align: center;background: #fff;height: 100%;line-height: 80px;">
-        <span>小伙伴们都还没有点菜！</span>
-    </div>
-</script>
+ 
 <script type="text/x-tmpl" id="temp_crowd_carte_list">
         <div id="crow_carte_scroll">
             <ul>
@@ -751,21 +642,6 @@
             </ul>
          </div>
     </script>
-
-<!--群点人员所点菜品详情-->
- <script type="text/x-tmpl" id="temp_user_carte">
-    <div id="crowduser_scroll">
-     <ul>
-    {% for (var i=0; i<o.length ; i++) {
-    %}
-       
-            <li><img src="{%=o[i].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt=""  /><div>{%=o[i].M_Name %}</div><span class="count">{%=o[i].cnt %}份</span></li>
-        
-    {%}%}
-    </ul>
-    </div>
- </script>
-
 
 
 </body>

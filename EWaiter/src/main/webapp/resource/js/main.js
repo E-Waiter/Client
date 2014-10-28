@@ -47,6 +47,7 @@ var $last_click_time = new Date().getTime();
 var $timer_search;
 var $person_data_id = null;
 var $carteAll = JSON.parse(localStorage.getItem('$carteAll'));
+var orderList;//已下订单对象
 
 function loadLazy(targetId, defaultImg) {
 	var blazy = new Blazy({
@@ -77,7 +78,6 @@ function initUserMark() {
 }
 
 function reStorageUserMark() {
-	// localStorage.setItem("user",JSON.stringify($user));
 	localStorage.setItem('gdata', JSON.stringify(gdata));
 };
 
@@ -220,17 +220,19 @@ function submitOrder() {
 		}
 	};
 	// 遍历xml ，组装 格式
-	var dishList = {
+	orderList = {
 		"foods": []
 	};
-	
+	console.log($order);
 	for (var j = 0; j < $order.size(); j++) {
 		var food = new Object();
 		food.foodID = $order.get(j).id;
 		food.number = $order.get(j).num;
+		food.name = $order.get(j).name;
+		food.price = $order.get(j).price;
 		food.type = '大';
 		food.des = '暂时描述';
-		dishList.foods.push(food);
+		orderList.foods.push(food);
 	}
 	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 电话
 	var sub_DB_Phone = ($("#phone_input").val() == "请输入电话" ? "": $("#phone_input").val()); // 备注
@@ -239,16 +241,16 @@ function submitOrder() {
 		return;
 	}
 	
-	dishList.des = sub_DB_Remark;
-	dishList.phone = sub_DB_Phone;
-    dishList.uID = $carteAll.deskID;
-	dishList.dID = 2;
-	dishList.merID = $carteAll.merID;
-	dishList.number = 10;
-	dishList.method = 2;
-	dishList.note = '老客户';
+	orderList.des = sub_DB_Remark;
+	orderList.phone = sub_DB_Phone;
+	orderList.uID = $carteAll.deskID;
+	orderList.dID = 2;
+	orderList.merID = $carteAll.merID;
+	orderList.number = 10;
+	orderList.method = 2;
+	orderList.note = '老客户';
 	
-	var sub_data =  JSON.stringify(dishList);
+	var sub_data =  JSON.stringify(orderList);
 	function focusOnPhone(){
 		$("#phone_input").focus();
 	}
@@ -256,11 +258,6 @@ function submitOrder() {
 	// 堂食下单
 	function localOrder() {
 
-		if (crowdObj.crowd_code) {
-			// 群点
-			qundianAdd();
-			return;
-		};
 
 		jAjax({
 			type: "POST",
@@ -269,7 +266,7 @@ function submitOrder() {
 			showLoading: true,
 			success: function(data) {
 				var obj = eval('(' + data + ')');
-				if (obj.code == 0) {
+				if (obj.code == 1) {
 					$("#carte_dish").html('');
 					// 选择状态为0
 					$("#dish_list").find('.dish_add').css('display', 'block');
@@ -278,7 +275,7 @@ function submitOrder() {
 					$("#dish_category_scroller").find(".num").css('display', 'none').html(0);
 					$("#dish_list").find(".dish_item").css('background-color', '#FFF');
 					$order = new ArrayList();
-					showdialog(1,"下单成功！");
+					showdialog(1,"下单成功！",toOrderDetailPage);
 					refreshCart("dish_info");
 					// 清除选中状态
 					$(".dish_list_active").css('border-bottom', '1px solid #f3f4f4').find(".vip").show();
@@ -292,70 +289,7 @@ function submitOrder() {
 		});
 	};
 
-	// 外卖下单
-	function takeoutOrder() {
-		var _order_number = 0;
-		var _order_price = 0;
-		for (var i = 0; i < $order.size(); i++) {
-			var dishItemTemp = $order.get(i);
-			_order_number += dishItemTemp.num;
-			_order_price += dishItemTemp.num * dishItemTemp.price;
-		};
 
-		// var
-		// sub_data02="r_id="+R_ID+"&ml_guid="+sub_ML_GUID+"&ti_code="+sub_TI_Code+"&pd_type="+sub_PD_Type+"&t_version="+sub_T_Version+"&db_remark="+sub_DB_Remark+"&xml="+encodeURIComponent(sub_xml);
-		// 获取菜品分类
-		var _currentT = new Date();
-		var orderT = _currentT.getFullYear() + "-" + (_currentT.getMonth() + 1) + "-" + _currentT.getDate() + " " + _currentT.getHours() + ":" + _currentT.getMinutes();
-
-		var waimai_name = $("#waimai_name").val();
-		var waimai_phone = $("#waimai_phone").val();
-		var waimai_address = $("#waimai_address").val();
-
-		var sub_data02 = "r_id=" + gdata.shop_config.R_ID + "&ml_guid=" + sub_ML_GUID + "&pd_type=" + sub_PD_Type + "&charge=0&sum=" + _order_price;
-		sub_data02 += "&b_time=" + orderT + "&b_address=" + encodeURIComponent(waimai_address) + "&b_peoplenum=1&b_invoiceunit=";
-		sub_data02 += "&b_contact=" + encodeURIComponent(waimai_name) + "&b_phone=" + encodeURIComponent(waimai_phone) + "&b_remark=" + sub_DB_Remark + "&xml=" + encodeURIComponent(sub_xml);
-
-		jAjax({
-			type: "post",
-			url: "/1/takeout.asmx/add",
-			data: sub_data02,
-			showLoading: true,
-			success: function(data) {
-
-				var obj = eval('(' + data + ')');
-				if (obj.result == 0) {
-					dineType = 0;
-					$("#waimai_address").val('');
-					$("#waimai_phone").val('');
-					$("#waimai_address").val('');
-					$("#carte_dish").html('');
-					// 选择状态为0
-					$("#dish_list").find('.dish_add').css('display', 'block');
-					$("#dish_list").find('.dish_ope').css('display', 'none');
-					$("#dish_list").find('.number').html(0);
-					$("#dish_category_scroller").find(".num").css('display', 'none').html(0);
-					$("#dish_list").find(".dish_item").css('background-color', '#FFF');
-					$order = new ArrayList();
-					// 隐藏所有的操作页面
-					// 是否有抽奖资格
-					// showdialog(1,"下单成功！");
-					orderinfo(obj.DB_Number);
-					refreshCart("dish_info");
-					// 清除选中状态
-					$(".dish_list_active").css('border-bottom', '1px solid #f3f4f4').find("vip").show();
-
-				} else {
-					showdialog(1, obj.error);
-				}
-
-			},
-			error: function() {
-				showdialog(1, "请求失败!");
-			}
-		});
-
-	};
 
 	if (dineType == 1) {
 		takeoutOrder();
@@ -390,6 +324,15 @@ function toCartePage() {
 	bindOrderOpeAction($("#carte_dish"));
 }
 
+function toOrderDetailPage(){
+		console.log(orderList);
+		$("#slider_order").html(tmpl("tmpl-order-info", eval('(' + JSON.stringify(orderList) + ')')));
+		document.getElementById("carte_page").style.webkitTransform = "translate3d(100%,0,0)";
+		document.getElementById("slider_person").style.webkitTransform = "translate3d(100%,0,0)";
+		document.getElementById("slider_order").style.webkitTransform = "translate3d(0,0, 0)";
+}
+
+//Optimizing the performance of increasing and delete function 
 function refreshCart(targetId) {
 	setTimeout(function() {
 		var total_number = 0;
@@ -431,11 +374,9 @@ function refreshCart(targetId) {
 			} else {
 				$("#dish_footer .select_ok").text('跳过');
 			};
-			/*$("#carte_footer").slideUp(800);*/
 
 		} else {
 			$("#dish_footer,#carte_footer").slideDown(800);
-
 			$("#dish_footer .select_ok").text('选好了');
 
 		};
