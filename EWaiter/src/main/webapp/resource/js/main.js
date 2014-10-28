@@ -48,7 +48,7 @@ var $timer_search;
 var $person_data_id = null;
 var $carteAll = JSON.parse(localStorage.getItem('$carteAll'));
 var orderList;//已下订单对象
-
+var totalPrice;
 function loadLazy(targetId, defaultImg) {
 	var blazy = new Blazy({
 		container: '#' + targetId,
@@ -223,7 +223,6 @@ function submitOrder() {
 	orderList = {
 		"foods": []
 	};
-	console.log($order);
 	for (var j = 0; j < $order.size(); j++) {
 		var food = new Object();
 		food.foodID = $order.get(j).id;
@@ -275,8 +274,8 @@ function submitOrder() {
 					$("#dish_category_scroller").find(".num").css('display', 'none').html(0);
 					$("#dish_list").find(".dish_item").css('background-color', '#FFF');
 					$order = new ArrayList();
-					showdialog(1,"下单成功！",toOrderDetailPage);
-					refreshCart("dish_info");
+					showdialog(1,"下单成功！",toOrderDetailPage(obj));
+					//refreshCart("dish_info");
 					// 清除选中状态
 					$(".dish_list_active").css('border-bottom', '1px solid #f3f4f4').find(".vip").show();
 				}else {
@@ -324,12 +323,19 @@ function toCartePage() {
 	bindOrderOpeAction($("#carte_dish"));
 }
 
-function toOrderDetailPage(){
-		console.log(orderList);
+function toOrderDetailPage(data){
+		orderList.totalPrice = totalPrice;
+		orderList.orderID = data.orderID;
+		orderList.time = data.time;
 		$("#slider_order").html(tmpl("tmpl-order-info", eval('(' + JSON.stringify(orderList) + ')')));
 		document.getElementById("carte_page").style.webkitTransform = "translate3d(100%,0,0)";
 		document.getElementById("slider_person").style.webkitTransform = "translate3d(100%,0,0)";
 		document.getElementById("slider_order").style.webkitTransform = "translate3d(0,0, 0)";
+		$('#order-back').bind("click",
+				function(){
+					document.getElementById("slider_order").style.webkitTransform = "translate3d(100%,0, 0)";
+					document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
+				});
 }
 
 //Optimizing the performance of increasing and delete function 
@@ -366,6 +372,7 @@ function refreshCart(targetId) {
 			};
 
 		};
+		totalPrice = total_price;
 		$("#" + targetId).html("<span style='font-family: Arial;'>" + total_number + "</span>个菜，&nbsp<span class='price'>￥" + total_price.toFixed(2) + "</span>");
 		$("#carte_info").html("<span style='font-family: Arial;'>" + total_number + "</span>个菜，&nbsp<span class='price'>￥" + total_price.toFixed(2) + "</span>");
 		if (total_number <= 0) {
@@ -777,7 +784,7 @@ function bindToSliderMenu() {
 		});
 
 	});
-
+	
 	$("#dish_ok").bind("click",
 	function() {
 		if ($order.size() > 0) {
@@ -1258,6 +1265,7 @@ $(document).ready(function() { // return;
 		$("#mylist").slideUp(500);
 
 	});
+	
 	$("#listBtn").click(function(e) {
 		e.stopPropagation();
 		if ($("#mylist").css("visibility") == "hidden") {

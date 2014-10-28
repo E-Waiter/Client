@@ -6,11 +6,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta content=”yes” name=”apple-mobile-web-app-capable” />
+<meta content=”black” name=”apple-mobile-web-app-status-bar-style” />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+
     
    <script>
        var ua = navigator.userAgent.toLowerCase();
@@ -386,13 +387,12 @@
               <div class="scroll">
                    <div class="Container">
                         <div class="order-Tip" style="height: 40px;line-height: 40px;background-color: #FFF2DD;position: relative;padding: 0 10px;"><span style="color: #DA643C;">请等待服务员与您确认订单</span>
-                            <div style="width: 16px;height: 16px;background: url(../resource/img/close.png) no-repeat;background-size: contain;position: absolute;right: 10px;top: 12px;" onclick="javascript:$(this).parent().remove();"></div>
                         </div>
                         <div class="content">
                             <div class="hd">麦当劳</div>
                             <div class="nav">
-                                <div class="left">订单号：1231231234567</div>
-                                <div class="right">2014/10/27 22:52:00</div>
+                                <div class="left">订单号：{%=o.orderID %}</div>
+                                <div class="right">{%=o.time %}</div>
                             </div>
                             <ul class="list">
                              {% for(var i in o.foods) { %}
@@ -403,16 +403,12 @@
                                 </li>
                              {% } %}
                             </ul>
-                            <div class="row"><div class="left"></div><div class="heji right">合计:<div class="totalPrice">{%=200%}</div></div></div>
-                            <div class="row"><div class="left">桌台号：{%=o.merID %}</div>
+                            <div class="row"><div class="left"></div><div class="heji right">合计:<div class="totalPrice">{%=o.totalPrice%}元</div></div></div>
+                            <div class="row"><div class="left">桌台号：{%=o.merID %}号桌</div>
                             </div>
                             <div class="mark"><div style="line-height: 18px;padding-top: 10px;">备注:{%=o.des%}</div></div>
                         </div>
                     </div>
-            </div>
-            <div style="height: 10px; background: #f5f5f5;"></div>
-            <div>
-                <div id="cj_btn" style="height: 40px;line-height: 40px;border-radius: 5px;font-size: 14px;margin: 0 15px;background: #fff;padding: 0 10px;">TestingData</div>
             </div>
             <div style="height: 10px; background: #f5f5f5;"></div>
             <div style="padding: 0 15px;">
