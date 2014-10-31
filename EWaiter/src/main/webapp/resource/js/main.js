@@ -31,9 +31,6 @@ var $person_scroller;
 var $table_scroller;
 var $dish_scroller;
 var $menu_scroller;
-var $myAddress_scroll;
-var $myAddress_add_scroll;
-var $mylist_scroll;
 var $dish_detail_scroll;
 var $user = {}; // 用户登录身份标识
 var $menu_load = false; // 分类是否下载
@@ -210,19 +207,13 @@ function initLoginMark(actionType) {
 
 function submitOrder() {
 
-	if (dineType == 1 || crowdObj.crowd_code) {
-		// 外卖 群点
-	} else {
 		if ($person_data_id == null) {
-			// $("#open_slider_table").trigger("click");
 			document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
 			return;
 		}
-	};
+
 	// 遍历xml ，组装 格式
-	orderList = {
-		"foods": []
-	};
+	orderList = {"foods": []};
 	for (var j = 0; j < $order.size(); j++) {
 		var food = new Object();
 		food.foodID = $order.get(j).id;
@@ -288,13 +279,8 @@ function submitOrder() {
 		});
 	};
 
+	localOrder();
 
-
-	if (dineType == 1) {
-		takeoutOrder();
-	} else {
-		localOrder();
-	};
 
 }
 /* 下单 */
@@ -335,7 +321,7 @@ function toOrderDetailPage(data){
 				function(){
 					document.getElementById("slider_order").style.webkitTransform = "translate3d(100%,0, 0)";
 					document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
-				});
+		});
 }
 
 //Optimizing the performance of increasing and delete function 
@@ -343,7 +329,6 @@ function refreshCart(targetId) {
 	setTimeout(function() {
 		var total_number = 0;
 		var total_price = 0.0;
-
 		$("#dish_menu").find("li[d-id]").find(".num").html(0).hide();
 		var _tmp = [];
 		// 遍历冷热酒水分类
@@ -377,7 +362,7 @@ function refreshCart(targetId) {
 		$("#carte_info").html("<span style='font-family: Arial;'>" + total_number + "</span>个菜，&nbsp<span class='price'>￥" + total_price.toFixed(2) + "</span>");
 		if (total_number <= 0) {
 			if (!crowdObj.crowd_code) {
-				$("#dish_footer").slideUp(800);
+				$("#dish_footer,#carte_footer").slideUp(800);
 			} else {
 				$("#dish_footer .select_ok").text('跳过');
 			};
@@ -455,6 +440,7 @@ function bindSearchOpeAction(target) {
 			$(this).parent().parent().parent().parent().css('border-bottom', '1px solid #f3f4f4').find(".vip").show();
 
 		}
+		refreshCart("carte_info");
 	});
 
 	$(target).find('.add').bind("click",
@@ -462,11 +448,11 @@ function bindSearchOpeAction(target) {
 		var $click_time = e["timeStamp"];
 		if ($click_time - $last_click_time < 400) return;
 		$last_click_time = $click_time;
-
 		var num_obj = $(this).prev();
 		$(num_obj).html(parseInt($(num_obj).html()) + 1);
 		$("#" + $(num_obj).parent().attr('data-ref-id')).children('.add').trigger('click', true);
 		$(this).parent().parent().parent().parent().css('border-bottom', '1px solid #e8383d').find(".vip").hide();;
+		refreshCart("carte_info");
 	});
 }
 
@@ -482,7 +468,7 @@ function bindOrderOpeAction(target) {
 		if (num_val < 0) return;
 		$(num_obj).html(num_val);
 		$("#" + $(num_obj).parent().attr('data-ref-id')).children('.sub').trigger('click', true);
-		refreshCart("carte_info");
+		subOrder($(num_obj).parent());
 	});
 
 	$(target).find('.add').bind("click",
@@ -493,7 +479,7 @@ function bindOrderOpeAction(target) {
 		var num_obj = $(this).prev();
 		$(num_obj).html(parseInt($(num_obj).html()) + 1);
 		$("#" + $(num_obj).parent().attr('data-ref-id')).children('.add').trigger('click', true);
-		refreshCart("carte_info");
+		addOrder($(num_obj).parent());
 	});
 }
 
@@ -739,7 +725,6 @@ function initDishList() {
 				},
 				500);
 			}
-/*		});*/
 		else {
 		document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 		setTimeout(function() {
@@ -793,21 +778,7 @@ function bindToSliderMenu() {
 			} else {
 				$("#carte_mark").show();
 			};
-			// document.getElementById("carte_page").style.display="block";
-			// setTimeout(function(){
 			document.getElementById("carte_page").style.webkitTransform = "translate3d(0,0,0)";
-			// });
-			if (dineType == 1) {
-				$("#zhuotaiRow").hide();
-				$("#waimaiRow").show();
-				$("#waimai_name").val(gdata.takeinfo.name);
-				$("#waimai_phone").val(gdata.takeinfo.phone);
-				$("#waimai_address").val(gdata.takeinfo.address);
-
-			} else {
-				$("#zhuotaiRow").show();
-				$("#waimaiRow").hide();
-			};
 			toCartePage();
 		} else {
 			if (crowdObj.crowd_code) {
@@ -829,40 +800,7 @@ function bindToSliderMenu() {
 	});
 }
 
-function init_persons_number() {
-	var menu_item_count = 7;
-	var menu_item_width = document.body.clientWidth / menu_item_count;
-	$('#basic').find("li").width(menu_item_width + "px");
-	$('#basic').find("li").height(menu_item_width + "px");
-	$('#basic').find("li").css("line-height", menu_item_width + "px");
-	$frame = $('#basic');
-	var $slidee = $frame.children('ul').eq(0);
-	var $wrap = $frame.parent();
 
-	var options = {
-		horizontal: 1,
-		itemNav: 'forceCentered',
-		activateMiddle: 1,
-		smart: 1,
-		activateOn: 'click',
-		mouseDragging: 1,
-		touchDragging: 1,
-		releaseSwing: 1,
-		startAt: 5,
-		scrollBar: $frame.find('.scrollbar'),
-		scrollBy: 1,
-		pagesBar: $frame.find('.pages'),
-		activatePageOn: 'click',
-		speed: 300,
-		moveBy: 600,
-		elasticBounds: 1,
-		dragHandle: 1,
-		dynamicHandle: 1,
-		clickBar: 1,
-	};
-
-	$frame_sly = new Sly($frame, options, true).init();
-}
 /* 初始化餐桌和店铺信息，以及GUID身份信息 */
 function init_shop() {
 	function re_init_shop(obj) {
@@ -916,19 +854,6 @@ function init_shop() {
 		useTransition: true,
 		click: true
 	});
-	$("#cancel_table").bind("click",
-	function() {
-		document.getElementById("slider_table_Full").style.display = "none";
-		$("#slider_table").css({
-			"-webkit-transform": "translate3d(0,100%, 0)"
-		});
-	});
-/*	$("#cancel_person").bind("click",
-	function() {
-		$("#slider_person").css({
-			"-webkit-transform": "translate3d(0,100%, 0)"
-		});
-	});*/
 
 	$("#person_category").find("li").bind("click",
 	function() {
@@ -972,11 +897,6 @@ function init_shop() {
 	});
 
 	// 初始化店铺信息，和GUID，以及桌台信息
-/*	$('#select_table,#select_table2').bind("click",
-	function() {
-		document.getElementById("slider_table_Full").style.display = "block";
-		document.getElementById("slider_table").style.webkitTransform = "translate3d(0,0, 0)";
-	});*/
 	jAjax({
 		type: "get",
 		url: "../resource/json/tables.json",
@@ -1201,7 +1121,6 @@ $(document).ready(function() { // return;
 	});
 	
 	$("document:not(#menu_font)").click(function() {
-		alert('aaa');
 		$('#menu_font').addClass('hidden');
 	});
 	
@@ -1214,19 +1133,9 @@ $(document).ready(function() { // return;
           
     });  
 	
-	$qaPage_scroll = new iScroll("mylist", {
-		hScrollbar: false,
-		vScrollbar: false,
-		lockDirection: true,
-		hScroll: false,
-		vScroll: true,
-		useTransition: true,
-		click: true
-	});
+
 
 	$table_data_id = getQueryStringValue("t");
-	// document.addEventListener('touchmove', function (e) {
-	// e.preventDefault(); }, false);
 	document.addEventListener('touchmove', stophand, false); // 防止浏览器的滑动
 	initUserMark();
 	reloadUser();
@@ -1234,15 +1143,7 @@ $(document).ready(function() { // return;
 	bindToDishAction();
 	init_shop();
 
-	// var cp_Property = [];
-	// myAjax({
-	// url: WX_URL + "/i106",
-	// success: function(js_data) {
-	// cp_Property = js_data.list;
-	// }
-	// });
 	$order = new ArrayList();
-	// alert($("body").height());
 	t_height = $("body").height();
 	$('.animation').css("height", t_height);
 	$("#lotteryBack").click(function() {
@@ -1250,488 +1151,6 @@ $(document).ready(function() { // return;
 		 document.addEventListener('touchmove',
 		 stophand, false); //防止浏览器的滑动
 		document.body.scrollTop = 0;
-	});
-	$("#takeaway_back").click(function() {
-		document.getElementById('takeaway').style.webkitTransform = 'translate3d(100%, 0, 0)';
-	});
-	$("#myAddress_add_back").click(function() {
-		document.getElementById('myAddress_add').style.webkitTransform = 'translate3d(100%, 0, 0)';
-	});
-	$(".tip_close").click(function() {
-		$("#index_tip").hide("slow");
-	});
-	$("#takeawaymain,#takeaway_footer").click(function() {
-		$(".tanchu").hide();
-		$("#mylist").slideUp(500);
-
-	});
-	
-	$("#listBtn").click(function(e) {
-		e.stopPropagation();
-		if ($("#mylist").css("visibility") == "hidden") {
-			$("#mylist").css("visibility", "visible");
-			$("#mylist").hide();
-			setTimeout(function() {
-				$(".tanchu").show();
-				$("#mylist").slideDown(500);
-			},
-			50);
-
-		} else {
-			$(".tanchu").show();
-			$("#mylist").slideDown(500);
-		};
-
-	});
-
-	var $takeaway_list_scroll;
-
-	$("#index_waimai").click(function() {
-		document.getElementById('takeaway').style.webkitTransform = 'translate3d(0, 0, 0)';
-		$("#takeaway_list").attr("mark", "name");
-		var current_Time = new Date();
-		gdata.shop_config.t = current_Time.getFullYear() + "-" + (current_Time.getMonth() + 1) + "-" + current_Time.getDate() + " " + current_Time.getHours() + ":" + current_Time.getMinutes();
-		gdata.shop_config.img = "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png";
-		$("#takeaway_list").html(tmpl("takeaway_model", gdata.shop_config));
-		$takeaway_list_scroll = new iScroll("takeawaymain", {
-			hScrollbar: false,
-			vScrollbar: false,
-			lockDirection: true,
-			hScroll: false,
-			vScroll: true,
-			useTransition: true,
-			click: true
-		});
-		// $takeaway_list_scroll.scrollToElement(document.querySelector("[data-ctid='"+ctid+"']"),500)
-		getCurrent_user_Address();
-
-	});
-
-	function getCurrent_user_Address() {
-
-		if (gdata.addresslist.length > 0) {
-
-			$("#mylist_scroll").html(tmpl("temp_myaddresslist2", gdata.addresslist));
-			$mylist_scroll.refresh();
-		} else {
-
-			jAjax({
-				type: "post",
-				url: "/1/address.asmx/all",
-				data: "ml_guid=" + gdata.ML_GUID,
-				success: function(data) {
-
-					var obj = eval('(' + data + ')');
-
-					if (obj.result == 0) {
-
-						gdata.addresslist = obj.addresses;
-
-						if (gdata.addresslist == undefined) {
-							gdata.addresslist = [];
-						}
-						if (gdata.addresslist.length > 0) {
-							$("#mylist_scroll").html(tmpl("temp_myaddresslist2", obj.addresses));
-							$("#mylist_scroll .item").click(function() {
-								var _name = $(this).attr("name");
-								var _phone = $(this).attr("phone");
-								var _address = $(this).attr("address");
-								$("#takeaway_list").append(tmpl("takeaway_model5", {
-									name: _name,
-									img: gdata.userinfo.M_Image,
-									mark: "name"
-								}));
-								$("#takeaway_list").append(tmpl("takeaway_model5", {
-									name: _phone,
-									img: gdata.userinfo.M_Image,
-									mark: "phone"
-								}));
-								$("#takeaway_list").append(tmpl("takeaway_model5", {
-									name: _address,
-									img: gdata.userinfo.M_Image,
-									mark: "address"
-								}));
-								$("#takeaway_list").attr("mark", "end");
-								gdata.takeinfo.name = _name;
-								gdata.takeinfo.phone = _phone;
-								gdata.takeinfo.address = _address;
-								$("#takeaway_list").append(tmpl("takeaway_model4", {
-									img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-								}));
-								$takeaway_list_scroll.refresh();
-								$takeaway_list_scroll.scrollToElement($("#takeaway_list").children(":last")[0], 500);
-								$("#mylist").slideUp(500);
-								$("[a-click]").unbind("click").bind("click",
-								function() {
-									if ($shop_load && $table_load) {
-										initDishList();
-										refreshCart("dish_info");
-										dineType = 1; // 外卖
-										crowdObj.crowd_code = "";
-										crowdObj.crowd_version = "";
-									} else {
-										showdialog(1, "店铺信息初始化失败，请刷新重试!");
-									}
-								});
-
-							});
-						} else {
-
-							$("#mylist_scroll").html("<div class=\"item no-border\"><div>您还未收藏收货地址！</div></div>");
-						};
-
-						$mylist_scroll.refresh();
-					} else {
-						$("#mylist_scroll").html("<div class=\"item no-border\"><div>您还未收藏收货地址！</div></div>");
-					}
-				}
-			});
-
-		};
-	};
-
-	//
-	$("#sendMessage-Text").change(function() {
-		if ($(this).val()) {
-			$("#listBtn").hide();
-			$("#messagebtn").show();
-		} else {
-			$("#listBtn").show();
-			$("#messagebtn").hide();
-		}
-	});
-
-	$("#sendMessage-Text").keyup(function() {
-		if ($(this).val()) {
-			$("#listBtn").hide();
-			$("#messagebtn").show();
-		} else {
-			$("#listBtn").show();
-			$("#messagebtn").hide();
-		}
-	});
-
-	$("#messagebtn").click(function() {
-		var inputObj = $(this).parent().find("input");
-		var str = inputObj.val();
-		var _foucs_flag = true;
-
-		if (!str) {
-			return;
-		};
-
-		var takeaway_mark = $("#takeaway_list").attr("mark");
-		if (chatFlag) {
-
-			var _goFlag = true;
-			// 处理重新输入标记
-			if (chatFlag == "1") {
-
-				$("#takeaway_list").append(tmpl("takeaway_model5", {
-					name: str,
-					img: gdata.userinfo.M_Image,
-					mark: "name"
-				}));
-				gdata.takeinfo.name = str;
-			} else if (chatFlag == "2") {
-				if (!isMobile_str(str)) {
-					_goFlag = false;
-					$("#takeaway_list").append(tmpl("takeaway_model6", {
-						message: "手机号码输入有误。",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-					inputObj.val('');
-					$takeaway_list_scroll.refresh();
-					$takeaway_list_scroll.scrollToElement($("#takeaway_list").children(":last")[0], 500);
-
-				} else {
-
-					$("#takeaway_list").append(tmpl("takeaway_model5", {
-						name: str,
-						img: gdata.userinfo.M_Image,
-						mark: "phone"
-					}));
-					gdata.takeinfo.phone = str;
-				}
-			} else {
-				$("#takeaway_list").append(tmpl("takeaway_model5", {
-					name: str,
-					img: gdata.userinfo.M_Image,
-					mark: "address"
-				}));
-				gdata.takeinfo.address = str;
-			};
-
-			if (_goFlag) {
-				if (takeaway_mark == "name") {
-					$("#takeaway_list").append(tmpl("takeaway_model2", {
-						"name": "名字",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-				} else if (takeaway_mark == "phone") {
-
-					$("#takeaway_list").append(tmpl("takeaway_model2", {
-						name: "电话",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-				} else if (takeaway_mark == "address") {
-					$("#takeaway_list").append(tmpl("takeaway_model2", {
-						name: "地址",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-				} else {
-					$("#takeaway_list").append(tmpl("takeaway_model4", {
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-					$("[a-click]").unbind("click").bind("click",
-					function() {
-						if ($shop_load && $table_load) {
-							initDishList();
-							refreshCart("dish_info");
-							dineType = 1; // 外卖
-							crowdObj.crowd_code = "";
-							crowdObj.crowd_version = "";
-						} else {
-							showdialog(1, "店铺信息初始化失败，请刷新重试!");
-						}
-					});
-
-				};
-
-				chatFlag = "";
-			}
-
-		} else {
-
-			if (takeaway_mark == "name") {
-				$("#takeaway_list").append(tmpl("takeaway_model5", {
-					name: str,
-					img: gdata.userinfo.M_Image,
-					mark: "name"
-				}));
-				$("#takeaway_list").attr("mark", "phone");
-				gdata.takeinfo.name = str;
-				$("#takeaway_list").append(tmpl("takeaway_model2", {
-					"name": "电话",
-					img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-				}));
-			} else if (takeaway_mark == "phone") {
-
-				$("#takeaway_list").append(tmpl("takeaway_model5", {
-					name: str,
-					img: gdata.userinfo.M_Image,
-					mark: "phone"
-				}));
-				// takeaway_model6
-				if (!isMobile_str(str)) {
-					$("#takeaway_list").append(tmpl("takeaway_model6", {
-						message: "手机号码输入有误。",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-
-				} else {
-
-					$("#takeaway_list").attr("mark", "address");
-					gdata.takeinfo.phone = str;
-					$("#takeaway_list").append(tmpl("takeaway_model2", {
-						name: "地址",
-						img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-					}));
-				}
-			} else if (takeaway_mark == "address") {
-
-				$("#takeaway_list").append(tmpl("takeaway_model5", {
-					name: str,
-					img: gdata.userinfo.M_Image,
-					mark: "address"
-				}));
-				$("#takeaway_list").attr("mark", "end");
-				gdata.takeinfo.address = str;
-
-				$("#takeaway_list").append(tmpl("takeaway_model4", {
-					img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-				}));
-				$("[a-click]").unbind("click").bind("click",
-				function() {
-					if ($shop_load && $table_load) {
-						initDishList();
-						refreshCart("dish_info");
-						dineType = 1; // 外卖
-						crowdObj.crowd_code = "";
-						crowdObj.crowd_version = "";
-					} else {
-						showdialog(1, "店铺信息初始化失败，请刷新重试!");
-					}
-				});
-
-				// 检测新地址
-				if (gdata.ML_GUID) {
-					if (gdata.addresslist.length >= 10) {
-						return;
-					}
-					var newAddress = true;
-					for (var j in gdata.addresslist) {
-						if (gdata.addresslist[j].CA_Address == gdata.takeinfo.address && gdata.addresslist[j].CA_Contact == gdata.takeinfo.name && gdata.addresslist[j].CA_Phone == gdata.takeinfo.phone) {
-							newAddress = false;
-							break;
-						}
-					};
-					if (newAddress) {
-						_foucs_flag = false;
-						// showdialog(2,"发现有新地址，您是否要保存？",function(){
-						// jAjax({
-						// type: "post",
-						// url:
-						// "/1/address.asmx/add",
-						// data: "ml_guid=" +
-						// gdata.ML_GUID +
-						// "&address=" +
-						// encodeURIComponent(gdata.takeinfo.address)
-						// + "&contact=" +
-						// encodeURIComponent(gdata.takeinfo.name)
-						// + "&phone=" +
-						// gdata.takeinfo.phone
-						// +
-						// "&is_default=false",
-						// success: function
-						// (data) {
-						// var obj2 = eval('(' +
-						// data + ')');
-						// if(obj2.result==0){
-						// gdata.addresslist =
-						// obj2.addresses;
-						// showdialog(1,"保存成功!");
-						// setTimeout(function(){
-						// $("#mylist_scroll").html(tmpl("temp_myaddresslist2",gdata.addresslist));
-						// $mylist_scroll.refresh();
-						// },50);
-						// }else
-						// {
-						// showdialog(1,"保存失败!");
-						// }
-						// }
-						// });
-						//                                
-						// },function(){
-						//                                
-						// });
-					};
-				}
-
-			} else {
-
-				$("#takeaway_list").append(tmpl("takeaway_model3", {
-					img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-				}));
-				$("[a-click]").unbind("click").bind("click",
-				function() {
-					if ($shop_load && $table_load) {
-						initDishList();
-						refreshCart("dish_info");
-						dineType = 1; // 外卖
-						crowdObj.crowd_code = "";
-						data.crowd_version = "";
-					} else {
-						showdialog(1, "店铺信息初始化失败，请刷新重试!");
-					}
-				});
-			};
-		};
-		if (_foucs_flag) {
-			inputObj.focus();
-		};
-		inputObj.val('');
-		$takeaway_list_scroll.refresh();
-		$takeaway_list_scroll.scrollToElement($("#takeaway_list").children(":last")[0], 500);
-	});
-
-	$("#myaddress_add_btn").click(function() {
-		document.getElementById('myAddress_add').style.webkitTransform = 'translate3d(0%, 0, 0)';
-	});
-	$("#myAddress_back").click(function() {
-
-		document.getElementById('myAddress').style.webkitTransform = 'translate3d(100%, 0, 0)';
-	});
-
-	$(".myAddress .item2").live("click",
-	function() {
-
-		if ($(this).attr("del")) {
-			// $(this).css({"-webkit-transform":"translate3d(0px,
-			// 0px, 0px)"});
-			$(this).stop().animate({
-				left: "0px"
-			});
-			$(this).attr("del", "")
-		} else {
-			// $(this).css({"-webkit-transform":"translate3d(-60px,
-			// 0px, 0px)"});
-			$(this).stop().animate({
-				left: "-60px"
-			});
-			$(this).attr("del", true)
-		}
-	});
-
-	$("#takeawaymain .message").live("click",
-	function() {
-		var _mark = $(this).parents(".item2").attr("mark");
-		$(this).next().show();
-
-	});
-
-	$("#takeaway").click(function() {
-		$("#takeaway .tip").hide();
-	});
-	$("#takeawaymain .tip").live("click",
-	function() {
-		var _mark = $(this).parents(".item2").attr("mark");
-		$(this).hide();
-		if (_mark == "name") {
-			chatFlag = "1";
-			$("#takeaway_list").append(tmpl("takeaway_model2", {
-				"name": "名字",
-				img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-			}));
-		} else if (_mark == "phone") {
-			chatFlag = "2";
-			$("#takeaway_list").append(tmpl("takeaway_model2", {
-				"name": "电话",
-				img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-			}));
-		} else if (_mark == "address") {
-			chatFlag = "3";
-			$("#takeaway_list").append(tmpl("takeaway_model2", {
-				"name": "地址",
-				img: "/dish/" + gdata.shop_config.RestaurantSign + "/restaurant.png"
-			}));
-		};
-		$takeaway_list_scroll.refresh();
-		$takeaway_list_scroll.scrollToElement($("#takeaway_list").children(":last")[0], 5);
-
-	});
-
-	// delete(string ml_guid, decimal id)
-	$(".myAddress .item2 .del").live("click",
-	function() {
-		var _id = $(this).parent().attr("CA_ID");
-		var _ParentObj = $(this).parent();
-
-		$.ajax({
-			url: "/1/lottery.asmx/delete",
-			type: "post",
-			data: "ml_guid=" + gdata.ML_GUID + "&id=" + _id,
-			success: function(data) {
-				var obj = eval('(' + data + ')');
-				if (obj.result == 0) {
-					_ParentObj.remove();
-				} else {
-					showdialog(1, obj.error);
-				}
-
-			}
-		});
-
 	});
 
 });

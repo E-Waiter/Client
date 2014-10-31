@@ -64,67 +64,7 @@
             <div id="dish_ok"><button class="select_ok">选好了</button></div>
         </div>
     </div>
-    <!--首页-->
-    <div id="index_page" class="animation" style="left:0; top:0px;-webkit-transform: translate3d(100%, 0px, 0px);">
-        <!--<div class="index_bg"></div>
-        <div class="index_title">
-            <div id="index_shop_title">神州美味</div>
-        </div>-->
 
-        <div style="text-align: center;height: 100px;margin-top: 70px;">
-            <img src="../resource/img/logo.png" style="height:100px;position: relative;z-index: 2;" />
-        </div>
-
-        <div style="position:absolute;height: 100px; width:100%;bottom:35%;">
-            <div id="open_slider_person" style="height:100%;margin: 20px;padding: 10px;color: #FFF;font-size: 20px;background: url(img/black.png);border-radius:5px;">
-                <p style="text-align:center; font-size:18px;  line-height:60px; margin:0;">欢迎您&nbsp;!请问您的用餐人数&nbsp;?</p>
-                <p style="text-align:center; margin:0;" id="open_slider_person_index">点击选择</p>
-            </div>
-        </div>
-        <div id="index_menu_Container">
-            <div id= "headImg" class="showimg"></div>
-            <div id= "head_add" class=""></div>
-            <div id="index_menu" class="hidden-img"> 
-                <span id="index-huiyuan" class="huiyuan"></span>
-                 <span id="index-order" class="order"></span>
-                  <span id="index-call" class="call"></span>
-            </div>
-        </div>
-        <div class="index_load">
-            <!--<img id="loading_img" src="../img/btn_sync_bg_sync.png" alt="" />-->
-            <div id="loading_img">开始点餐</div>
-        </div>
-        <div id="index_tip">
-            <span></span>
-            <div class="tip_close"></div>
-        </div>
-
-        
-        <div id="index_footer" >
-            <p style="  z-index:20;position: relative; height: 100%;text-align: center;color: black;padding-top: 10px;color:#fff;font-size:10px;"><span id="index_qundian">小伙伴一起点餐</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=" width:8px; height:8px; background:#fff; border-radius: 45px; display: inline-block;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="index_waimai">我要外卖</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=" width:8px; height:8px; background:#fff; border-radius: 45px; display: inline-block;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="index_qa">不会用点这里</span></p>
-            <!--<table class="index_menu">
-                <tbody>
-                    <tr>
-                        <td style="background: url(../img/index_line.png);background-repeat: no-repeat;background-position: right;">
-                            <div  id="open_slider_person">
-                                <div class="index_btn_pe"></div>
-                                <br />
-                                <span class="index-btn-span" id="index_table_pe">人数</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div  id="open_slider_table">
-                            <div class="index_btn_table"></div>
-                            <br />
-                            <span class="index-btn-span" id="index_table_text">选桌</span>
-                            </div>
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>-->
-        </div>
-    </div>
     <!--加载div-->
     <div id="load" class="load">
         <div class="full"></div>
@@ -195,29 +135,6 @@
     <!-- 详细页面 -->
     <div id="dish_details" style="display: none;"></div>
 
-    <!-- 外卖页面 -->
-    <div id="takeaway" class="page animation"  style="-webkit-transform: translate3d(100%, 0px, 0px); display:  block;">
-        <div class="title">
-            <span id="takeaway_back" class="back"></span>
-            <div siteTitle="true"></div>
-        </div>
-        <div id="takeaway_footer">
-            <div class="input_div">
-                <input id="sendMessage-Text"/>
-            </div>
-            <div id="listBtn" class="right" title="收货地址列表">&nbsp;</div>
-            <div id="messagebtn" class="right">发送</div>
-        </div>
-
-        <div class="mylist" id="mylist">
-            <div id="mylist_scroll">
-                
-            </div>
-   
-        </div>
-        <div class="tanchu">&nbsp;</div>
-    </div>
-
     <div id="order_detail" style="display:none;"></div>
    
 
@@ -234,10 +151,9 @@
     <script src="../resource/js/jarray.min.js" type="text/javascript"></script>
     <script src="../resource/js/main.js" type="text/javascript"></script>
     <script src="../resource/js/xg.js" type="text/javascript"></script>
-    <script src="../resource/js/wechat.js" type="text/javascript"></script>
     <script src="../resource/js/main1.1.js" type="text/javascript"></script>
     <script src="../resource/js/wScratchPad.js" type="text/javascript"></script>
-    <script src="../resource/js/gzy.run.js" type="text/javascript"></script>
+    
     <!--选择人数-->
     <script type="text/x-tmpl" id="tmpl-person-category">
         <div id="person_category_scroller">
@@ -315,13 +231,13 @@
                                 }
                             %}
                             
-                            <div class="dish_price">￥{%=this_price%}/{%=o.foodTypeList[k].foodModels[i].unitModel.name%} {% if(this_price_vip>0){ %} <span class="vip" style="padding-left: 15px;">VIP {%=this_price_vip %}</span>  {% } %} </div>
+                            <div class="dish_price">￥{%=this_price%}/{%=o.foodTypeList[k].foodModels[i].unit%} {% if(this_price_vip>0){ %} <span class="vip" style="padding-left: 15px;">VIP {%=this_price_vip %}</span>  {% } %} </div>
                             <div class="dish_add"></div>
                             <div class="dish_ope" style="display:none;"
                                 data-remark="{%=o.foodTypeList[k].foodModels[i].name%}"
                                 id="dish_ope_id_{%=o.foodTypeList[k].foodModels[i].id%}" cp-id="{%=o.foodTypeList[k].foodModels[i].id%}" d-ctid="{%=o.foodTypeList[k].id%}" data-id="{%=o.foodTypeList[k].foodModels[i].id%}" 
-                                data-name="{%=o.foodTypeList[k].foodModels[i].name%}" data-spec="{%=o.foodTypeList[k].foodModels[i].unitModel.name%}"
-                                data-ref-id="dish_ope_id_{%=o.foodTypeList[k].foodModels[i].unitModel.id%}"
+                                data-name="{%=o.foodTypeList[k].foodModels[i].name%}" data-spec="{%=o.foodTypeList[k].foodModels[i].unit%}"
+                                
                                 data-price="{%=this_price%}" data-vip-price="{%=this_price_vip%}"  data-img="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg">
                                 <span class="sub"></span><span class="number" >0</span><span class="add"></span>
                             </div> 
@@ -423,21 +339,6 @@
             </div>
         </div>
     </script>
-    
-    <script type="text/x-tmpl" id="order_submit">
-        <data>
-            {% for (var i=0; i<o.list.length ; i++) { %}
-                <Carte>
-                    <CS_ID>{%=o.list[i].id %}</CS_ID>
-                    <DC_Name>{%=o.list[i].name %}</DC_Name>
-                    <DC_Amount>{%=o.list[i].num %}</DC_Amount>
-                    <DC_Price>{%=o.list[i].price %}</DC_Price>
-                    <DC_Sum>0</DC_Sum>
-                    <DC_Remark></DC_Remark>
-                </Carte>
-             {% } %}
-         </data>
-    </script>
     <!--菜品详情模板-->
      <script type="text/x-tmpl" id="tmpl_dish_detail">
         <div class="wrap"">
@@ -522,123 +423,6 @@
                     </div>
                 </div>
     </script>
-    
-<!--订单列表页面-->
-    <script type="text/x-tmpl" id="orderlistpage">
-          <div id="order_detail_scroll">  
-			<ul>
-                {% for (var i=0; i<o.list.length ; i++) { %}
-                <li class="group" data-id={%=o.list[i].DB_Number%}>
-                 
-                    <div class="item clearfix">
-                        <div class="left color">{%=o.shopname %}</div>
-                        <div class="right color">{%=o.list[i].t1 %}</div>
-                    </div>
-
-                    <div class="item clearfix">
-                        <div class="left">共计{%=o.list[i].D_Count %}个菜，<span style="color: #de4046;font-family: Arial;">￥{%=o.list[i].P_Sum %}</span></div>
-                        <div class="right">现金支付</div>
-                    </div>
-                    <div class="go_next"></div>
-                </li>
-                {% } %}
-            </ul>
-		</div>
-</script>
-
-
-
-
- 
-<script type="text/x-tmpl" id="temp_crowd_carte_list">
-        <div id="crow_carte_scroll">
-            <ul>
-                {% for (var i=0; i<o.list.length ; i++) { 
-                    if(o.list[i].user.length==1)
-                    {
-                %}
-                    <li>
-                        <div class="dish_item">
-                            <div class="imagelist people1" data_name="{%=o.list[i].CD_Name %}" data-user="{%= JSON.stringify(o.list[i].user)%}"><img class="dish_img" src="{%=o.list[i].user[0].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" /></div>
-                            <div class="dish_name">{%=o.list[i].CD_Name %}</div>
-                            <div class="dish_price">￥{%=o.list[i].CD_Price %}</div>
-                            <div class="dish_ope" style="right:5px;" csid="{%=o.list[i].CS_ID %}">
-                                 <span class="sub"></span><span class="number">{%=o.list[i].CD_Amount %}</span><span class="add"></span>
-                            </div>
-                        </div>
-                     </li>
-                {%    
-                    }else if(o.list[i].user.length==2)
-                    {
-                %}
-                     <li>
-                        <div class="dish_item">
-                            <div class="imagelist people2" data_name="{%=o.list[i].CD_Name %}" data-user="{%= JSON.stringify(o.list[i].user)%}">
-                                <img class="dish_img" src="{%=o.list[i].user[0].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                <img class="dish_img" src="{%=o.list[i].user[1].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                            </div>
-                            <div class="dish_name">{%=o.list[i].CD_Name %}</div>
-                            <div class="dish_price">￥{%=o.list[i].CD_Price %}</div>
-                            <div class="dish_ope" style="right:5px;" csid="{%=o.list[i].CS_ID %}">
-                                 <span class="sub"></span><span class="number">{%=o.list[i].CD_Amount %}</span><span class="add"></span>
-                            </div>
-                        </div>
-                     </li>
-
-                {%      
-                    }else if(o.list[i].user.length==3)
-                    {
-                %}
-                    <li>
-                        <div class="dish_item">
-                            <div class="imagelist people3" data_name="{%=o.list[i].CD_Name %}" data-user="{%= JSON.stringify(o.list[i].user)%}">
-                                <div class="item"><img class="dish_img" id="img01" src="{%=o.list[i].user[0].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" /></div>
-                                <div class="item">
-                                    <img class="dish_img" src="{%=o.list[i].user[1].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                    <img class="dish_img" src="{%=o.list[i].user[2].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                </div>
-                            </div>
-                            <div class="dish_name">{%=o.list[i].CD_Name %}</div>
-                            <div class="dish_price">￥{%=o.list[i].CD_Price %}</div>
-                            <div class="dish_ope" style="right:5px;" csid="{%=o.list[i].CS_ID %}">
-                                 <span class="sub"></span><span class="number">{%=o.list[i].CD_Amount %}</span><span class="add"></span>
-                            </div>
-                        </div>
-                     </li>
-
-                {%   
-                    }else if(o.list[i].user.length==4)
-                    {
-                %}
-                     <li>
-                        <div class="dish_item">
-                            <div class="imagelist people4" data_name="{%=o.list[i].CD_Name %}" data-user="{%=JSON.stringify(o.list[i].user)%}">
-                                <div class="item">
-                                    <img class="dish_img" src="{%=o.list[i].user[0].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                    <img class="dish_img" src="{%=o.list[i].user[1].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                </div>
-                                <div class="item">
-                                    <img class="dish_img" src="{%=o.list[i].user[2].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                    <img class="dish_img" src="{%=o.list[i].user[3].M_Image %}" onerror="javascript:this.src='img/carte_default_small.png';" alt="" />
-                                </div>
-                            </div>
-                            <div class="dish_name">{%=o.list[i].CD_Name %}</div>
-                            <div class="dish_price">￥{%=o.list[i].CD_Price %}</div>
-                            <div class="dish_ope" style="right:5px;" csid="{%=o.list[i].CS_ID %}">
-                                 <span class="sub"></span><span class="number">{%=o.list[i].CD_Amount %}</span><span class="add"></span>
-                            </div>
-                        </div>
-                     </li>
-
-
-                {%   
-                    }
-                }%}
-               
-            </ul>
-         </div>
-    </script>
-
 
 </body>
 </html>
