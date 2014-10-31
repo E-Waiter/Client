@@ -1,5 +1,7 @@
 package com.EWaiter.model.mer;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -44,6 +46,8 @@ public class MerModel
 	private double lon;
 	private double lat;
 	private String phone;
+	private Date lastedUpdate;
+	
 	
 	@OneToOne
 	@JoinColumn(name = "MerTypeID")
@@ -122,14 +126,11 @@ public class MerModel
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Date getLastedUpdate() {
+		return lastedUpdate;
+	}
+	public void setLastedUpdate(Date lastedUpdate) {
+		this.lastedUpdate = lastedUpdate;
+	}
 	
 }

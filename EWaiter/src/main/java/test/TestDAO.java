@@ -28,6 +28,7 @@ import com.EWaiter.service.order.OrderService;
 import com.EWaiter.service.place.NationService;
 import com.EWaiter.service.user.BUserService;
 import com.EWaiter.util.ErrorCode;
+import com.EWaiter.util.JsonResponse;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,17 +66,23 @@ public class TestDAO {
 	@Test
 	public void  testOrder()
 	{
-		List<OrderModel> orderModels = orderService.getOrderByMerID(1);
-		for (OrderModel orderModel : orderModels) 
-		{
-			System.out.println(orderModel.getPhone());
-			Set<OrderItemModel> orderItemModels = orderModel.getOrderItemModels();
-			for (OrderItemModel orderItemModel :orderItemModels ) 
-			{
-				System.out.println(orderItemModel.getFoodModel().getName());
-			}
-		}
+		Date date = new Date();
 		
+		JsonResponse orderModels = orderService.syncOrder(2, new Date());
+		System.out.println("orderModels:" + orderModels.generate());
+//		System.out.println(date.toString());
+		
+		
+//		for (OrderModel orderModel : orderModels) 
+//		{
+//			System.out.println(orderModel.getPhone());
+//			Set<OrderItemModel> orderItemModels = orderModel.getOrderItemModels();
+//			for (OrderItemModel orderItemModel :orderItemModels ) 
+//			{
+//				System.out.println(orderItemModel.getFoodModel().getName());
+//			}
+//		}
+//		
 		
 	}
 	

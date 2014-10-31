@@ -2,6 +2,7 @@ package com.EWaiter.service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Set;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -13,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.EWaiter.dao.FoodTypeDAO;
 import com.EWaiter.dao.mer.MerDAO;
+import com.EWaiter.model.food.FoodModel;
 import com.EWaiter.model.food.FoodTypeModel;
+import com.EWaiter.model.food.UnitModel;
 import com.EWaiter.model.mer.MerModel;
 
 @Service("foodTypeService")
@@ -61,8 +64,12 @@ public class FoodTypeService
 		}
 		merjson.put("name", merModel.getName());
 		merjson.put("errorCode", "0");
-		JSONArray jsonArray = JSONArray.fromObject(foodTypeModels);
-		merjson.put("foodTypeList", jsonArray.toString());
+		
+		
+		
+		
+//		JSONArray jsonArray = JSONArray.fromObject(foodTypeModels);
+		merjson.put("foodTypeList", foodTypesFormat(foodTypeModels));
 		
 		return merjson.toString();
 		
@@ -77,6 +84,50 @@ public class FoodTypeService
 		foodTypeModel.setDes("早茶。。。。");
 		
 		foodTypeDAO.addFoodType(foodTypeModel);
+	}
+	
+	private JSONArray foodTypesFormat(List<FoodTypeModel> foodTypeModels)
+	{
+		JSONArray foodTypes = new JSONArray();
+		for (FoodTypeModel foodTypeModel : foodTypeModels) 
+		{
+			if (foodTypeModel.getFoodModels() == null|| foodTypeModel.getFoodModels().size() == 0)
+			{
+				continue;
+			}
+			JSONObject foodTypeJSON = new JSONObject();
+			foodTypeJSON.put("id", foodTypeModel.getId());
+			foodTypeJSON.put("name", foodTypeModel.getName());
+			foodTypeJSON.put("des", foodTypeModel.getDes());
+			
+			Set<FoodModel> foodModels = foodTypeModel.getFoodModels();
+			JSONArray foodjJsonArray = new JSONArray();
+			for (FoodModel foodModel : foodModels)
+			{
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("id", foodModel.getId());
+				jsonObject.put("name", foodModel.getName());
+				jsonObject.put("url", foodModel.getUrl());
+				jsonObject.put("price", foodModel.getPrice());
+				jsonObject.put("dPrice", foodModel.getdPrice());
+				jsonObject.put("isTakeOut", foodModel.getIsTakeOut());
+				jsonObject.put("isChara", foodModel.getIsChara());
+				jsonObject.put("status", foodModel.getStatus());
+				jsonObject.put("code", foodModel.getCode());
+				UnitModel unitModel = foodModel.getUnitModel();
+				if (unitModel != null) 
+				{
+					jsonObject.put("unit", unitModel.getName());
+				}else 
+				{
+					jsonObject.put("unit", "");
+				}
+				foodjJsonArray.add(jsonObject);
+			}
+			foodTypeJSON.put("foodModels", foodjJsonArray);
+			foodTypes.add(foodTypeJSON);
+		}
+		return foodTypes;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.EWaiter.controller.order;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.omg.CORBA.DATA_CONVERSION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ErrorCoded;
@@ -26,6 +28,7 @@ import com.EWaiter.model.order.OrderItemModel;
 import com.EWaiter.model.order.OrderModel;
 import com.EWaiter.service.FoodTypeService;
 import com.EWaiter.service.order.OrderService;
+import com.EWaiter.service.user.BUserService;
 import com.EWaiter.util.ErrorCode;
 import com.EWaiter.util.JsonResponse;
 
@@ -36,6 +39,11 @@ public class OrderController
 	@Autowired(required = true)
 	@Qualifier("orderService")
 	private OrderService orderService;
+	
+	@Autowired(required = true)
+	@Qualifier("bUserService")
+	private BUserService bUserService;
+	
 	
 	
 //	order/
@@ -80,22 +88,30 @@ public class OrderController
 		
 	}
 	@RequestMapping(value = "/syncOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
-	public  @ResponseBody String  syncOrder(@RequestParam("merID") Long merID,@RequestParam("bUserID") Long user,@RequestParam("token") String token ,HttpServletRequest request)
+	public  @ResponseBody String  syncOrder(@RequestParam("merID") Long merID,@RequestParam("bUserID") Long user,@RequestParam("token") String token ,@RequestParam("lastUpdate") String lastUpdate,HttpServletRequest request)
 	{
-
-		List<OrderModel> orderModels = orderService.getOrderByMerID(merID);
-		JsonResponse jsonResponse = null;
-		if (orderModels == null|| orderModels.size() == 0)
-		{
-			 jsonResponse = new JsonResponse(ErrorCode.NULL_POINTER, "orders is null");
-		}else {
-			
+		
+		ErrorCode code = bUserService.authenticate(user, token);
+		if (code != ErrorCode.OK) 
+		{	
+			return new JsonResponse(code).generate();
 		}
-		JSONArray jsonArray = JSONArray.fromObject(orderModels);
-		JSONObject jsonObject = JSONObject.fromObject(jsonArray);
-		jsonResponse = new JsonResponse(ErrorCode.OK, "ok", jsonObject);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = null;
+		try {
+			date = format.parse(lastUpdate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		JsonResponse jsonResponse = orderService.syncOrder(merID, date);
 		
 		return jsonResponse.generate();
+		
+	
 		
 	}
 }

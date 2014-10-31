@@ -38,6 +38,7 @@ public class BUserController
 //		}
 		System.out.println("auth!");
 		JSONObject data = new JSONObject();
+		
 		ErrorCode code = bUserService.authBUser(phone, password ,data);
 		if (!code.isOK()) {
 			return new JsonResponse(code).generate();

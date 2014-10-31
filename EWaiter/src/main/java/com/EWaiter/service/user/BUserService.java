@@ -53,17 +53,26 @@ public class BUserService
 		} else {
 			try {
 				tokenDAO.add(uuid, user);
-			} catch (EWaiterException e) {
+			} catch (EWaiterException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+		jsonObject.put("id", user.getId());
 		jsonObject.put("name", user.getName());
 //		data.put("role", user.getDbRole());
 		jsonObject.put("token", uuid);
-
+		jsonObject.put("merID", user.getMerModel().getId());
+		jsonObject.put("merName", user.getMerModel().getName());
+		
 		return ErrorCode.OK;
 	}
-	
+	public  ErrorCode authenticate(long userID , String token)
+	{
+		BUserModel bUserModel = bUserDAO.getBUserByID(userID);
+		ErrorCode code = tokenDAO.authenticate(bUserModel, token);
+		
+		return code;
+	}
 }

@@ -42,17 +42,22 @@ public class FoodModel
 	private int isChara;
 	//菜状态（正常,售完,锁定）
 	private int status;
+	//短码
+	private String code;
+	
 	
 	@OneToOne
 	@JoinColumn(name="unitID")
 	private UnitModel UnitModel;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="foodTypeID")
+	private FoodTypeModel foodTypeModel;
+//	
 
-	
-
-	@OneToOne
-	@JoinColumn(name="sortGroupID")
-	private SortGroupsModel sortGroupsModel;
+//	@OneToOne
+//	@JoinColumn(name="sortGroupID")
+//	private SortGroupsModel sortGroupsModel;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "preferenceID")
@@ -61,6 +66,18 @@ public class FoodModel
 	
 	
 	
+	public FoodTypeModel getFoodTypeModel() {
+		return foodTypeModel;
+	}
+	public void setFoodTypeModel(FoodTypeModel foodTypeModel) {
+		this.foodTypeModel = foodTypeModel;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	public UnitModel getUnitModel() {
 		return UnitModel;
 	}
@@ -73,12 +90,12 @@ public class FoodModel
 	public void setPreferenceModels(Set<FoodPreferenceModel> preferenceModels) {
 		this.preferenceModels = preferenceModels;
 	}
-	public SortGroupsModel getSortGroupsModel() {
-		return sortGroupsModel;
-	}
-	public void setSortGroupsModel(SortGroupsModel sortGroupsModel) {
-		this.sortGroupsModel = sortGroupsModel;
-	}
+//	public SortGroupsModel getSortGroupsModel() {
+//		return sortGroupsModel;
+//	}
+//	public void setSortGroupsModel(SortGroupsModel sortGroupsModel) {
+//		this.sortGroupsModel = sortGroupsModel;
+//	}
 
 	public long getId() {
 		return id;

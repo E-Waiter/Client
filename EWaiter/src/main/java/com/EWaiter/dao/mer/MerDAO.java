@@ -1,5 +1,7 @@
 package com.EWaiter.dao.mer;
 
+import java.util.Date;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,14 @@ public class MerDAO extends BaseDAO
 		query.setLong(0, id);
 		return (MerModel)query.uniqueResult();
 	}
-	
+	public boolean updateData(long id , Date date)
+	{
+		String hql = "update merModel m set m.lastedUpdate=? where m.id =?";
+		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
+//		query.setDate(0, date);
+		query.setTimestamp(0, date);
+		
+		query.setLong(1, id);
+		return (query.executeUpdate() > 0);
+	}
 }

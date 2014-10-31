@@ -24,6 +24,9 @@ public class DeskModel
 	private int volume;
 	private int type;
 	private int status;
+	private String name;
+	
+	
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@Cascade(value = {CascadeType.SAVE_UPDATE})
@@ -67,6 +70,12 @@ public class DeskModel
 	}
 	public void setRoomModel(RoomModel roomModel) {
 		this.roomModel = roomModel;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 

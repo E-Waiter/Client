@@ -1,5 +1,7 @@
 package com.EWaiter.service.order;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,15 +16,24 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
+
+
+
+
 import com.EWaiter.dao.FoodDAO;
+import com.EWaiter.dao.mer.MerDAO;
 import com.EWaiter.dao.order.OrderDAO;
+import com.EWaiter.dao.user.BUserDAO;
+import com.EWaiter.dao.user.TokenDAO;
 import com.EWaiter.model.food.FoodModel;
 import com.EWaiter.model.mer.DeskModel;
 import com.EWaiter.model.mer.MerModel;
 import com.EWaiter.model.order.OrderItemModel;
 import com.EWaiter.model.order.OrderModel;
-import com.EWaiter.model.user.UserModel;
 import com.EWaiter.util.ErrorCode;
+import com.EWaiter.util.JsonResponse;
 
 @Service("orderService")
 @Transactional(value="transactionManager")
@@ -36,6 +47,12 @@ public class OrderService
 	@Qualifier("foodDAO")
 	private FoodDAO foodDAO;
 	
+	@Autowired
+	@Qualifier("merDAO")
+	private MerDAO merDAO;
+	
+	
+	private TokenDAO tokenDAO;
 	
 	public boolean addOrder(OrderModel orderModel)
 	{
@@ -122,7 +139,7 @@ public class OrderService
 //		"{'uID':'2','dID':'2','merID':'1','number':'5','method':'2','note':'老客户','phone':'13922151165','foods':[{'foodID':'1','number':'2','type':'大','des':'....'},{'foodID':'2','number':'1','type':'中','des':'不放糖'},{'foodID':'3','number':'1','type':'大','des':'....'}]}";
 		return ErrorCode.EXECUTE_EXTERNAL_ERROR;
 	}
-	public List<OrderModel> getOrderByMerID(long merID)
+	public List<OrderModel> getOrderByMerID(long merID ,int status)
 	{
 		List<OrderModel> orderModels = orderDAO.getOrderByMerID(merID, 0);
 		return orderModels;
@@ -142,6 +159,115 @@ public class OrderService
 			}
 		}
 		return foodModels;
+		
+	}
+	private ErrorCode checkUpdate(long  merID,Date lastUpdate ,ArrayList<OrderModel> orderModels)
+	{
+		MerModel merModel = merDAO.getMerByID(merID);
+		Date lastedDate = merModel.getLastedUpdate();
+		
+		if (lastedDate != null && lastUpdate != null)
+		{
+			
+			
+		
+			if (lastedDate.getTime() -lastUpdate.getTime() >0) 
+			{
+				List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, OrderModel.CONFIRM);
+				orderModels.addAll(itemModels);
+				System.out.println("lasted:"+ lastedDate.getTime() +" last:" + lastUpdate.getTime());
+				return ErrorCode.OK;
+			}else 
+			{	System.out.println("lasted:"+ lastedDate.getTime() +" last:" + lastUpdate.getTime());
+				return ErrorCode.ALREADY_LASTED;
+			}
+			
+		}else {
+			
+			List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, OrderModel.CONFIRM);
+			orderModels.addAll(itemModels);
+			return ErrorCode.OK;
+					
+		}
+		
+	}
+	public JsonResponse syncOrder(long  merID,Date lastUpdate )
+	{
+		ArrayList<OrderModel> orderModels = new ArrayList<OrderModel>();
+		
+		ErrorCode errorCode = checkUpdate(merID, lastUpdate, orderModels);
+	
+		
+		if(errorCode == ErrorCode.OK)
+		{
+			
+//			JSONArray jsonArray = JSONArray.fromObject(orderModels);
+//			JSONObject jsonObject = new JSONObject();
+//			jsonObject.put("orders", jsonArray);
+			JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), formatOrder(orderModels));
+			Date date = new Date();
+			if (merDAO.updateData(merID, date)) {
+				
+			}
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateStr = format.format(date);
+			jsonResponse.addElement("updateDate", dateStr);
+			jsonResponse.addElement("merID", ""+merID);
+			
+			return jsonResponse;
+		}
+		return new JsonResponse(errorCode, errorCode.getDetail(), null);
+	}
+	private JSONObject formatOrder(ArrayList<OrderModel> orderModels)
+	{
+		JSONObject jsonObject = new JSONObject();
+		JSONArray ordersJSON = new JSONArray();
+		for (OrderModel orderModel:orderModels) 
+		{
+			JSONObject orderJsonObject = new JSONObject();
+			orderJsonObject.put("orderID", orderModel.getId());
+			orderJsonObject.put("phone", orderModel.getPhone());
+			orderJsonObject.put("total", orderModel.getTotle());
+			orderJsonObject.put("number", orderModel.getNumber());
+			orderJsonObject.put("roomID", orderModel.getDeskModel().getRoomModel().getId());
+			orderJsonObject.put("room", orderModel.getDeskModel().getRoomModel().getName());
+			orderJsonObject.put("deskID", orderModel.getDeskModel().getId());
+			orderJsonObject.put("desk", orderModel.getDeskModel().getName());
+			orderJsonObject.put("time", orderModel.getTime());
+			orderJsonObject.put("status", orderModel.getStatus());
+			
+			JSONArray foodsJSON = new JSONArray();
+			Set< OrderItemModel> orderItemModels =orderModel.getOrderItemModels();
+			for(OrderItemModel orderItemModel:orderItemModels)
+			{
+				FoodModel foodModel = orderItemModel.getFoodModel();
+				JSONObject foodJSON = new JSONObject();
+				foodJSON.put("foodID", foodModel.getId());
+				foodJSON.put("name", foodModel.getName());
+				foodJSON.put("nubmer", orderItemModel.getNumber());
+				foodJSON.put("price", foodModel.getPrice());
+				if (foodModel.getUnitModel() != null)
+				{
+					foodJSON.put("unit", foodModel.getUnitModel().getName());
+				}else {
+					foodJSON.put("unit", "");
+				}
+				
+//				foodJSON.put("type", foodModel.);
+				foodJSON.put("foodTypeID", foodModel.getFoodTypeModel().getId());
+				foodJSON.put("foodType", foodModel.getFoodTypeModel().getName());
+				foodJSON.put("des", orderItemModel.getDes());
+				foodsJSON.add(jsonObject);
+//	
+			}
+			orderJsonObject.put("foods", foodsJSON);
+			ordersJSON.add(orderJsonObject);
+			
+		}
+		jsonObject.put("orders", ordersJSON);
+		
+		
+		return jsonObject;
 		
 	}
 }

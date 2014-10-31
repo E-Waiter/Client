@@ -32,6 +32,12 @@ public class BUserModel extends UserModel
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+	public MerModel getMerModel() {
+		return merModel;
+	}
+	public void setMerModel(MerModel merModel) {
+		this.merModel = merModel;
+	}
 	
 	
 	

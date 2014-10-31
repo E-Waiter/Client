@@ -36,4 +36,16 @@ public class BUserDAO extends BaseDAO
 		}
 		return bUserModels.get(0);
 	}
+	public BUserModel getBUserByID(long userID)
+	{
+		String hql = "from bUserModel b where b.id=?";
+		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
+		query.setLong(0, userID);
+		List<BUserModel> bUserModels = query.list();
+		if (bUserModels == null || bUserModels.size() == 0)
+		{
+			return null;
+		}
+		return bUserModels.get(0);
+	}
 }
