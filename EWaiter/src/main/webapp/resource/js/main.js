@@ -207,10 +207,6 @@ function initLoginMark(actionType) {
 
 function submitOrder() {
 
-		if ($person_data_id == null) {
-			document.getElementById("slider_person").style.webkitTransform = "translate3d(0,0, 0)";
-			return;
-		}
 
 	// 遍历xml ，组装 格式
 	orderList = {"foods": []};
@@ -230,13 +226,17 @@ function submitOrder() {
 		showdialog(0, "请输入您的电话号码",focusOnPhone);
 		return;
 	}
-	
+	var sub_DB_Person_Count = ($("#person_count_input").val() == "请输入用餐人数" ? "": $("#phone_input").val()); // 备注
+	if( sub_DB_Person_Count == "") {
+		showdialog(0, "请输入您的用餐人数",focusOnPersonCount);
+		return;
+	}
 	orderList.des = sub_DB_Remark;
 	orderList.phone = sub_DB_Phone;
 	orderList.uID = $carteAll.deskID;
 	orderList.dID = 2;
 	orderList.merID = $carteAll.merID;
-	orderList.number = 10;
+	orderList.number = sub_DB_Person_Count;
 	orderList.method = 2;
 	orderList.note = '老客户';
 	
@@ -244,11 +244,12 @@ function submitOrder() {
 	function focusOnPhone(){
 		$("#phone_input").focus();
 	}
+	function focusOnPersonCount(){
+		$("#person_count_input").focus();
+	}
 	// 获取菜品分类
 	// 堂食下单
 	function localOrder() {
-
-
 		jAjax({
 			type: "POST",
 			url: "/EWaiter/order/commitOrder",
@@ -313,6 +314,7 @@ function toOrderDetailPage(data){
 		orderList.totalPrice = totalPrice;
 		orderList.orderID = data.orderID;
 		orderList.time = data.time;
+		orderList.name = $carteAll.name;
 		$("#slider_order").html(tmpl("tmpl-order-info", eval('(' + JSON.stringify(orderList) + ')')));
 		document.getElementById("carte_page").style.webkitTransform = "translate3d(100%,0,0)";
 		document.getElementById("slider_person").style.webkitTransform = "translate3d(100%,0,0)";
@@ -659,6 +661,7 @@ function loadCarteAll() {
 		// 初始化图片目录
 		$carteAll.RestaurantSign = RestaurantSign;
 		$(dish_list).html(tmpl("tmpl-dish-list", $carteAll));
+		var pullDownEl = document.getElementById('pullDown');
 		$dish_scroller = new iScroll("dish_list_scroller", {
 			hScrollbar: false,
 			vScrollbar: false,
@@ -667,10 +670,23 @@ function loadCarteAll() {
 			vScroll: true,
 			useTransition: true,
 			click: true,
+			onRefresh: function () {
+				pullDownEl.className = '';
+			},
+			onScrollMove: function () {
+		     if (this.y > 50 && !pullDownEl.className.match('flip')) {
+		         pullDownEl.className = 'flip';
+		         this.minScrollY = 0;
+		        }
+			},
 			onTouchEnd: function() {
 				$blazy_control.validate();
 			},
 			onScrollEnd: function() {
+				if( pullDownEl.className.match('flip')){
+					showSearch();
+					$dish_scroller.refresh();
+				}
 				$blazy_control.validate();
 			}
 		});
@@ -683,6 +699,7 @@ function loadCarteAll() {
 		bindDetailAction(dish_list);
 	}
 }
+
 
 function initDishList() {
 	if ($menu_load == false) {
@@ -803,6 +820,8 @@ function bindToSliderMenu() {
 
 /* 初始化餐桌和店铺信息，以及GUID身份信息 */
 function init_shop() {
+	initDishList();
+	refreshCart("dish_info");
 	function re_init_shop(obj) {
 		if (gdata.ML_GUID && gdata.userinfo.M_Image) {
 			document.getElementById("headImg").style.backgroundImage = "url(" + gdata.userinfo.M_Image + ")";
@@ -843,114 +862,7 @@ function init_shop() {
 		});
 
 	};
-	// 构造人数信息
-	$("#person_category").html(tmpl("tmpl-person-category"));
-	$person_scroller = new iScroll("person_category", {
-		hScrollbar: false,
-		vScrollbar: false,
-		lockDirection: true,
-		hScroll: false,
-		vScroll: true,
-		useTransition: true,
-		click: true
-	});
 
-	$("#person_category").find("li").bind("click",
-	function() {
-		if (!$(this).hasClass('cancel')) {
-			$person_data_id = $(this).attr('data-id');
-			//$('#index_table_pe').html($(this).attr('data-name'));
-			$("#open_slider_person_index").html($(this).attr('data-id') + "人");
-			$("#select_table").html($(this).attr('data-id') + "人");
-			localStorage.setItem("person-data-id", $person_data_id);
-			$('.person_active').removeClass('person_active');
-			$(this).addClass("person_active");
-		}
-
-		$("#slider_person").css({
-			"-webkit-transform": "translate3d(0,100%, 0)"
-		});
-		$("#slider_dish").css({
-			"-webkit-transform": "translate3d(0,0, 0)"
-		});
-		initDishList();
-		refreshCart("dish_info");
-	});
-	// 初始化店铺信息，和GUID，以及桌台信息
-	jAjax({
-		type: "get",
-		url: "../resource/json/restaurant.json",
-		data: "sign_or_null=",
-		dataType: "json",
-		showLoading: true,
-		async: false,
-		success: function(data) {
-			// alert(JSON.stringify(data));
-			var obj = eval('(' + data + ')');
-			gdata.shop_config = obj;
-			re_init_shop(obj);
-			$shop_load = true;
-		},
-		error: function() {
-			showdialog(1, "请求失败!");
-		}
-	});
-
-	// 初始化店铺信息，和GUID，以及桌台信息
-	jAjax({
-		type: "get",
-		url: "../resource/json/tables.json",
-		data: "r_id=" + R_ID,
-		showLoading: true,
-		success: function(data) {
-			var obj = eval('(' + data + ')');
-			// var obj=data;
-			$("#table_category").html(tmpl("tmpl-table-category", obj));
-			$table_scroller = new iScroll("table_category", {
-				hScrollbar: false,
-				vScrollbar: false,
-				lockDirection: true,
-				hScroll: false,
-				vScroll: true,
-				useTransition: true,
-				click: true
-			});
-			$("#table_category").find("li").bind("click",
-			function(e) {
-				var $click_time = e["timeStamp"];
-				if ($click_time - $last_click_time < 400) return;
-				$last_click_time = $click_time;
-
-				if (!$(this).hasClass('cancel')) {
-					$table_data_id = $(this).attr('data-id');
-					localStorage.setItem("table-data-id", $(this).attr('data-id'));
-					localStorage.setItem("table-data-code", $(this).attr('data-code'));
-					localStorage.setItem("table-data-name", $(this).attr('data-name'));
-
-					$("#open_slider_tableName").html($(this).attr('data-name'));
-
-					$('#select_table,#select_table2').html($(this).attr('data-name'));
-					$('#index_table_text').html($(this).attr('data-name'));
-					$('.table_active').removeClass('table_active');
-					$(this).addClass("table_active");
-				}
-
-				setTimeout(function() {
-					document.getElementById("slider_table_Full").style.display = "none";
-					$("#slider_table").css({
-						"-webkit-transform": "translate3d(0,100%, 0)"
-					});
-				},
-				300);
-
-			});
-			$table_load = true;
-		},
-		error: function() {
-
-			showdialog(1, "请求失败!");
-		}
-	});
 };
 
 function bindToDishAction() {
@@ -984,7 +896,6 @@ function bindHideSearchAction() {
 
 	$("#search_result").bind("click",
 	function() {
-
 		$("#search_result").unbind("click");
 		hideSearch();
 	});
@@ -1053,10 +964,10 @@ function onSearchChange(searchContent) {
 				}
 			}
 		}
-		console.log(searchResult);
 		if (searchResult.size() > 0) {
 			// 模板
 			var search_json_data = eval('(' + JSON.stringify(searchResult) + ')');
+			console.log(search_json_data);
 			search_json_data.RestaurantSign = RestaurantSign;
 			var search_result = $("#search_result");
 			$(search_result).html(tmpl("search-dish-item", search_json_data));
@@ -1115,10 +1026,7 @@ function stophand(e) {
 
 var t_height = 0;
 $(document).ready(function() { // return;
-	//禁止用户在页面上做双击操作
-	document.documentElement.addEventListener('dblclick', function(e){
-	    e.preventDefault();
-	});
+
 	
 	$("document:not(#menu_font)").click(function() {
 		$('#menu_font').addClass('hidden');

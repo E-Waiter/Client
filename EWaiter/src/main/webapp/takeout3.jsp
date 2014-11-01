@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
 <meta content=”yes” name=”apple-mobile-web-app-capable” />
 <meta content=”black” name=”apple-mobile-web-app-status-bar-style” />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -41,19 +41,14 @@
         </div>
     </div>
     <!--选择人数-->
-    <div id="slider_person" class="animation below slider_down" style=" display:block; -webkit-transform: translate3d(0,0,0);">
+    <div id="slider_person" class="animation below slider_down" style=" display:block; -webkit-transform: translate3d(100%,0,0);">
         <div id="basic_person">
             <div class="thick_border content cancel" style="background-color:lavender;font-size: 14;" id="select_person">请选择用餐人数</div>
             <div id="person_category"></div>
         </div>
     </div>
     <!--选择菜品的页面-->
-    <div id="slider_dish" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px);display: block;">
-        <div class="dish_title">
-            <span id="dish_back" class="back"></span>
-            <div id="dish_shop_title" siteTitle="true">全部菜单</div>
-	    <div id="dish_search"></div>
-		</div>
+    <div id="slider_dish" class="animation" style="-webkit-transform: translate3d(0, 0px, 0px);display: block;">
         <div id="dish_container">
             <div id="dish_menu"></div>
             <div id="dish_list"></div>
@@ -69,6 +64,9 @@
     <div id="load" class="load">
         <div class="full"></div>
     </div>
+    <!-- 下拉标记 -->
+   <div id="pullDown"></div>   
+    
     <!--结账单-->
     <div id="slider_order" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px); display: block;"></div> 
     <!-- Carte Page -->
@@ -81,7 +79,16 @@
            
             <div id="carte_mark">
                 <div id="zhuotaiRow" style="padding-left: 15px;border-bottom: 1px solid #f3f4f4;"> 
-                <div id="carte_table">用餐人数:<div id="select_table" class="">未选择</div></div>
+					<div id="carte_memo" style="position: relative;">
+						用餐人数:
+						<div
+							style="position: absolute; top: 0px; left: 85px; right: 15px;">
+							<input id="person_count_input" type="tel" style="" class="input no_value"
+								value="请输入用餐人数" 
+								onfocus="this.className='input'; if(this.value=='请输入用餐人数'){this.value='';}"
+								onblur="this.blur();if(this.value==''){this.value='请输入用餐人数';this.className='input no_value';}" />
+						</div>
+					</div>
                 </div>
 				<div style="padding-left: 15px;">
 					<div id="carte_memo" style="position: relative;">
@@ -154,36 +161,7 @@
     <script src="../resource/js/main1.1.js" type="text/javascript"></script>
     <script src="../resource/js/wScratchPad.js" type="text/javascript"></script>
     
-    <!--选择人数-->
-    <script type="text/x-tmpl" id="tmpl-person-category">
-        <div id="person_category_scroller">
-            <ul>
-                {% for (var i=1; i<= 20 ; i++) { %}
-                <li class="thick_border content" data-id="{%=i %}"><span>{%=i %}</span></li>
-                {% } %}
-            </ul>
-        </div>
-    </script>
-    <!-- 选择桌台 -->
-    <script type="text/x-tmpl" id="tmpl-table-category">
-        <div id="table_category_scroller">
-            <ul>
-            {% for (var i=0; i< o.tabletypelist.length ; i++) { %}
-               {% for (var j in o.tabletypelist[i].tableinfolist) { 
-                   if($table_data_id==o.tabletypelist[i].tableinfolist[j].TI_Code)
-                   {
-                       $("#open_slider_tableName").html(o.tabletypelist[i].TT_Name+"-"+o.tabletypelist[i].tableinfolist[j].TI_Name);
-                   }
-               %}
-                
-                <li class="thick_border content" data-id="{%=o.tabletypelist[i].tableinfolist[j].TI_Code %}" 
-                    data-code="{%=o.tabletypelist[i].tableinfolist[j].TI_Code %}" data-name="{%=o.tabletypelist[i].TT_Name %}-{%=o.tabletypelist[i].tableinfolist[j].TI_Name %}">
-                    <span>{%=o.tabletypelist[i].TT_Name %}-{%=o.tabletypelist[i].tableinfolist[j].TI_Name %}</span></li>
-                {% } %}
-            {% } %}
-            </ul>
-        </div>
-    </script>
+
     <!--获取所有的菜品分类-->
     <script type="text/x-tmpl" id="tmpl-dish-category">
         <div id="dish_category_scroller">
@@ -279,7 +257,7 @@
                                 <img class="dish_img b-lazy" src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.datas[i].C_ID%}.jpg" alt="" />
                             </div>
                             <div class="dish_name">{%=o.datas[i].name%}</div>
-                            <div class="dish_price">￥{%=o.datas[i].dPrice%}/{%=o.datas[i].unitModel.name%}</div>
+                            <div class="dish_price">￥{%=o.datas[i].dPrice%}/{%=o.datas[i].unit%}</div>
                             <div class="dish_ope" data-ref-id="dish_ope_id_{%=o.datas[i].id%}">
                                 <span class="sub"></span><span class="number">{%=o.datas[i].number %}</span><span class="add"></span>
                             </div> 
@@ -297,7 +275,6 @@
     <!--订单模板-->
     <script type="text/x-tmpl" id="tmpl-order-info">
     <div class="dish_title"><span id="order-back" class="back"></span>结账单</div>
-    <div class="nav_img"></div>
     <div class="body" id="order_scroll">
          <div id="order-content">
               <div class="scroll">
@@ -305,7 +282,7 @@
                         <div class="order-Tip" style="height: 40px;line-height: 40px;background-color: #FFF2DD;position: relative;padding: 0 10px;"><span style="color: #DA643C;">请等待服务员与您确认订单</span>
                         </div>
                         <div class="content">
-                            <div class="hd">麦当劳</div>
+                            <div class="hd">{%=o.name %}</div>
                             <div class="nav">
                                 <div class="left">订单号：{%=o.orderID %}</div>
                                 <div class="right">{%=o.time %}</div>
