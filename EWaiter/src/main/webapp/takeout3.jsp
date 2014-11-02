@@ -32,21 +32,6 @@
 </head>
 <body>
 
-    <!--选择桌台-->
-    <div id="slider_table_Full" style=" background:#000; display:none; position:absolute ; top:0; height:100%; width:100%; opacity: 0.5; z-index:20;" > </div>
-    <div id="slider_table" class="animation below slider_down" style=" display:block; -webkit-transform: translate3d(0px, 100%, 0px);">
-        <div id="basic_table">
-            <div class="thick_border content cancel" style=" height:40px; line-height:40px; color:#220f00; font-size:20px; border-bottom:1px solid #6e4421;background: #C8C7C7;" id="cancel_table">取消选桌设置</div>
-            <div id="table_category"></div>
-        </div>
-    </div>
-    <!--选择人数-->
-    <div id="slider_person" class="animation below slider_down" style=" display:block; -webkit-transform: translate3d(100%,0,0);">
-        <div id="basic_person">
-            <div class="thick_border content cancel" style="background-color:lavender;font-size: 14;" id="select_person">请选择用餐人数</div>
-            <div id="person_category"></div>
-        </div>
-    </div>
     <!--选择菜品的页面-->
     <div id="slider_dish" class="animation" style="-webkit-transform: translate3d(0, 0px, 0px);display: block;">
         <div id="dish_container">
@@ -64,7 +49,7 @@
     <div id="load" class="load">
         <div class="full"></div>
     </div>
-    <!-- 下拉标记 -->
+    <!-- 每次在菜单页面做下拉动作时做标记 -->
    <div id="pullDown"></div>   
     
     <!--结账单-->
@@ -275,7 +260,7 @@
     <!--订单模板-->
     <script type="text/x-tmpl" id="tmpl-order-info">
     <div class="dish_title"><span id="order-back" class="back"></span>结账单</div>
-    <div class="body" id="order_scroll">
+    <div class="body" id="order_list_scroller">
          <div id="order-content">
               <div class="scroll">
                    <div class="Container">

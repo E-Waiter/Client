@@ -122,34 +122,6 @@ A lazy loading and multi-serving image script
     
 
     function validate() {
-
-//                var i=0;
-//                function loadData(){
-//                    setTimeout(function(){
-//                        var image = images[i];
-//                        if (elementInView(image) || isElementLoaded(image)) {
-//                            Blazy.prototype.load(image);
-//                            images.splice(i, 1);
-//                            count--;
-//                            i--;
-//                        };
-//                        i++;
-
-//                         if (count === 0) {
-//                            Blazy.prototype.destroy();
-//           
-//                        }
-
-//                        if(i<count){
-//                            loadData();
-//                        }
-
-//                    },10)
-
-//                };
-
-//                loadData();
-                
                 for (var i = 0; i < count; i++) {
                     var image = images[i];
                     if (elementInView(image) || isElementLoaded(image)) {

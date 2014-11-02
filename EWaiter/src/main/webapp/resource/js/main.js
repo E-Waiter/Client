@@ -316,8 +316,16 @@ function toOrderDetailPage(data){
 		orderList.time = data.time;
 		orderList.name = $carteAll.name;
 		$("#slider_order").html(tmpl("tmpl-order-info", eval('(' + JSON.stringify(orderList) + ')')));
+		$dish_scroller = new iScroll("order_list_scroller", {
+			hScrollbar: false,
+			vScrollbar: false,
+			lockDirection: true,
+			hScroll: false,
+			vScroll: true,
+			useTransition: true,
+			click: true,
+		});
 		document.getElementById("carte_page").style.webkitTransform = "translate3d(100%,0,0)";
-		document.getElementById("slider_person").style.webkitTransform = "translate3d(100%,0,0)";
 		document.getElementById("slider_order").style.webkitTransform = "translate3d(0,0, 0)";
 		$('#order-back').bind("click",
 				function(){
@@ -632,9 +640,6 @@ function bindDetailAction(target) {
 		});
 		var imgscroll = new ImageScroll("image-scroll", test_data,
 		function(o) {
-			console.log(o);
-			// { id: 1, img: "", name:"",
-			// price:"",vip:0,num:1,ctid:1,mark:"备注"}
 			$("#dish_title_name").html(o.name);
 			$("#dish_details_price").html("￥" + o.price + "   <span class=\"vip\" style=\"padding-left: 15px;\">VIP " + o.vip + "</span>   ");
 			$(".dish_ope_02").attr("data-ref-id", "dish_ope_id_" + o.id);
