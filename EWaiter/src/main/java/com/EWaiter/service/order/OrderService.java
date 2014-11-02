@@ -218,6 +218,63 @@ public class OrderService
 		}
 		return new JsonResponse(errorCode, errorCode.getDetail(), null);
 	}
+	public ErrorCode getOrderDesByID(long id , JSONObject data)
+	{
+		if (data == null)
+		{
+			return ErrorCode.NULL_POINTER;
+		}
+		OrderModel orderModel = orderDAO.getOrderByID(id );
+//		Set<OrderItemModel> orderItemModels = orderModel.getOrderItemModels();
+		data.put("orderID", orderModel.getId());
+		data.put("phone", orderModel.getPhone());
+		data.put("total", orderModel.getTotle());
+		data.put("number", orderModel.getNumber());
+		data.put("roomID", orderModel.getDeskModel().getRoomModel().getId());
+		data.put("room", orderModel.getDeskModel().getRoomModel().getName());
+		data.put("deskID", orderModel.getDeskModel().getId());
+		
+		Date date = orderModel.getTime();
+		if (date != null) {
+			data.put("time", orderModel.getTime().toString());
+		}
+		data.put("time", "");
+		
+		data.put("desk", orderModel.getDeskModel().getName());
+		
+		
+		data.put("status", orderModel.getStatus());
+		data.put("foodNumber", orderModel.getOrderItemModels().size());
+		data.put("note", orderModel.getNote());
+		
+		JSONArray foodsJSON = new JSONArray();
+		Set< OrderItemModel> orderItemModels =orderModel.getOrderItemModels();
+		for(OrderItemModel orderItemModel:orderItemModels)
+		{
+			FoodModel foodModel = orderItemModel.getFoodModel();
+			JSONObject foodJSON = new JSONObject();
+			foodJSON.put("foodID", foodModel.getId());
+			foodJSON.put("name", foodModel.getName());
+			foodJSON.put("nubmer", orderItemModel.getNumber());
+			foodJSON.put("price", foodModel.getPrice());
+			foodJSON.put("code", foodModel.getCode());
+			if (foodModel.getUnitModel() != null)
+			{
+				foodJSON.put("unit", foodModel.getUnitModel().getName());
+			}else {
+				foodJSON.put("unit", "");
+			}
+			
+			foodJSON.put("foodTypeID", foodModel.getFoodTypeModel().getId());
+			foodJSON.put("foodType", foodModel.getFoodTypeModel().getName());
+			foodJSON.put("des", orderItemModel.getDes());
+			foodsJSON.add(foodJSON);
+//
+		}
+		data.put("foods", foodsJSON);
+		
+		return ErrorCode.OK;
+	}
 	private JSONObject formatOrder(ArrayList<OrderModel> orderModels)
 	{
 		JSONObject jsonObject = new JSONObject();
@@ -232,35 +289,20 @@ public class OrderService
 			orderJsonObject.put("roomID", orderModel.getDeskModel().getRoomModel().getId());
 			orderJsonObject.put("room", orderModel.getDeskModel().getRoomModel().getName());
 			orderJsonObject.put("deskID", orderModel.getDeskModel().getId());
-			orderJsonObject.put("desk", orderModel.getDeskModel().getName());
-			orderJsonObject.put("time", orderModel.getTime());
-			orderJsonObject.put("status", orderModel.getStatus());
 			
-			JSONArray foodsJSON = new JSONArray();
-			Set< OrderItemModel> orderItemModels =orderModel.getOrderItemModels();
-			for(OrderItemModel orderItemModel:orderItemModels)
-			{
-				FoodModel foodModel = orderItemModel.getFoodModel();
-				JSONObject foodJSON = new JSONObject();
-				foodJSON.put("foodID", foodModel.getId());
-				foodJSON.put("name", foodModel.getName());
-				foodJSON.put("nubmer", orderItemModel.getNumber());
-				foodJSON.put("price", foodModel.getPrice());
-				if (foodModel.getUnitModel() != null)
-				{
-					foodJSON.put("unit", foodModel.getUnitModel().getName());
-				}else {
-					foodJSON.put("unit", "");
-				}
-				
-//				foodJSON.put("type", foodModel.);
-				foodJSON.put("foodTypeID", foodModel.getFoodTypeModel().getId());
-				foodJSON.put("foodType", foodModel.getFoodTypeModel().getName());
-				foodJSON.put("des", orderItemModel.getDes());
-				foodsJSON.add(jsonObject);
-//	
+			Date date = orderModel.getTime();
+			if (date != null) {
+				orderJsonObject.put("time", orderModel.getTime().toString());
 			}
-			orderJsonObject.put("foods", foodsJSON);
+			orderJsonObject.put("time", "");
+			
+			orderJsonObject.put("desk", orderModel.getDeskModel().getName());
+			
+			
+			orderJsonObject.put("status", orderModel.getStatus());
+			orderJsonObject.put("foodNumber", orderModel.getOrderItemModels().size());
+			orderJsonObject.put("note", orderModel.getNote());
+			
 			ordersJSON.add(orderJsonObject);
 			
 		}

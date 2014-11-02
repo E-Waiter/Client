@@ -19,11 +19,11 @@ import com.EWaiter.model.order.OrderModel;
 @Repository("orderDAO")
 public class OrderDAO extends BaseDAO 
 {
-	public OrderModel getOrderByID(int id)
+	public OrderModel getOrderByID(long id)
 	{
 		String hql = "from orderModer o where o.id=?";
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
+		query.setLong(0, id);
 		return (OrderModel)query.uniqueResult();
 	}
 	
