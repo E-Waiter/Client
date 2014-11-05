@@ -322,8 +322,8 @@
                         <div class="content">
                             <div class="hd">{%=o.name %}</div>
                             <div class="nav">
-                                <div class="left">订单号：{%=o.orderID %}</div>
-                                <div class="right">{%=o.time %}</div>
+                                <div class="left" style="font-size: 14px;">订单号：{%=o.orderID %}</div>
+                                <div class="right"style="font-size: 14px;">{%=o.time %}</div>
                             </div>
                             <ul class="list">
                              {% for(var i in o.foods) { %}
