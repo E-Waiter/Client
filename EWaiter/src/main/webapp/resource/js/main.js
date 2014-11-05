@@ -220,17 +220,14 @@ function submitOrder() {
 		food.des = '暂时描述';
 		orderList.foods.push(food);
 	}
-	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 电话
-	var sub_DB_Phone = ($("#phone_input").val() == "请输入电话" ? "": $("#phone_input").val()); // 备注
-	if( sub_DB_Phone == "") {
-		showdialog(0, "请输入您的电话号码",focusOnPhone);
-		return;
-	}
-	var sub_DB_Person_Count = ($("#person_count_input").val() == "请输入用餐人数" ? "": $("#phone_input").val()); // 备注
+	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 備注
+
+	var sub_DB_Person_Count = ($("#person_count_input").val() == "请输入用餐人数" ? "": $("#person_count_input").val()); // 备注
 	if( sub_DB_Person_Count == "") {
 		showdialog(0, "请输入您的用餐人数",focusOnPersonCount);
 		return;
 	}
+	var sub_DB_Phone = $("#telephone").val();
 	orderList.des = sub_DB_Remark;
 	orderList.phone = sub_DB_Phone;
 	orderList.uID = $carteAll.deskID;
@@ -329,6 +326,7 @@ function toOrderDetailPage(data){
 		document.getElementById("slider_order").style.webkitTransform = "translate3d(0,0, 0)";
 		$('#order-back').bind("click",
 				function(){
+					refreshCart("dish_info");
 					document.getElementById("slider_order").style.webkitTransform = "translate3d(100%,0, 0)";
 					document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 		});
@@ -741,7 +739,7 @@ function initDishList() {
 				});
 				$menu_load = true;
 
-				document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
+				document.getElementById("slider_dish").style.webkitTransform = "translate3d(100%,0,0)";
 				setTimeout(function() {
 					$("#loading_img").removeClass("rotate_animation");
 				},
@@ -873,18 +871,21 @@ function init_shop() {
 function bindToDishAction() {
 	$("#loading_img").bind("click",
 	function() {
-		if ($shop_load && $table_load) {
-			dineType = 0;
-			crowdObj.crowd_code = "";
-			crowdObj.crowd_version = "";
-			
-			// $(this).addClass("rotate_animation");
-			initDishList();
-			refreshCart("dish_info");
-		} else {
-			showdialog(1, "店铺信息初始化失败，请刷新重试!");
+		var flag = true;
+		var sub_DB_Phone = $("#telephone").val(); // 電話
+		var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
+		if(!isMobile.test(sub_DB_Phone)){ //如果用户输入的值不同时满足手机号和座机号的正则
+			showdialog(1,"请正确填写电话号码，例如:13415764179或0321-4816048",focusOnTelePhoneInput);  //就弹出提示信息
+		    flag = false;         //返回一个错误，不向下执行
+		}
+		if (flag) {
+			init_shop();
 		}
 	});
+}
+
+function focusOnTelePhoneInput() {
+	$("#telephone").focus();
 }
 
 /* 跳转到选择菜品的页面 */
@@ -1054,7 +1055,7 @@ $(document).ready(function() { // return;
 	reloadUser();
 	bindToSliderMenu();
 	bindToDishAction();
-	init_shop();
+
 
 	$order = new ArrayList();
 	t_height = $("body").height();

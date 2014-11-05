@@ -17,23 +17,25 @@
 
 <body>
 
-<!-- demo content -->
+<div class="loginPage" style="border: 3px; width:100%; heigh:100%">
 <div class="loginform cf">
 	<form name="login" action="index_submit" method="get" accept-charset="utf-8">
 	<div class='loginContact'>
 		<ul>
-			<li><label for="usermail">电话号码</label>
-			<input type="phone" name="usermail" placeholder="请输入您的手机号码" required>
+			<li>电话号码</li>
+			<li>
+			<input type="telephone" name="telephone" placeholder="请输入您的手机号码" required>
 			</li>
-			<li><input type="submit" value="Login"> </li>
+			<li><input type="submit" value="验证"> </li>
 		</ul>
 	</div>
 	</form>
 </div>
 
-<div style="text-align:center;clear:both">
+<div class="state" style="">
 <p>隐私说明</p>
 <p>本站对所有用户信息仅作数据分析，会对用户信息进行保密.....</p>
+</div>
 </div>
 </body>
 
