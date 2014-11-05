@@ -738,8 +738,7 @@ function initDishList() {
 
 				});
 				$menu_load = true;
-
-				document.getElementById("slider_dish").style.webkitTransform = "translate3d(100%,0,0)";
+				document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 				setTimeout(function() {
 					$("#loading_img").removeClass("rotate_animation");
 				},
@@ -843,27 +842,6 @@ function init_shop() {
 		localStorage.setItem("index_shop_title", NameLogo);
 		localStorage.setItem("RestaurantSign", RestaurantSign);
 		document.title = NameLogo;
-		
-		$.ajax({
-			url: "../resource/json/lottery_rule.json",
-			type: "get",
-			data: "r_id=" + R_ID,
-			//data: "r_id=",
-			dataType: "json",
-			success: function(data) {
-				if (data.Lottery) {
-					if (data.LotterySum > 0) {
-						$("#index_tip").children("span").html("发现有消费满" + data.LotterySum + "元抽奖活动");
-					} else {
-						$("#index_tip").children("span").text("发现有活动");
-					};
-					$("#index_tip").show("slow");
-
-				}
-
-			}
-		});
-
 	};
 
 };

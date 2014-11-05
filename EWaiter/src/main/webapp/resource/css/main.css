@@ -338,15 +338,15 @@ content: ".";
             z-index: 4;
             text-align:center;
             margin-left: 55%;
-    		margin-top: 20%;
+    		margin-top: 50%;
         }
         #loginTelephone
         {
             position:absolute;
             height: 40%;
             width: 60%;
-/*     		margin-right: 10%;
-    		margin-top: 50%; */
+    		margin-right: 10%;
+    		margin-top: 50%;
             z-index: 4;
             text-align:center;
         }
