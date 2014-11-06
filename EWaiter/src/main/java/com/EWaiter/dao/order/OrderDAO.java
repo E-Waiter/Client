@@ -21,16 +21,16 @@ public class OrderDAO extends BaseDAO
 {
 	public OrderModel getOrderByID(long id)
 	{
-		String hql = "from orderModer o where o.id=?";
+		String hql = "from orderModel o where o.id=?";
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
 		query.setLong(0, id);
 		return (OrderModel)query.uniqueResult();
 	}
 	
 	
-	public List<OrderModel> getOrderByMerID(long merID , int status)
+	public List<OrderModel> getOrderByMerID(Long merID , int status)
 	{
-		String hql = "FROM orderModel o WHERE o.merModel.id=? and o.status<=?";
+		String hql = "FROM orderModel o WHERE o.merModel.id=? and o.status<?";
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
 		query.setLong(0, merID);
 		query.setInteger(1, status);
@@ -56,8 +56,16 @@ public class OrderDAO extends BaseDAO
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
 		query.setProperties(orderModel);
 		return (query.executeUpdate() > 0);
-		
 	}
 	
-	
+	public boolean updateOrderStatus(Long orderID , Integer status)
+	{
+		String hql = "UPDATE orderModel o SET o.status=? WHERE o.id=?";
+		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
+		query.setInteger(0, status);
+		query.setLong(1, orderID);
+		
+		System.out.println("updateOrderStatus:"+query.getQueryString() +"orderID:" + orderID +" status:" + status);
+		return (query.executeUpdate() >0);
+	}
 }	

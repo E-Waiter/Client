@@ -83,7 +83,8 @@ public enum ErrorCode {
 	BAD_TOKEN(1065, "无效的令牌"),
 	UNSYNC(1066, "不同步"),
 	
-	ALREADY_LASTED(2001,"已是最新数据")
+	ALREADY_LASTED(2001,"已是最新数据"),
+	MYSQL_EXCEPTION(2101,"SQL异常")
 	;
 	
 	

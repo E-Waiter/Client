@@ -81,7 +81,7 @@ public class OrderService
 		String note = jObject.getString("note");
 		String phone = jObject.getString("phone");
 		int number = jObject.getInt("number");
-		
+		Date date = new Date();
 
 		DeskModel deskModel = new DeskModel();
 		deskModel.setId(dID);
@@ -93,7 +93,7 @@ public class OrderService
 		orderModel.setNote(note);
 		orderModel.setPhone(phone);
 		orderModel.setNumber(number);
-		orderModel.setTime(new Date());
+		orderModel.setTime(date);
 
 		Set<OrderItemModel> orderDesModels  = new HashSet<OrderItemModel>();
 		JSONArray jsonArray = jObject.getJSONArray("foods");
@@ -132,6 +132,7 @@ public class OrderService
 		if (id >=0) 
 		{
 			orderModel.setId(id);
+			merDAO.updateData(id, date);
 			return ErrorCode.OK;
 		}
 		
@@ -173,7 +174,7 @@ public class OrderService
 		
 			if (lastedDate.getTime() -lastUpdate.getTime() >0) 
 			{
-				List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, OrderModel.CONFIRM);
+				List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, 3);
 				orderModels.addAll(itemModels);
 				System.out.println("lasted:"+ lastedDate.getTime() +" last:" + lastUpdate.getTime());
 				return ErrorCode.OK;
@@ -184,7 +185,7 @@ public class OrderService
 			
 		}else {
 			
-			List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, OrderModel.CONFIRM);
+			List<OrderModel> itemModels = orderDAO.getOrderByMerID(merID, OrderModel.CONFIRMED);
 			orderModels.addAll(itemModels);
 			return ErrorCode.OK;
 					
@@ -311,5 +312,11 @@ public class OrderService
 		
 		return jsonObject;
 		
+	}
+	public boolean updateStatus(Long id ,Integer status)
+	{
+		boolean  result = orderDAO.updateOrderStatus(id, status);
+	
+		return result;
 	}
 }

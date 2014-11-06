@@ -55,10 +55,7 @@ public class OrderController
 		List<FoodModel> foodModels = new ArrayList<FoodModel>();
 		OrderModel orderModel = new OrderModel();
 		
-		ErrorCode errorCode = orderService.addOrder(order ,foodModels , orderModel);
-		
-		
-		
+		ErrorCode errorCode = orderService.addOrder(order ,foodModels , orderModel);		
 		if (ErrorCode.OK == errorCode)
 		{
 			JsonResponse jsonResponse = new JsonResponse(errorCode, errorCode.getDetail(), new JSONObject());
@@ -98,20 +95,111 @@ public class OrderController
 		}
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
-		try {
-			date = format.parse(lastUpdate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (lastUpdate != null && !lastUpdate.equals(""))
+		{
+			try {
+				date = format.parse(lastUpdate);
+			} catch (ParseException e) 
+			{
+				// TODO Auto-generated catch bloc
+				e.printStackTrace();
+			}
 		}
-		
-		
-		
 		JsonResponse jsonResponse = orderService.syncOrder(merID, date);
 		
 		return jsonResponse.generate();
+	}
+	@RequestMapping(value = "/obtainOrderDes",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String syncFoodsByOrderID(@RequestParam("bUserID") Long user,@RequestParam("token") String token,@RequestParam("orderID") Long orderID)
+	{
+		ErrorCode code = null;
+		 code = bUserService.authenticate(user, token);
+		if (code != ErrorCode.OK)
+		{	
+			return new JsonResponse(code).generate();
+		}
+		JSONObject data = new JSONObject();
+		code = orderService.getOrderDesByID(orderID, data);
+		if ( code== ErrorCode.OK)
+		{
+			String str = new JsonResponse(code, data).generate();
+			System.out.println(str);
+			return str;
+		}else
+		{
+			return new JsonResponse(code).generate();
+		}
+	}
+	@RequestMapping(value = "/confirmOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String confirmOrder(@RequestParam("bUserID") Long user,@RequestParam("token") String token,@RequestParam("orderID") Long orderID)
+	{
+		//orderID ,status ,
 		
-	
+		ErrorCode code = null;
+		 code = bUserService.authenticate(user, token);
+		if (code != ErrorCode.OK)
+		{	
+			return new JsonResponse(code).generate();
+		}
+		boolean result =  orderService.updateStatus(orderID, OrderModel.CONFIRMED);
+		if (result)
+		{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("orderID", orderID);
+			jsonObject.put("status", OrderModel.CONFIRMED);
+			JsonResponse jsonResponse = new JsonResponse(ErrorCode.OK, jsonObject);
+			return jsonResponse.generate();
+					
+		}else {
+			return new JsonResponse(ErrorCode.BAD_COMMAND).generate();
+		}
+	}
+	@RequestMapping(value = "/closeOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String delOrder(@RequestParam("bUserID") Long user,@RequestParam("token") String token,@RequestParam("orderID") Long orderID)
+	{
+		//orderID ,status ,
 		
+		ErrorCode code = null;
+		 code = bUserService.authenticate(user, token);
+		if (code != ErrorCode.OK)
+		{	
+			return new JsonResponse(code).generate();
+		}
+		boolean result =  orderService.updateStatus(orderID, OrderModel.B_CLOSE);
+		if (result)
+		{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("orderID", orderID);
+			jsonObject.put("status", OrderModel.B_CLOSE);
+			JsonResponse jsonResponse = new JsonResponse(ErrorCode.OK, jsonObject);
+			return jsonResponse.generate();
+					
+		}else {
+			return new JsonResponse(ErrorCode.BAD_COMMAND).generate();
+		}
+	}
+	@RequestMapping(value = "/finishOrder",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String finishOrder(@RequestParam("bUserID") Long user,@RequestParam("token") String token,@RequestParam("orderID") Long orderID)
+	{
+		//orderID ,status ,
+		
+		ErrorCode code = null;
+		 code = bUserService.authenticate(user, token);
+		if (code != ErrorCode.OK)
+		{	
+			return new JsonResponse(code).generate();
+		}
+		boolean result =  orderService.updateStatus(orderID, OrderModel.END);
+		if (result)
+		{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("orderID", orderID);
+			jsonObject.put("status", OrderModel.B_CLOSE);
+			JsonResponse jsonResponse = new JsonResponse(ErrorCode.OK, jsonObject);
+			return jsonResponse.generate();
+					
+		}else {
+			return new JsonResponse(ErrorCode.BAD_COMMAND).generate();
+		}
 	}
 }
