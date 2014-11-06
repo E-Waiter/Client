@@ -220,17 +220,14 @@ function submitOrder() {
 		food.des = '暂时描述';
 		orderList.foods.push(food);
 	}
-	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 电话
-	var sub_DB_Phone = ($("#phone_input").val() == "请输入电话" ? "": $("#phone_input").val()); // 备注
-	if( sub_DB_Phone == "") {
-		showdialog(0, "请输入您的电话号码",focusOnPhone);
-		return;
-	}
-	var sub_DB_Person_Count = ($("#person_count_input").val() == "请输入用餐人数" ? "": $("#phone_input").val()); // 备注
+	var sub_DB_Remark = ($("#remark_input").val() == "请输入特殊要求" ? "": $("#remark_input").val()); // 備注
+
+	var sub_DB_Person_Count = ($("#person_count_input").val() == "请输入用餐人数" ? "": $("#person_count_input").val()); // 备注
 	if( sub_DB_Person_Count == "") {
 		showdialog(0, "请输入您的用餐人数",focusOnPersonCount);
 		return;
 	}
+	var sub_DB_Phone = $("#telephone").val();
 	orderList.des = sub_DB_Remark;
 	orderList.phone = sub_DB_Phone;
 	orderList.uID = $carteAll.deskID;
@@ -329,6 +326,7 @@ function toOrderDetailPage(data){
 		document.getElementById("slider_order").style.webkitTransform = "translate3d(0,0, 0)";
 		$('#order-back').bind("click",
 				function(){
+					refreshCart("dish_info");
 					document.getElementById("slider_order").style.webkitTransform = "translate3d(100%,0, 0)";
 					document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 		});
@@ -740,7 +738,6 @@ function initDishList() {
 
 				});
 				$menu_load = true;
-
 				document.getElementById("slider_dish").style.webkitTransform = "translate3d(0,0,0)";
 				setTimeout(function() {
 					$("#loading_img").removeClass("rotate_animation");
@@ -845,47 +842,11 @@ function init_shop() {
 		localStorage.setItem("index_shop_title", NameLogo);
 		localStorage.setItem("RestaurantSign", RestaurantSign);
 		document.title = NameLogo;
-		
-		$.ajax({
-			url: "../resource/json/lottery_rule.json",
-			type: "get",
-			data: "r_id=" + R_ID,
-			//data: "r_id=",
-			dataType: "json",
-			success: function(data) {
-				if (data.Lottery) {
-					if (data.LotterySum > 0) {
-						$("#index_tip").children("span").html("发现有消费满" + data.LotterySum + "元抽奖活动");
-					} else {
-						$("#index_tip").children("span").text("发现有活动");
-					};
-					$("#index_tip").show("slow");
-
-				}
-
-			}
-		});
-
 	};
 
 };
 
-function bindToDishAction() {
-	$("#loading_img").bind("click",
-	function() {
-		if ($shop_load && $table_load) {
-			dineType = 0;
-			crowdObj.crowd_code = "";
-			crowdObj.crowd_version = "";
-			
-			// $(this).addClass("rotate_animation");
-			initDishList();
-			refreshCart("dish_info");
-		} else {
-			showdialog(1, "店铺信息初始化失败，请刷新重试!");
-		}
-	});
-}
+
 
 /* 跳转到选择菜品的页面 */
 function to_dish() {
@@ -1032,7 +993,7 @@ function stophand(e) {
 var t_height = 0;
 $(document).ready(function() { // return;
 
-	
+	init_shop();
 	$("document:not(#menu_font)").click(function() {
 		$('#menu_font').addClass('hidden');
 	});
@@ -1053,8 +1014,7 @@ $(document).ready(function() { // return;
 	initUserMark();
 	reloadUser();
 	bindToSliderMenu();
-	bindToDishAction();
-	init_shop();
+
 
 	$order = new ArrayList();
 	t_height = $("body").height();

@@ -45,6 +45,7 @@
         </div>
     </div>
 
+
     <!--加载div-->
     <div id="load" class="load">
         <div class="full"></div>
@@ -75,18 +76,6 @@
 						</div>
 					</div>
                 </div>
-				<div style="padding-left: 15px;">
-					<div id="carte_memo" style="position: relative;">
-						电话:
-						<div
-							style="position: absolute; top: 0px; left: 60px; right: 15px;">
-							<input id="phone_input" type="tel" style="" class="input no_value"
-								value="请输入电话" 
-								onfocus="this.className='input'; if(this.value=='请输入电话'){this.value='';}"
-								onblur="this.blur();if(this.value==''){this.value='请输入电话';this.className='input no_value';}" />
-						</div>
-					</div>
-				</div>
 				<div style="padding-left: 15px;">
 					<div id="carte_memo" style="position: relative;">
 						备注:
@@ -180,10 +169,10 @@
                 for (var k=0; k< o.foodTypeList.length ; k++) { %}  
                     <li class="dish_list_active nav" data-ctid="{%=o.foodTypeList[k].id%}" >{%=o.foodTypeList[k].name%}</li>
                 {% for (var i=0; i< o.foodTypeList[k].foodModels.length ; i++) { %}
-                    <li class="dish_list_active">
+                    <li class="dish_list_active" >
                         <div class="dish_item">
-                            <div class="dish_image"><img class="dish_img b-lazy" 
-                                src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg" alt="" /></div>
+                            <div class="dish_image">
+					<img class="dish_img b-lazy" src="/default.png" data-src="/dish/{%=o.RestaurantSign %}/LO/128x128/{%=o.foodTypeList[k].foodModels[i].id%}.jpg" alt="" /></div>
                             <div class="dish_name">{%=o.foodTypeList[k].foodModels[i].name%}</div>
                             {%
                                 if(i<=1)
@@ -269,8 +258,8 @@
                         <div class="content">
                             <div class="hd">{%=o.name %}</div>
                             <div class="nav">
-                                <div class="left">订单号：{%=o.orderID %}</div>
-                                <div class="right">{%=o.time %}</div>
+                                <div class="left" style="font-size: 14px;">订单号：{%=o.orderID %}</div>
+                                <div class="right"style="font-size: 14px;">{%=o.time %}</div>
                             </div>
                             <ul class="list">
                              {% for(var i in o.foods) { %}
@@ -287,15 +276,6 @@
                             <div class="mark"><div style="line-height: 18px;padding-top: 10px;">备注:{%=o.des%}</div></div>
                         </div>
                     </div>
-            </div>
-            <div style="height: 10px; background: #f5f5f5;"></div>
-            <div style="padding: 0 15px;">
-                <div class="payContainer">
-                    <div class="item hd" id="pay-type">支付方式<div class="expland up"></div></div>
-                        <div id="paytype-list">
-                            <div class="item select ">现金支付<div class="memo">请等待服务员与您确认订单<span class="right-img"></span></div></div>
-                    </div>
-                </div>
             </div>
             </div>
             </div>
