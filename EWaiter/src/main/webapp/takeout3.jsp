@@ -33,7 +33,7 @@
 <body>
 
     <!--选择菜品的页面-->
-    <div id="slider_dish" class="animation" style="-webkit-transform: translate3d(100%, 0px, 0px);display: block;">
+    <div id="slider_dish" class="animation" style="-webkit-transform: translate3d(0, 0px, 0px);display: block;">
         <div id="dish_container">
             <div id="dish_menu"></div>
             <div id="dish_list"></div>
@@ -45,71 +45,7 @@
         </div>
     </div>
 
-    <!--首页-->
-    <div id="index_page" class="animation" style="  left:0; top:0px;">
-        <!--<div class="index_bg"></div>
-        <div class="index_title">
-            <div id="index_shop_title">神州美味</div>
-        </div>-->
 
-<!--         <div style="text-align: center;height: 100px;margin-top: 70px;">
-            <img src="../resource/img/logo.png" style="height:100px;position: relative;z-index: 2;" />
-        </div>
- -->
-<!--         <div style="position:absolute;height: 100px; width:100%;bottom:35%;">
-            <div id="open_slider_person" style="height:100%;margin: 20px;padding: 10px;color: #FFF;font-size: 20px;background: url(img/black.png);border-radius:5px;">
-                <p style="text-align:center; font-size:18px;  line-height:60px; margin:0;">欢迎您&nbsp;!请问您的用餐人数&nbsp;?</p>
-                <p style="text-align:center; margin:0;" id="open_slider_person_index">点击选择</p>
-            </div>
-        </div> -->
-<!--         <div id="index_menu_Container">
-            <div id= "headImg" class="showimg"></div>
-            <div id= "head_add" class=""></div>
-            <div id="index_menu" class="hidden-img"> 
-                <span id="index-huiyuan" class="huiyuan"></span>
-                 <span id="index-order" class="order"></span>
-                  <span id="index-call" class="call"></span>
-            </div>
-        </div>
- -->
-		<div id="loginTelephone">
-			<input type="number" name="telephone"id="telephone" placeholder="请输入您的手机号码"required>
-		</div>
-		<div class="index_load">
-            <div id="loading_img">开始验证</div>
-        </div>
-		<div class="state" style="text-align: center;">
-		<p>隐私说明</p>
-		<p>本站对所有用户信息仅作数据分析，会对用户信息进行保密.....</p>
-		</div>
-
-        
-        <div id="index_footer" >
-            <!-- <p style="  z-index:20;position: relative; height: 100%;text-align: center;color: black;padding-top: 10px;color:#fff;font-size:10px;"><span id="index_qundian">小伙伴一起点餐</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=" width:8px; height:8px; background:#fff; border-radius: 45px; display: inline-block;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="index_waimai">我要外卖</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=" width:8px; height:8px; background:#fff; border-radius: 45px; display: inline-block;"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="index_qa">不会用点这里</span></p> -->
-            <!--<table class="index_menu">
-                <tbody>
-                    <tr>
-                        <td style="background: url(../img/index_line.png);background-repeat: no-repeat;background-position: right;">
-                            <div  id="open_slider_person">
-                                <div class="index_btn_pe"></div>
-                                <br />
-                                <span class="index-btn-span" id="index_table_pe">人数</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div  id="open_slider_table">
-                            <div class="index_btn_table"></div>
-                            <br />
-                            <span class="index-btn-span" id="index_table_text">选桌</span>
-                            </div>
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>-->
-        </div>
-    </div>
-    
     <!--加载div-->
     <div id="load" class="load">
         <div class="full"></div>

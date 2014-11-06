@@ -846,25 +846,7 @@ function init_shop() {
 
 };
 
-function bindToDishAction() {
-	$("#loading_img").bind("click",
-	function() {
-		var flag = true;
-		var sub_DB_Phone = $("#telephone").val(); // 電話
-		var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
-		if(!isMobile.test(sub_DB_Phone)){ //如果用户输入的值不同时满足手机号和座机号的正则
-			showdialog(1,"请正确填写电话号码，例如:13415764179或0321-4816048",focusOnTelePhoneInput);  //就弹出提示信息
-		    flag = false;         //返回一个错误，不向下执行
-		}
-		if (flag) {
-			init_shop();
-		}
-	});
-}
 
-function focusOnTelePhoneInput() {
-	$("#telephone").focus();
-}
 
 /* 跳转到选择菜品的页面 */
 function to_dish() {
@@ -1011,7 +993,7 @@ function stophand(e) {
 var t_height = 0;
 $(document).ready(function() { // return;
 
-	
+	init_shop();
 	$("document:not(#menu_font)").click(function() {
 		$('#menu_font').addClass('hidden');
 	});
@@ -1032,7 +1014,6 @@ $(document).ready(function() { // return;
 	initUserMark();
 	reloadUser();
 	bindToSliderMenu();
-	bindToDishAction();
 
 
 	$order = new ArrayList();
