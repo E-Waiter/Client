@@ -66,7 +66,8 @@ public class OrderService
 	
 	public ErrorCode addOrder(String json, List<FoodModel> foodModels ,OrderModel orderModel)
 	{
-		
+//		action:{"foods":[{"foodID":"7","number":1,"name":"?????","price":10,"type":"?","des":"????"},{"foodID":"5","number":1,"name":"?????","price":10,"type":"?","des":"????"},{"foodID":"6","number":1,"name":"?????","price":10,"type":"?","des":"????"}],"des":"???","uID":1,"dID":2,"merID":2,"number":"13","method":2,"note":"???"}
+	
 		
 //		action:{"foods":[{"foodID":"2","number":2,"type":"?","des":"????"}],"des":"","phone":"13922151165","uID":2,"dID":2,"merID":1,"number":10,"menthod":2,"note":"???"}
 		if (json == null)
@@ -94,6 +95,7 @@ public class OrderService
 		orderModel.setPhone(phone);
 		orderModel.setNumber(number);
 		orderModel.setTime(date);
+		orderModel.setStatus(OrderModel.NEW);
 
 		Set<OrderItemModel> orderDesModels  = new HashSet<OrderItemModel>();
 		JSONArray jsonArray = jObject.getJSONArray("foods");

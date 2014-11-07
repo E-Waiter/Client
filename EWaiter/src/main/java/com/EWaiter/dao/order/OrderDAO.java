@@ -30,7 +30,7 @@ public class OrderDAO extends BaseDAO
 	
 	public List<OrderModel> getOrderByMerID(Long merID , int status)
 	{
-		String hql = "FROM orderModel o WHERE o.merModel.id=? and o.status<?";
+		String hql = "FROM orderModel o WHERE o.merModel.id=? and o.status<=?";
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
 		query.setLong(0, merID);
 		query.setInteger(1, status);
