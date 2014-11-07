@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/EWaiter/controller/order/OrderController.java=UTF-8
-encoding//src/main/java/com/EWaiter/dao/DeskDAO.java=UTF-8
+encoding//src/main/java/com/EWaiter/dao/mer/TableDAO.java=UTF-8
 encoding//src/main/java/com/EWaiter/model/food/FoodModel.java=UTF-8
 encoding//src/main/java/com/EWaiter/model/food/FoodSortModel.java=UTF-8
 encoding//src/main/java/com/EWaiter/model/food/SortGroupsModel.java=UTF-8

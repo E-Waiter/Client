@@ -22,7 +22,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.EWaiter.model.food.FoodPreferenceModel;
-import com.EWaiter.model.mer.DeskModel;
+import com.EWaiter.model.mer.TableModel;
 import com.EWaiter.model.mer.MerModel;
 import com.EWaiter.model.user.UserModel;
 
@@ -58,7 +58,7 @@ public class OrderModel
 //	private int deskID;
 	@OneToOne
 	@JoinColumn(name="deskID")
-	private DeskModel deskModel;
+	private TableModel deskModel;
 	
 	private Date time;
 	private int status;
@@ -132,11 +132,11 @@ public class OrderModel
 		this.userModel = userModel;
 	}
 
-	public DeskModel getDeskModel() {
+	public TableModel getDeskModel() {
 		return deskModel;
 	}
 
-	public void setDeskModel(DeskModel deskModel) {
+	public void setDeskModel(TableModel deskModel) {
 		this.deskModel = deskModel;
 	}
 

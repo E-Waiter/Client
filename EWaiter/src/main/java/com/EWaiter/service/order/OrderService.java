@@ -28,7 +28,7 @@ import com.EWaiter.dao.order.OrderDAO;
 import com.EWaiter.dao.user.BUserDAO;
 import com.EWaiter.dao.user.TokenDAO;
 import com.EWaiter.model.food.FoodModel;
-import com.EWaiter.model.mer.DeskModel;
+import com.EWaiter.model.mer.TableModel;
 import com.EWaiter.model.mer.MerModel;
 import com.EWaiter.model.order.OrderItemModel;
 import com.EWaiter.model.order.OrderModel;
@@ -84,7 +84,7 @@ public class OrderService
 		int number = jObject.getInt("number");
 		Date date = new Date();
 
-		DeskModel deskModel = new DeskModel();
+		TableModel deskModel = new TableModel();
 		deskModel.setId(dID);
 		orderModel.setDeskModel(deskModel);
 		MerModel merModel = new MerModel();

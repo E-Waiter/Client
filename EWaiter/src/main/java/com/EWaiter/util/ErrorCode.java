@@ -84,7 +84,12 @@ public enum ErrorCode {
 	UNSYNC(1066, "不同步"),
 	
 	ALREADY_LASTED(2001,"已是最新数据"),
-	MYSQL_EXCEPTION(2101,"SQL异常")
+	
+	MYSQL_EXCEPTION(2101,"SQL异常"),
+	
+	MER_EXCEPTION(2201,"未知的店铺"),
+	TALBE_EXCEPTION(2201,"未知的桌子")
+	
 	;
 	
 	

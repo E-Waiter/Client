@@ -1,23 +1,26 @@
-package com.EWaiter.dao;
+package com.EWaiter.dao.mer;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.EWaiter.dao.BaseDAO;
+import com.EWaiter.model.mer.TableModel;
 
 
-@Repository("deskDAO")
-public class DeskDAO extends BaseDAO
+
+@Repository("tableDAO")
+public class TableDAO extends BaseDAO
 {
 
-//	public DeskModel getDeskByID(int id)
-//	{
-//		String hql = "FROM deskModel d WHERE d.id=?";
-//		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
-//		query.setInteger(0, id);
-//		return (DeskModel)query.uniqueResult();
-//	}
+	public TableModel getTableByID(Long id)
+	{
+		String hql = "FROM tableModel t WHERE t.id=?";
+		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
+		query.setLong(0, id);
+		return (TableModel)query.uniqueResult();
+	}
 //	public List<DeskModel> geRooByMerID(int roomID)
 //	{
 //		String hql = "FROM deskModel d WHERE d.roomID=?";

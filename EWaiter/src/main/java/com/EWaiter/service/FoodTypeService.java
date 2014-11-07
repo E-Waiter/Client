@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.EWaiter.dao.FoodTypeDAO;
 import com.EWaiter.dao.mer.MerDAO;
+import com.EWaiter.dao.mer.TableDAO;
 import com.EWaiter.model.food.FoodModel;
 import com.EWaiter.model.food.FoodTypeModel;
 import com.EWaiter.model.food.UnitModel;
 import com.EWaiter.model.mer.MerModel;
+import com.EWaiter.util.ErrorCode;
 
 @Service("foodTypeService")
 @Transactional(value="transactionManager")
@@ -31,6 +33,10 @@ public class FoodTypeService
 	@Qualifier("merDAO")
 	private MerDAO merDAO;
 	
+	@Autowired
+	@Qualifier("tableDAO")
+	private TableDAO tableDAO;
+	
 	
 	public FoodTypeModel getFoodTypeByID(long id)
 	{
@@ -41,6 +47,18 @@ public class FoodTypeService
 		
 		
 		return foodTypeDAO.getFoodTypes(id);
+	}
+	public ErrorCode authMerInfo(Long merID ,Long tableID)
+	{
+		if (merDAO.getMerByID(merID) == null) 
+		{
+			return ErrorCode.MER_EXCEPTION;
+		}
+		if (tableDAO.getTableByID(tableID) == null) 
+		{
+			return ErrorCode.MER_EXCEPTION;
+		}
+		return ErrorCode.OK;
 	}
 	public String getMenuByMerID(long merID , long deskID)
 	{
