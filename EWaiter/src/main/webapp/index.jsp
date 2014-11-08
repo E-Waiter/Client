@@ -27,7 +27,6 @@
                     	var initInfo = <%=initInfo%>;
     					var merID = initInfo.data.merID;
     					var tableID = initInfo.data.tableID;
-    					var obtainMenu = '';
                         var sub_DB_Phone = $("#telephone").val(); // 電話
                         var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
 						 if( initInfo.code != 1){
@@ -37,7 +36,8 @@
                             showdialog(1, "请正确填写电话号码，例如:13415764179或0321-4816048", focusOnTelePhoneInput); //就弹出提示信息
                             return; //返回一个错误，不向下执行
                         }else {
-                        	goToObtainMenu(merID,tableID,sub_DB_Phone);
+                        	location.href = "../takeout3.jsp?sub_DB_Phone="+sub_DB_Phone+"&merID="+merID
+											+"&tableID="+tableID;
     					}
 /* 						 
 						 if (flag) {
@@ -46,25 +46,6 @@
                     });
                 });
 				
-                
-                function goToObtainMenu(merID,tableID,sub_DB_Phone){
-                	alert(sub_DB_Phone);
-                    $.ajax({
-                        type: "get",
-                        data:{
-                        	"merID" : merID,
-                        	"tableID" : tableID,
-                        },
-                        url: "/EWaiter/foodType/obtainMenu",
-                        success: function(data) {
-                        	location.href = "../takeout3.jsp?sub_DB_Phone="+sub_DB_Phone+"&menu="+data;				
-                        }
-                    });
-                }
-                function focusOnTelePhoneInput() {
-                    $("#telephone").focus();
-                }
-                
                 
             </script>
         </head>
@@ -76,14 +57,14 @@
                     开始验证
                 </button>
             </div>
-            <div class="state" style="text-align: center;">
+<!--             <div class="state" style="text-align: center;">
                 <p>
                     隐私说明
                 </p>
                 <p>
                     本站对所有用户信息仅作数据分析，会对用户信息进行保密.....
                 </p>
-            </div>
+            </div> -->
             <div style="width: 100%; height: 100%; margin: 0; top: 0; position: absolute; z-index: -1">
                 <img src="../resource/img/bg.jpg" alt="" id="background" />
             </div>

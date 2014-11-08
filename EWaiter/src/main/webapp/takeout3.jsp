@@ -2,6 +2,8 @@
 <%
 	String dishJSON = (String)request.getParameter("menu");
 	String phone = (String)request.getParameter("sub_DB_Phone");
+	String merID = (String)request.getParameter("merID");
+	String tableID = (String)request.getParameter("tableID");
 %>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 
@@ -13,22 +15,42 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 
+   <script src="resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
    <script>
        var ua = navigator.userAgent.toLowerCase();
+       var merID = <%=merID%>;
+       var tableID = <%=tableID%>;
+      //use ajax to get Menu data by merID and tableID     
+           $.ajax({
+               type: "post",
+               async: false,
+               data:{
+               	"merID" : merID,
+               	"tableID" : tableID,
+               },
+               url: "/EWaiter/foodType/obtainMenu",
+               success: function(data) {
+            	   console.log(data);
+            	   localStorage.setItem('$carteAll', data);				
+               }
+           });
+           
+       function focusOnTelePhoneInput() {
+           $("#telephone").focus();
+       }
+       
        var gdata;
        var $carteAll = null;
        try { gdata = JSON.parse(localStorage.getItem('gdata')); } catch (ex) { alert('error'); gdata = null };
-       try { dishJson = JSON.parse(localStorage.getItem('dishJson')); } catch (ex) { alert('error'); gdata = null };
+/*        try { dishJson = JSON.parse(localStorage.getItem('dishJson')); } catch (ex) { alert('error'); gdata = null }; */
        try { phone = localStorage.getItem('phone'); } catch (ex) { alert('error'); gdata = null };
+      
        if (gdata == null) { gdata = {}; };
        if( phone == null) {
     	   phone = <%= phone%>;
     	   localStorage.setItem('$phone', phone);
        }
-       if (dishJson == null) {
-    	   dishJson = <%= dishJSON%>;
-    	   localStorage.setItem('$carteAll', JSON.stringify(dishJson));
-       }
+
    </script>
     <link href="resource/css/main.css" rel="stylesheet" type="text/css" />
     <link href="resource/css/base.css" rel="stylesheet" type="text/css" />
@@ -124,7 +146,7 @@
     <div id="order_detail" style="display:none;"></div>
    
 
-    <script src="resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+ 
    
     <script src="resource/js/iscroll.js" type="text/javascript"></script>
     <!--延迟加载-->
