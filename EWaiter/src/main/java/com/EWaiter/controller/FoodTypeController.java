@@ -48,7 +48,7 @@ public class FoodTypeController
 		return jsonResponse.generate();
 	}
 	@RequestMapping(value = "/init" ,method=RequestMethod.GET)
-	public String init(Long merID , Long tableID,HttpServletRequest request)
+	public String init(@RequestParam("merID")Long merID , @RequestParam("tableID")Long tableID ,HttpServletRequest request)
 	{
 		ErrorCode errorCode = foodTypeService.authMerInfo(merID, tableID);
 		JsonResponse jsonResponse = null;
@@ -62,6 +62,7 @@ public class FoodTypeController
 		}
 		
 		request.setAttribute("initInfo",jsonResponse.generate());
+		
 		
 		return "index";
 	}

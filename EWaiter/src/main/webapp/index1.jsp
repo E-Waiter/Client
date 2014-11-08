@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
    <script language="JavaScript">
- window.location.href = "/EWaiter/foodType/getFoodTypesByMerID?merID=2&deskID=1";
+ window.location.href = "/EWaiter/foodType/init?merID=2&deskID=1";
 </script>
 <!--
 <body>
