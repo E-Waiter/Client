@@ -1,7 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%
-	String dishJSON = (String)request.getAttribute("menu");
-	%>
+	String dishJSON = (String)request.getParameter("menu");
+	String phone = (String)request.getParameter("sub_DB_Phone");
+%>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,22 +13,26 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 
-    
    <script>
        var ua = navigator.userAgent.toLowerCase();
        var gdata;
        var $carteAll = null;
        try { gdata = JSON.parse(localStorage.getItem('gdata')); } catch (ex) { alert('error'); gdata = null };
        try { dishJson = JSON.parse(localStorage.getItem('dishJson')); } catch (ex) { alert('error'); gdata = null };
+       try { phone = localStorage.getItem('phone'); } catch (ex) { alert('error'); gdata = null };
        if (gdata == null) { gdata = {}; };
+       if( phone == null) {
+    	   phone = <%= phone%>;
+    	   localStorage.setItem('$phone', phone);
+       }
        if (dishJson == null) {
     	   dishJson = <%= dishJSON%>;
     	   localStorage.setItem('$carteAll', JSON.stringify(dishJson));
        }
    </script>
-    <link href="../resource/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="../resource/css/base.css" rel="stylesheet" type="text/css" />
-    <link href="../resource/css/xg.css" rel="stylesheet" type="text/css" />
+    <link href="resource/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="resource/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="resource/css/xg.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
 <body>
@@ -119,21 +124,21 @@
     <div id="order_detail" style="display:none;"></div>
    
 
-    <script src="../resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
    
-    <script src="../resource/js/iscroll.js" type="text/javascript"></script>
+    <script src="resource/js/iscroll.js" type="text/javascript"></script>
     <!--延迟加载-->
-    <script src="../resource/js/blazy.js" type="text/javascript"></script>
+    <script src="resource/js/blazy.js" type="text/javascript"></script>
     <!--模板-->
-    <script src="../resource/js/tmpl.min.js" type="text/javascript"></script>
+    <script src="resource/js/tmpl.min.js" type="text/javascript"></script>
     <!--ajax 请求库-->
-    <script src="../resource/js/jlib.js" type="text/javascript"></script>
+    <script src="resource/js/jlib.js" type="text/javascript"></script>
     <!--arraylist-->
-    <script src="../resource/js/jarray.min.js" type="text/javascript"></script>
-    <script src="../resource/js/main.js" type="text/javascript"></script>
-    <script src="../resource/js/xg.js" type="text/javascript"></script>
-    <script src="../resource/js/main1.1.js" type="text/javascript"></script>
-    <script src="../resource/js/wScratchPad.js" type="text/javascript"></script>
+    <script src="resource/js/jarray.min.js" type="text/javascript"></script>
+    <script src="resource/js/main.js" type="text/javascript"></script>
+    <script src="resource/js/xg.js" type="text/javascript"></script>
+    <script src="resource/js/main1.1.js" type="text/javascript"></script>
+    <script src="resource/js/wScratchPad.js" type="text/javascript"></script>
     
 
     <!--获取所有的菜品分类-->
@@ -206,7 +211,7 @@
                 {% for (var i=0; i<o.list.length ; i++) { %}
                     <li>
                         <div class="dish_item">
-                            <div class="dish_image"><img class="dish_img" src="{%=o.list[i].img %}" onerror="javascript:this.src='../resource/img/carte_default_small.png';" alt="" /></div>
+                            <div class="dish_image"><img class="dish_img" src="{%=o.list[i].img %}" onerror="javascript:this.src='resource/img/carte_default_small.png';" alt="" /></div>
                             <div class="dish_name">{%=o.list[i].name %}</div>
                             <div class="dish_price">￥{%=o.list[i].price %}</div>
                             <div class="dish_ope"  data-id="{%=o.list[i].id %}" data-name="{%=o.list[i].name%}" data-spec="{%=o.list[i].spec%}"
@@ -321,9 +326,9 @@
                                 <div style="width:100%;height: 100%;margin: 0 auto;position: relative;background: #fff;-webkit-border-radius: 5px;border-radius: 15px;">
                                         <div class="title"><span id="dish_title_name" style="display: inline-block;width: 130px;text-align: center;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{%=o.name%} </span><button id="close_dish"></button></div>
                                         <div class="content" id="image-scroll">
-                                            <div ><img class="img" src="" alt="" onerror="javascript:this.src='../resource/img/carte_default_big.png'"/></div>
-			                                <div ><img class="img" src="" alt="" onerror="javascript:this.src='../resource/img/carte_default_big.png'"/></div>
-                                            <div ><img class="img" src="" alt="" onerror="javascript:this.src='../resource/img/carte_default_big.png'"/></div>
+                                            <div ><img class="img" src="" alt="" onerror="javascript:this.src='resource/img/carte_default_big.png'"/></div>
+			                                <div ><img class="img" src="" alt="" onerror="javascript:this.src='resource/img/carte_default_big.png'"/></div>
+                                            <div ><img class="img" src="" alt="" onerror="javascript:this.src='resource/img/carte_default_big.png'"/></div>
                                         
                                         </div>
                                         <div class="bottom" id="dish_detail_bottom">
