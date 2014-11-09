@@ -4,7 +4,6 @@
 %>
     <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
     <html>
-        
         <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
             <meta content=”yes” name=”apple-mobile-web-app-capable” />
@@ -18,6 +17,9 @@
             <link href="../resource/css/xg.css" rel="stylesheet" type="text/css" />
             <link href="../resource/css/login.css" rel="stylesheet" type="text/css" />
             <script type="text/javascript">
+            $(document).ready(function() { 
+            	showLoad();
+            }); 
 	        	var initInfo = <%=initInfo%>;
 				var merID = initInfo.data.merID;
 				var tableID = initInfo.data.tableID;
@@ -36,6 +38,7 @@
                 });
                 $(window).load(
                         function() {
+                        	closeLoad();
                             $("#background").fullBg();
                             $("#checkIphone").bind("click",
                             function() {
@@ -74,6 +77,34 @@
             <div style="width: 100%; height: 100%; margin: 0; top: 0; position: absolute; z-index: -1">
                 <img src="../resource/img/bg.jpg" alt="" id="background" />
             </div>
+                <!--加载div-->
+    <div id="load" class="load">
+        <div class="full"></div>
+            <div class="l-body">
+                <div class="content"></div>
+                <div class="spinner">
+                    <div class="spinner-container container1">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container2">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container3">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                </div>
+           <div class="load-text"></div>
+      </div>
+    </div>
         </body>
     
     </html>
