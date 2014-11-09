@@ -914,7 +914,9 @@ content: ".";
             position:absolute;
             right:0;
         }
-        
+        .select_ok{
+        	margin-right: 0px;
+        }
         .good
         {
             position: relative;

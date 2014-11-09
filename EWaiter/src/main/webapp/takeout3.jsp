@@ -2,44 +2,26 @@
 <%
 	String dishJSON = (String)request.getParameter("menu");
 	String phone = (String)request.getParameter("sub_DB_Phone");
-	String merID = (String)request.getParameter("merID");
-	String tableID = (String)request.getParameter("tableID");
 %>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta content=”yes” name=”apple-mobile-web-app-capable” />
 <meta content=”black” name=”apple-mobile-web-app-status-bar-style” />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 
    <script src="resource/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+       <!--ajax 请求库-->
+    <script src="resource/js/jlib.js" type="text/javascript"></script>
    <script>
        var ua = navigator.userAgent.toLowerCase();
-       var merID = <%=merID%>;
-       var tableID = <%=tableID%>;
-      //use ajax to get Menu data by merID and tableID     
-           $.ajax({
-               type: "post",
-               async: false,
-               data:{
-               	"merID" : merID,
-               	"tableID" : tableID,
-               },
-               url: "/EWaiter/foodType/obtainMenu",
-               success: function(data) {
-            	   console.log(data);
-            	   localStorage.setItem('$carteAll', data);				
-               }
-           });
-           
        function focusOnTelePhoneInput() {
            $("#telephone").focus();
        }
-       
-       var gdata;
        var $carteAll = null;
        try { gdata = JSON.parse(localStorage.getItem('gdata')); } catch (ex) { alert('error'); gdata = null };
 /*        try { dishJson = JSON.parse(localStorage.getItem('dishJson')); } catch (ex) { alert('error'); gdata = null }; */
@@ -68,7 +50,7 @@
         
         <div id="dish_footer">
             <div id="dish_info"></div>
-            <div id="dish_ok"><button class="select_ok">选好了</button></div>
+            <div id="dish_ok"><button class="select_ok" >选好了</button></div>
         </div>
     </div>
 
@@ -76,6 +58,30 @@
     <!--加载div-->
     <div id="load" class="load">
         <div class="full"></div>
+            <div class="l-body">
+                <div class="content"></div>
+                <div class="spinner">
+                    <div class="spinner-container container1">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container2">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                    <div class="spinner-container container3">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                      <div class="circle3"></div>
+                      <div class="circle4"></div>
+                    </div>
+                </div>
+           <div class="load-text"></div>
+      </div>
     </div>
     <!-- 每次在菜单页面做下拉动作时做标记 -->
    <div id="pullDown"></div>   
@@ -123,7 +129,7 @@
 
         <div id="carte_footer">
             <div id="carte_info">共计11个菜,&nbsp;<span class="price">￥0.43</span></div>
-            <div id="carte_ok"><button class="select_ok">立即下单</button></div>
+            <div id="carte_ok"><button class="select_ok" >立即下单</button></div>
         </div>
     </div>
     
@@ -153,8 +159,6 @@
     <script src="resource/js/blazy.js" type="text/javascript"></script>
     <!--模板-->
     <script src="resource/js/tmpl.min.js" type="text/javascript"></script>
-    <!--ajax 请求库-->
-    <script src="resource/js/jlib.js" type="text/javascript"></script>
     <!--arraylist-->
     <script src="resource/js/jarray.min.js" type="text/javascript"></script>
     <script src="resource/js/main.js" type="text/javascript"></script>

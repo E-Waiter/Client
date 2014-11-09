@@ -6,7 +6,7 @@
     <html>
         
         <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
             <meta content=”yes” name=”apple-mobile-web-app-capable” />
             <meta content=”black” name=”apple-mobile-web-app-status-bar-style” />
             <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -18,35 +18,41 @@
             <link href="../resource/css/xg.css" rel="stylesheet" type="text/css" />
             <link href="../resource/css/login.css" rel="stylesheet" type="text/css" />
             <script type="text/javascript">
-                $(window).load(
-                function() {
-
-                    $("#background").fullBg();
-                    $("#checkIphone").bind("click",
-                    function() {
-                    	var initInfo = <%=initInfo%>;
-    					var merID = initInfo.data.merID;
-    					var tableID = initInfo.data.tableID;
-                        var sub_DB_Phone = $("#telephone").val(); // 電話
-                        var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
-						 if( initInfo.code != 1){
-                        	showdialog(1,initInfo.msg);
-                        	return;
-                        } else if (!isMobile.test(sub_DB_Phone)) { //如果用户输入的值不同时满足手机号和座机号的正则
-                            showdialog(1, "请正确填写电话号码，例如:13415764179或0321-4816048", focusOnTelePhoneInput); //就弹出提示信息
-                            return; //返回一个错误，不向下执行
-                        }else {
-                        	location.href = "../takeout3.jsp?sub_DB_Phone="+sub_DB_Phone+"&merID="+merID
-											+"&tableID="+tableID;
-    					}
-/* 						 
-						 if (flag) {
-                            
-                        } */
-                    });
+	        	var initInfo = <%=initInfo%>;
+				var merID = initInfo.data.merID;
+				var tableID = initInfo.data.tableID;
+                //use ajax to get Menu data by merID and tableID     
+                jAjax({
+                    type: "get",
+                    async: true,
+                    data:{
+                    	"merID" : merID,
+                    	"tableID" : tableID,
+                    },
+                    url: "/EWaiter/foodType/obtainMenu",
+                    success: function(data) {
+                 	   localStorage.setItem('$carteAll', data);				
+                    }
                 });
-				
-                
+                $(window).load(
+                        function() {
+                            $("#background").fullBg();
+                            $("#checkIphone").bind("click",
+                            function() {
+
+                                var sub_DB_Phone = $("#telephone").val(); // 電話
+                                var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
+        						 if( initInfo.code != 1){
+                                	showdialog(1,initInfo.msg);
+                                	return;
+                                } else if (!isMobile.test(sub_DB_Phone)) { //如果用户输入的值不同时满足手机号和座机号的正则
+                                    showdialog(1, "请正确填写电话号码，例如:13415764179或0321-4816048", focusOnTelePhoneInput); //就弹出提示信息
+                                    return; //返回一个错误，不向下执行
+                                }else {
+                                	location.href = "../takeout3.jsp?sub_DB_Phone="+sub_DB_Phone;
+            					}
+                            });
+                        });
             </script>
         </head>
         
