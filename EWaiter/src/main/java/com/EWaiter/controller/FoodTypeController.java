@@ -32,8 +32,8 @@ public class FoodTypeController
 	@Qualifier("merService")
 	private MerService merServicd;
 	
-	@RequestMapping(value = "/obtainMenu" ,method=RequestMethod.GET)
-	public @ResponseBody String getFoodTypes(@RequestParam("merID")Long merID , @RequestParam("tableID")Long tableID,HttpServletRequest request)
+	@RequestMapping(value = "/obtainMenu" ,produces = "text/plain; charset=UTF-8",method=RequestMethod.POST)
+	public @ResponseBody() String getFoodTypes(@RequestParam("merID")Long merID , @RequestParam("tableID")Long tableID,HttpServletRequest request)
 	{
 		ErrorCode errorCode = foodTypeService.authMerInfo(merID, tableID);
 		JsonResponse jsonResponse = null;
@@ -45,9 +45,10 @@ public class FoodTypeController
 			jsonObject.put("menu", menu);
 			jsonResponse= new JsonResponse(errorCode, jsonObject);
 		}
+		System.out.println("obtainMenu:" + jsonResponse.generate());
 		return jsonResponse.generate();
 	}
-	@RequestMapping(value = "/init" ,method=RequestMethod.GET)
+	@RequestMapping(value = "/init" ,produces = "text/plain; charset=UTF-8",method=RequestMethod.GET)
 	public String init(@RequestParam("merID")Long merID , @RequestParam("tableID")Long tableID ,HttpServletRequest request)
 	{
 		ErrorCode errorCode = foodTypeService.authMerInfo(merID, tableID);
@@ -62,7 +63,6 @@ public class FoodTypeController
 		}
 		
 		request.setAttribute("initInfo",jsonResponse.generate());
-		
 		
 		return "index";
 	}

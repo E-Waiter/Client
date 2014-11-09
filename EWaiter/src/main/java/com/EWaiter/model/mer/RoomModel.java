@@ -67,7 +67,7 @@ public class RoomModel
 	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "roomID")
 	@Fetch(FetchMode.SUBSELECT)
-	private Set<TableModel> deskModels = new HashSet<TableModel>();
+	private Set<TableModel> tableModels = new HashSet<TableModel>();
 	public long getId() 
 	{
 		return id;
@@ -131,12 +131,13 @@ public class RoomModel
 	public void setMerImageModels(Set<MerImageModel> merImageModels) {
 		this.merImageModels = merImageModels;
 	}
-	public Set<TableModel> getDeskModels() {
-		return deskModels;
+	public Set<TableModel> getTableModels() {
+		return tableModels;
 	}
-	public void setDeskModels(Set<TableModel> deskModels) {
-		this.deskModels = deskModels;
+	public void setTableModels(Set<TableModel> tableModels) {
+		this.tableModels = tableModels;
 	}
+	
 	
 	
 	
