@@ -17,15 +17,12 @@
             <link href="../resource/css/xg.css" rel="stylesheet" type="text/css" />
             <link href="../resource/css/login.css" rel="stylesheet" type="text/css" />
             <script type="text/javascript">
+            var flag = true;
             $(document).ready(function() { 
             	showLoad();
-            }); 
-	        	var initInfo = <%=initInfo%>;
-				var merID = initInfo.data.merID;
-				var tableID = initInfo.data.tableID;
                 //use ajax to get Menu data by merID and tableID     
                 jAjax({
-                    type: "get",
+                    type: "post",
                     async: true,
                     data:{
                     	"merID" : merID,
@@ -34,15 +31,22 @@
                     url: "/EWaiter/foodType/obtainMenu",
                     success: function(data) {
                  	   localStorage.setItem('$carteAll', data);				
+                    },
+                    error:function() {
+                    	showdialog(1,"数据加载失败，请联系服务员。");	
+                    	flag = false;
                     }
                 });
+            }); 
+	        	var initInfo = <%=initInfo%>;
+				var merID = initInfo.data.merID;
+				var tableID = initInfo.data.tableID;
                 $(window).load(
                         function() {
                         	closeLoad();
                             $("#background").fullBg();
                             $("#checkIphone").bind("click",
                             function() {
-
                                 var sub_DB_Phone = $("#telephone").val(); // 電話
                                 var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/;
         						 if( initInfo.code != 1){
@@ -51,11 +55,16 @@
                                 } else if (!isMobile.test(sub_DB_Phone)) { //如果用户输入的值不同时满足手机号和座机号的正则
                                     showdialog(1, "请正确填写电话号码，例如:13415764179或0321-4816048", focusOnTelePhoneInput); //就弹出提示信息
                                     return; //返回一个错误，不向下执行
+                                } else if(!flag) {
+                                	showdialog(1,"数据加载失败，请联系服务员。");	
                                 }else {
                                 	location.href = "../takeout3.jsp?sub_DB_Phone="+sub_DB_Phone;
             					}
                             });
                         });
+                function focusOnTelePhoneInput() {
+                    $("#telephone").focus();
+                }
             </script>
         </head>
         
