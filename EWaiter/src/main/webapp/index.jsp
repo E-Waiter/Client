@@ -84,7 +84,7 @@
                 </p>
             </div> -->
             <div style="width: 100%; height: 100%; margin: 0; top: 0; position: absolute; z-index: -1">
-                <img src="../resource/img/bg.jpg" alt="" id="background" />
+                <img src="../resource/img/bg.png" alt="" id="background" />
             </div>
                 <!--加载div-->
     <div id="load" class="load">
