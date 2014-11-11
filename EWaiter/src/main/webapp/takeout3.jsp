@@ -19,9 +19,6 @@
     <script src="resource/js/jlib.js" type="text/javascript"></script>
    <script>
        var ua = navigator.userAgent.toLowerCase();
-       function focusOnTelePhoneInput() {
-           $("#telephone").focus();
-       }
        var $carteAll = null;
        try { gdata = JSON.parse(localStorage.getItem('gdata')); } catch (ex) { alert('error'); gdata = null };
 /*        try { dishJson = JSON.parse(localStorage.getItem('dishJson')); } catch (ex) { alert('error'); gdata = null }; */
@@ -33,7 +30,7 @@
     	   localStorage.setItem('$phone', phone);
        }
 
-   </script>
+	</script>
     <link href="resource/css/main.css" rel="stylesheet" type="text/css" />
     <link href="resource/css/base.css" rel="stylesheet" type="text/css" />
     <link href="resource/css/xg.css" rel="stylesheet" type="text/css" />
@@ -48,12 +45,12 @@
             <div id="dish_list"></div>
         </div>
         
+
+    </div>
         <div id="dish_footer">
             <div id="dish_info"></div>
             <div id="dish_ok"><button class="select_ok" >选好了</button></div>
         </div>
-    </div>
-
 
     <!--加载div-->
     <div id="load" class="load">

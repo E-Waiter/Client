@@ -53,7 +53,7 @@
                                 	showdialog(1,initInfo.msg);
                                 	return;
                                 } else if (!isMobile.test(sub_DB_Phone)) { //如果用户输入的值不同时满足手机号和座机号的正则
-                                    showdialog(1, "请正确填写电话号码，例如:13415764179或0321-4816048", focusOnTelePhoneInput); //就弹出提示信息
+                                    showdialog(1, "验证未通过，正确格式如13922151165", focusOnTelePhoneInput); //就弹出提示信息
                                     return; //返回一个错误，不向下执行
                                 } else if(!flag) {
                                 	showdialog(1,"数据加载失败，请联系服务员。");	
@@ -70,7 +70,7 @@
         
         <body>
             <div class="form-wrapper cf">
-                <input type="number" id="telephone" placeholder="请输入电话号码" required>
+                <input type="number" id="telephone" placeholder="请输入您的手机号码" required>
                 <button type="button" id="checkIphone">
                     开始验证
                 </button>
