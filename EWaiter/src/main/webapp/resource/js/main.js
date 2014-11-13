@@ -47,7 +47,7 @@ function submitOrder() {
 		showdialog(0, "请输入数字,如数字1或数字2", focusOnPersonCount);
 		return;
 	}
-	var sub_DB_Phone = localStorage.getItem('phone');
+	var sub_DB_Phone = localStorage.getItem('$phone');
 	orderList.des = sub_DB_Remark;
 	orderList.phone = sub_DB_Phone;
 	orderList.uID = $carteAll.deskID;
@@ -685,9 +685,15 @@ function orient() {
 		$("#dish_footer #carte_footer").css({
 			heigh: "10%"
 		});
+		$("#carte_footer").css({
+			heigh: "10%"
+		});
 		return false;
 	} else if (window.orientation == 0 || window.orientation == 180) {
 		$("#dish_footer #carte_footer").css({
+			heigh: "10%"
+		});
+		$("#carte_footer").css({
 			heigh: "10%"
 		});
 		return false;
