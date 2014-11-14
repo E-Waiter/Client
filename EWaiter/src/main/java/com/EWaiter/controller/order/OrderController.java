@@ -88,11 +88,11 @@ public class OrderController
 	public  @ResponseBody String  syncOrder(@RequestParam("merID") Long merID,@RequestParam("bUserID") Long user,@RequestParam("token") String token ,@RequestParam("lastUpdate") String lastUpdate,HttpServletRequest request)
 	{
 		
-		ErrorCode code = bUserService.authenticate(user, token);
-		if (code != ErrorCode.OK) 
-		{	
-			return new JsonResponse(code).generate();
-		}
+//		ErrorCode code = bUserService.authenticate(user, token);
+//		if (code != ErrorCode.OK) 
+//		{	
+//			return new JsonResponse(code).generate();
+//		}
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
 		if (lastUpdate != null && !lastUpdate.equals(""))
@@ -113,11 +113,11 @@ public class OrderController
 	public @ResponseBody String syncFoodsByOrderID(@RequestParam("bUserID") Long user,@RequestParam("token") String token,@RequestParam("orderID") Long orderID)
 	{
 		ErrorCode code = null;
-		 code = bUserService.authenticate(user, token);
-		if (code != ErrorCode.OK)
-		{	
-			return new JsonResponse(code).generate();
-		}
+//		 code = bUserService.authenticate(user, token);
+//		if (code != ErrorCode.OK)
+//		{	
+//			return new JsonResponse(code).generate();
+//		}
 		JSONObject data = new JSONObject();
 		code = orderService.getOrderDesByID(orderID, data);
 		if ( code== ErrorCode.OK)
@@ -136,11 +136,11 @@ public class OrderController
 		//orderID ,status ,
 		
 		ErrorCode code = null;
-		 code = bUserService.authenticate(user, token);
-		if (code != ErrorCode.OK)
-		{	
-			return new JsonResponse(code).generate();
-		}
+//		 code = bUserService.authenticate(user, token);
+//		if (code != ErrorCode.OK)
+//		{	
+//			return new JsonResponse(code).generate();
+//		}
 		boolean result =  orderService.updateStatus(orderID, OrderModel.CONFIRMED);
 		if (result)
 		{
@@ -160,11 +160,11 @@ public class OrderController
 		//orderID ,status ,
 		
 		ErrorCode code = null;
-		 code = bUserService.authenticate(user, token);
-		if (code != ErrorCode.OK)
-		{	
-			return new JsonResponse(code).generate();
-		}
+//		 code = bUserService.authenticate(user, token);
+//		if (code != ErrorCode.OK)
+//		{	
+//			return new JsonResponse(code).generate();
+//		}
 		boolean result =  orderService.updateStatus(orderID, OrderModel.B_CLOSE);
 		if (result)
 		{
@@ -184,11 +184,11 @@ public class OrderController
 		//orderID ,status ,
 		
 		ErrorCode code = null;
-		 code = bUserService.authenticate(user, token);
-		if (code != ErrorCode.OK)
-		{	
-			return new JsonResponse(code).generate();
-		}
+//		 code = bUserService.authenticate(user, token);
+//		if (code != ErrorCode.OK)
+//		{	
+//			return new JsonResponse(code).generate();
+//		}
 		boolean result =  orderService.updateStatus(orderID, OrderModel.END);
 		if (result)
 		{
@@ -202,4 +202,11 @@ public class OrderController
 			return new JsonResponse(ErrorCode.BAD_COMMAND).generate();
 		}
 	}
+	@RequestMapping(value = "/obtainOrdersByUserID",method=RequestMethod.POST ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String obtainOrdersByUserID(@RequestParam("userID") Long user,@RequestParam("token") String token)
+	{
+		
+		return "";
+	}
+	
 }

@@ -34,12 +34,15 @@ public class FoodModel
 	private String url;
 	//菜价格
 	private float price;
+	//是否打折
+	private boolean isDiscount;
+	
 	//折扣价
 	private float dPrice;
 	//是否支持外卖
 	private int isTakeOut;
 	//是否是特色菜
-	private int isChara;
+	private int isFeature;
 	//菜状态（正常,售完,锁定）
 	private int status;
 	//短码
@@ -133,17 +136,27 @@ public class FoodModel
 	public void setIsTakeOut(int isTakeOut) {
 		this.isTakeOut = isTakeOut;
 	}
-	public int getIsChara() {
-		return isChara;
-	}
-	public void setIsChara(int isChara) {
-		this.isChara = isChara;
-	}
+	
 	public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	
+	public boolean isDiscount() {
+		return isDiscount;
+	}
+	public void setDiscount(boolean isDiscount) {
+		this.isDiscount = isDiscount;
+	}
+	public int getIsFeature() {
+		return isFeature;
+	}
+	public void setIsFeature(int isFeature) {
+		this.isFeature = isFeature;
+	}
+	
 
 }

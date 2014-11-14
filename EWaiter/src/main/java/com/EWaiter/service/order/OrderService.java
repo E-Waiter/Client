@@ -96,10 +96,13 @@ public class OrderService
 		orderModel.setNumber(number);
 		orderModel.setTime(date);
 		orderModel.setStatus(OrderModel.NEW);
+		
 
 		Set<OrderItemModel> orderDesModels  = new HashSet<OrderItemModel>();
 		JSONArray jsonArray = jObject.getJSONArray("foods");
 		int size = jsonArray.size();
+		float price = 0;
+		float dPrice = 0;
 		for (int i = 0; i < size; i++) 
 		{
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -108,17 +111,29 @@ public class OrderService
 			int dNumber = jsonObject.getInt("number");
 			String type = jsonObject.getString("type");
 			String des = jsonObject.getString("des");
+			FoodModel foodModel = foodDAO.getFoodByID(foodID);
+			price	+= foodModel.getPrice();
+			if (foodModel.isDiscount() == true) 
+			{
+				dPrice += foodModel.getdPrice();
+			}else 
+			{
+				dPrice += foodModel.getPrice();
+			}	
 			
 			OrderItemModel orderDesModel = new OrderItemModel();
+						
 			
-			FoodModel foodModel = new FoodModel();
-			foodModel.setId(foodID);
+//			FoodModel foodModel = new FoodModel();
+//			foodModel.setId(foodID);
 			orderDesModel.setFoodModel(foodModel);
 			orderDesModel.setNumber(dNumber);
 			orderDesModel.setType(type);
 			orderDesModel.setDes(des);
 			orderDesModels.add(orderDesModel);
 		}
+		orderModel.setDis(dPrice);
+		orderModel.setTotle(price);
 		
 		List<FoodModel> foodModels2 = isSellOut(orderDesModels);
 		if (foodModels2 != null && foodModels2.size() !=0) 
@@ -147,7 +162,11 @@ public class OrderService
 		List<OrderModel> orderModels = orderDAO.getOrderByMerID(merID, 0);
 		return orderModels;
 	}
-	
+	public List<OrderModel> getOrderByUserID(Long userID ,int status)
+	{
+		List<OrderModel> orderModels = orderDAO.getOrderByUserID(userID, 0);
+		return orderModels;
+	}
 	public List<FoodModel> isSellOut(Set<OrderItemModel> orderDesModels)
 	{
 		List<FoodModel> foodModels = new ArrayList<FoodModel>();
@@ -249,6 +268,8 @@ public class OrderService
 		data.put("status", orderModel.getStatus());
 		data.put("foodNumber", orderModel.getOrderItemModels().size());
 		data.put("note", orderModel.getNote());
+//		data.put("price", orderModel.getTotle());
+		data.put("dPrice", orderModel.getDis());
 		
 		JSONArray foodsJSON = new JSONArray();
 		Set< OrderItemModel> orderItemModels =orderModel.getOrderItemModels();
@@ -305,6 +326,7 @@ public class OrderService
 			orderJsonObject.put("status", orderModel.getStatus());
 			orderJsonObject.put("foodNumber", orderModel.getOrderItemModels().size());
 			orderJsonObject.put("note", orderModel.getNote());
+			orderJsonObject.put("dPrice", orderModel.getDis());
 			
 			ordersJSON.add(orderJsonObject);
 			
@@ -315,6 +337,7 @@ public class OrderService
 		return jsonObject;
 		
 	}
+
 	public boolean updateStatus(Long id ,Integer status)
 	{
 		boolean  result = orderDAO.updateOrderStatus(id, status);

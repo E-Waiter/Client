@@ -88,11 +88,11 @@ public enum ErrorCode {
 	MYSQL_EXCEPTION(2101,"SQL异常"),
 	
 	MER_EXCEPTION(2201,"未知的店铺"),
-	TALBE_EXCEPTION(2201,"未知的桌子")
+	TALBE_EXCEPTION(2201,"未知的桌子"),
 	
-	;
-	
-	
+	USER_EXISTED_EXCEPTION(2301 ,"手机号已存在"),
+	USER_VIRIFI_CODE_EXCEPTION(2302 ,"手机验证码错误"),
+	USER_REGISTER_EXCEPTION(2303 , "用户注册失败");
 	
 	
 	private ErrorCode(int id, String detail) {

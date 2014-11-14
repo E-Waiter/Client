@@ -36,7 +36,14 @@ public class OrderDAO extends BaseDAO
 		query.setInteger(1, status);
 		return query.list();
 	}
-	
+	public List<OrderModel> getOrderByUserID(Long userID , int status)
+	{
+		String hql = "FROM orderModel o WHERE o.userModel.id=? and o.status<=?";
+		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
+		query.setLong(0, userID);
+		query.setInteger(1, status);
+		return query.list();
+	}
 	
 	public long addOrder(OrderModel orderModel) {
 		Long id = (Long)getSessionFactory().getCurrentSession().save(orderModel);

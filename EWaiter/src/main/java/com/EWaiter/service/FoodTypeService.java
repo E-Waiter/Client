@@ -129,7 +129,7 @@ public class FoodTypeService
 				jsonObject.put("price", foodModel.getPrice());
 				jsonObject.put("dPrice", foodModel.getdPrice());
 				jsonObject.put("isTakeOut", foodModel.getIsTakeOut());
-				jsonObject.put("isChara", foodModel.getIsChara());
+				jsonObject.put("isChara", foodModel.getIsFeature());
 				jsonObject.put("status", foodModel.getStatus());
 				jsonObject.put("code", foodModel.getCode());
 				UnitModel unitModel = foodModel.getUnitModel();

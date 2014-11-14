@@ -11,18 +11,14 @@ import javax.persistence.Table;
 @Entity(name="userModel")
 public class UserModel 
 {
-//	private long id;
-//	private String loginID;
-//	private String nikeName;
-//	private String password;
-//	private String phone;
-//	private String email;
-//	private String userType;
+
+	public static int USER_STATES_UNREGISTER =1;
+	public static int USER_STATES_NEW=2;
 	
 	
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	private String userName;
 	private String name;
 	private String password;
@@ -51,10 +47,11 @@ public class UserModel
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getId() {
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -63,7 +60,8 @@ public class UserModel
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPassword() {
+	public String getPassword() 
+	{
 		return password;
 	}
 	public void setPassword(String password) {
@@ -87,9 +85,4 @@ public class UserModel
 	public void setUserState(int userState) {
 		this.userState = userState;
 	}
-	
-	
-	
-	
-
 }

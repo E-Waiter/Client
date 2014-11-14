@@ -22,13 +22,16 @@ import com.EWaiter.model.mer.RoomModel;
 import com.EWaiter.model.order.OrderItemModel;
 import com.EWaiter.model.order.OrderModel;
 import com.EWaiter.model.place.AreaModel;
+import com.EWaiter.model.user.UserModel;
 import com.EWaiter.service.FoodTypeService;
 import com.EWaiter.service.mer.RoomService;
 import com.EWaiter.service.order.OrderService;
 import com.EWaiter.service.place.NationService;
 import com.EWaiter.service.user.BUserService;
+import com.EWaiter.service.user.UserService;
 import com.EWaiter.util.ErrorCode;
 import com.EWaiter.util.JsonResponse;
+import com.EWaiter.util.Sha1;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -56,20 +59,26 @@ public class TestDAO {
 	@Qualifier("bUserService")
 	private BUserService bUserService;
 	
-//	@Test
-//	public void testBuser()
-//	{
-//		JSONObject jsonObject = new JSONObject();
-//		ErrorCode errorCode = bUserService.authBUser("13922151165", "123458", jsonObject);
-//		System.out.println(errorCode.getDetail());
-//	}
+	@Autowired
+	@Qualifier("userService")
+	public UserService userService;
+
 	@Test
-	public void  testOrder()
+	public void testRegister()
 	{
-		Date date = new Date();
-		
-		JsonResponse orderModels = orderService.syncOrder(2, new Date());
-		System.out.println("orderModels:" + orderModels.generate());
+		UserModel userModel = new UserModel();
+		userModel.setPhone("13922151165");
+		userModel.setPassword(Sha1.encode("123458"));
+		userModel.setUserState(UserModel.USER_STATES_NEW);
+		userService.addUser(userModel, "2211");
+	}
+
+	//	public void  testOrder()
+//	{
+//		Date date = new Date();
+//		
+//		JsonResponse orderModels = orderService.syncOrder(2, new Date());
+//		System.out.println("orderModels:" + orderModels.generate());
 //		System.out.println(date.toString());
 		
 		
@@ -84,7 +93,7 @@ public class TestDAO {
 //		}
 //		
 		
-	}
+//	}
 	
 	
 	

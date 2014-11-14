@@ -40,6 +40,7 @@ public class OrderModel
 	@Id
 	@GeneratedValue
 	private long id;
+	//下单方式
 	private int method;
 	
 	
@@ -59,14 +60,21 @@ public class OrderModel
 	@OneToOne
 	@JoinColumn(name="deskID")
 	private TableModel deskModel;
-	
+	//下单时间
 	private Date time;
+	//当前状态
 	private int status;
+	//电话
 	private String phone;
+	//总价
 	private float totle;
+	//折扣价
 	private float dis;
+	//备注
 	private String note;
+	//菜品数目
 	private int number;
+	
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade(CascadeType.SAVE_UPDATE)
